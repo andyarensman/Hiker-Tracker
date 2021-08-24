@@ -1,69 +1,38 @@
-/*
-- Created with help from the following tutorial by Amit Agarwal: https://www.labnol.org/code/google-sheet-d3js-visualization-200608
-- Additional resources found at: https://developers.google.com/chart/interactive/docs/querylanguage
-*/
+//const d3 = require('d3')
 
-
-//Initialize the Google Visualization API
-
-var googleSpreadSheetURL = 'https://docs.google.com/spreadsheets/d/1vsQcLWAUfMSH6ncC8yK95UEVYaQ3aDjc0O2fUsbJlsg/edit?usp=sharing'
-
-google.charts.load('current');
-google.charts.setOnLoadCallback(init);
-
-function init() {
-  var url = googleSpreadSheetURL;
-  var query = new google.visualization.Query(url);
-  query.setQuery('select A, B');
-  query.setQuery('offset 2');
-  query.send(processSheetsData);
-}
 
 
 //Prepare the Data for D3.js
 
-function processSheetsData(response) {
-  var array = [];
-  var data = response.getDataTable();
-  var columns = data.getNumberOfColumns();
-  var rows = data.getNumberOfRows();
-  for (var r = 0; r < rows; r++) {
-    var row = [];
-    for (var c = 0; c < columns; c++) {
-      row.push(data.getFormattedValue(r, c));
-    }
-    array.push({
-      number: +row[0],
-      name: row[1],
-      date: row[2],
-      mileage: +row[3],
-      time: row[4],
-      elevation_gain: +(row[5].replace(/,/g, '')),
-      min_elevation: +(row[6].replace(/,/g, '')),
-      max_elevation: +(row[7].replace(/,/g, '')),
-      average_pace: row[8],
-      average_bpm: +row[9],
-      max_bpm: +row[10],
-      city: row[11],
-      location: row[12],
-      notes: row[13]
-    });
-  }
-  renderData(array);
-  //console.log(array)
-}
+
+
+      // number: +row[0],
+      // name: row[1],
+      // date: row[2],
+      // mileage: +row[3],
+      // time: row[4],
+      // elevation_gain: +(row[5].replace(/,/g, '')),
+      // min_elevation: +(row[6].replace(/,/g, '')),
+      // max_elevation: +(row[7].replace(/,/g, '')),
+      // average_pace: row[8],
+      // average_bpm: +row[9],
+      // max_bpm: +row[10],
+      // city: row[11],
+      // location: row[12],
+      // notes: row[13]
+
 
 
 //Render the D3.js chart
 
-function renderData(data) {
+const d3ScatterPlot = (data) => {
   //removing entries with no data
   var hikeData = [];
   for (var i = 0; data[i].mileage; i++) {
     hikeData.push(data[i])
   }
 
-  //console.log(hikeData[1])
+  console.log(hikeData[1])
 
   //Variables
   const width = 900,
@@ -537,3 +506,5 @@ function renderData(data) {
 
 
 }
+
+module.exports = { d3ScatterPlot }

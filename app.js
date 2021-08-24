@@ -1,55 +1,50 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-require('dotenv').config()
-var mongo = require('mongodb');
+const express = require('express');
+require('dotenv').config();
+const mongo = require('mongodb');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
+const hikeSchemas = require('./models/hikeSchemas');
+const HikeSession = hikeSchemas.HikeSession;
+const Hiker = hikeSchemas.Hiker;
+const { d3ScatterPlot } = require('./graph.js');
 
+//express app
+const app = express();
+
+//connect to mongodb
 const uri = process.env['MONGO_URI']
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then((result) => app.listen(process.env.PORT || 3000))
+  .catch((err) => console.log(err));
 
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+//not sure where to put this or if I need it
+mongoose.set('useFindAndModify', false);
+
+//middleware and static files
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true })); //allows you to use req.body
 
 
-app.use(cors())
-app.use(express.static('public'))
+//routes
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 
+app.get('/:id', (req, res) => {
+  //practice id = '61252905f2362a1348516b85'
+  const id = req.params.id
 
-const listener = app.listen(process.env.PORT || 3000, () => {
-  console.log('Your app is listening on port ' + listener.address().port)
-})
-
-var hikeSessionSchema = new mongoose.Schema({
-    hike_name: {type: String, required: true},
-    hike_date: {type: String, required: true},
-    mileage: {type: Number, required: true},
-    duration: {type: String, required: true},
-    elevation_gain: {type: Number, required: true},
-    min_elevation: Number,
-    max_elevation: Number,
-    average_pace: String,
-    average_bpm: Number,
-    max_bpm: Number,
-    city: {type: String, required: true},
-    location: {type: String, required: true},
-    notes: String
+  Hiker.findById(id)
+  .then(result => {
+    console.log(result.log)
+    d3ScatterPlot(result.log)
   })
-
-var hikerSchema = new mongoose.Schema({
-  username: {type: String, required: true},
-  log: [hikeSessionSchema]
+  .catch(err => {
+    console.log('invalid user ID');
+  })
 })
 
-var HikeSession = mongoose.model('HikeSession', hikeSessionSchema)
-var Hiker = mongoose.model('Hiker', hikerSchema)
-
-////////////////////////////////////////////
-
-mongoose.set('useFindAndModify', false);
 
 
 //updated but I want to stay on same page

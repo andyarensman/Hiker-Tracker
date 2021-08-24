@@ -1,7 +1,7 @@
 {
-	"name": "fcc-exercise-tracker",
+	"name": "hiker-data-tracker",
 	"version": "0.1.0",
-	"description": "A REST API project, part of Free Code Camp's curriculum",
+	"description": "Practicing Backend",
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js"
