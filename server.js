@@ -91,8 +91,8 @@ app.post('/api/users/:_id/exercises', bodyParser.urlencoded({ extended: false })
     location: req.body.location,
     notes: req.body.notes || ''
   })
-  
-  Hiker.findByIdAndUpdate( 
+
+  Hiker.findByIdAndUpdate(
     req.params._id,
     {$push : {log: newHike}},
     {new: true},
@@ -114,13 +114,13 @@ app.post('/api/users/:_id/exercises', bodyParser.urlencoded({ extended: false })
 app.get('/api/users/:_id/logs', (req, res) => {
   console.log(req.params)
   console.log(req.query.from)
-  
+
   Hiker.findById(req.params._id, (error, result) => {
     if(!error) {
       var responseObject = result
-      
+
       if (req.query.from || req.query.to) {
-        
+
         var fromDate = new Date(0)
         var toDate = new Date()
 
