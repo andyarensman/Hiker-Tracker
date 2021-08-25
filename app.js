@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const hikeSchemas = require('./models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
 const Hiker = hikeSchemas.Hiker;
-const { d3ScatterPlot } = require('./graph.js');
 
 //express app
 const app = express();
@@ -17,6 +16,9 @@ const uri = process.env['MONGO_URI']
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => app.listen(process.env.PORT || 3000))
   .catch((err) => console.log(err));
+
+//register viwe engine
+app.set('view engine', 'ejs');
 
 //not sure where to put this or if I need it
 mongoose.set('useFindAndModify', false);
@@ -28,20 +30,19 @@ app.use(express.urlencoded({ extended: true })); //allows you to use req.body
 
 //routes
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html')
+  res.render('index')
 });
 
-app.get('/:id', (req, res) => {
+app.get('/users/:id', (req, res) => {
   //practice id = '61252905f2362a1348516b85'
   const id = req.params.id
 
   Hiker.findById(id)
   .then(result => {
-    console.log(result.log)
-    d3ScatterPlot(result.log)
+    res.render('graph', { data: result.log })
   })
   .catch(err => {
-    console.log('invalid user ID');
+    console.log(err);
   })
 })
 

@@ -1,0 +1,88 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+svg {
+  display: block;
+  margin: 30px auto;
+}
+body {
+  font-family: 'Roboto';
+  background-color: #635F5D;
+}
+
+.tick line, #y-axis {
+  color: #C0C0BB
+}
+
+.tick text {
+  font-size: 1.5em;
+  fill: #635F5D;
+}
+
+.axis-label {
+  font-size: 1.8em;
+  fill: #8E8883;
+}
+
+.title {
+  font-size: 2.5em;
+  fill: #635F5D;
+}
+
+.description {
+  font-size: 16px;
+  fill: #8E8883;
+  font-style: italic;
+}
+
+.footer {
+  font-size: 10px;
+  fill: #8E8883;
+  font-style: italic;
+}
+
+circle {
+  opacity: 1;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  max-width: 150px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 130%;
+  background: #F8F8F8;
+  border: 1px solid  #C0C0BB;
+  border-radius: 2px;
+  pointer-events: none;
+  color: #635F5D;
+  opacity: 0;
+}
+
+.legend-tooltip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 130%;
+  background: #F8F8F8;
+  border: 1px solid  #C0C0BB;
+  border-radius: 2px;
+  pointer-events: none;
+  color: #635F5D;
+  opacity: 0;
+}
+
+hr { margin: 0.2em auto; }
+
+.legend-text {
+  font-size: 12px;
+  fill: #635F5D;
+}
+
+.legend-title {
+  font-size: 1.8em;
+  fill: #8E8883;
+}
