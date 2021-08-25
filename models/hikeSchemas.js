@@ -5,7 +5,7 @@ const hikeSessionSchema = new mongoose.Schema({
     hike_name: {type: String, required: true},
     hike_date: {type: String, required: true},
     mileage: {type: Number, required: true},
-    duration: {type: String, required: true},
+    time: {type: String, required: true},
     elevation_gain: {type: Number, required: true},
     min_elevation: Number,
     max_elevation: Number,

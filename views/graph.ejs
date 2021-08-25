@@ -11,7 +11,7 @@
     hike_name: 'Baldy',
     hike_date: '2021-08-10',
     mileage: 2,
-    duration: '10:25:25',
+    time: '10:25:25',
     elevation_gain: 3400,
     min_elevation: 34,
     max_elevation: 5000,
@@ -26,7 +26,7 @@
     hike_name: 'sdfsdf',
     hike_date: '2021-08-04',
     mileage: 12,
-    duration: '12:25:13',
+    time: '12:25:13',
     elevation_gain: 3400,
     min_elevation: 1231,
     max_elevation: 12312,
@@ -34,7 +34,22 @@
     average_bpm: 143,
     max_bpm: 144,
     city: 'Castaic',
-    location: 'Valencia, CA',
+    location: 'Baldy',
+    notes: '134134erwwerwer'
+  },
+  {
+    hike_name: 'yes',
+    hike_date: '2021-08-04',
+    mileage: 5,
+    time: '12:25:13',
+    elevation_gain: 2000,
+    min_elevation: 1231,
+    max_elevation: 12312,
+    average_pace: '',
+    average_bpm: 143,
+    max_bpm: 144,
+    city: 'Castaic',
+    location: 'Nowheres',
     notes: '134134erwwerwer'
   }];
   console.log(data)
@@ -165,15 +180,16 @@
     return b[1] - a[1];
   });
 
-    //console.log(sortedHikes)
-    //If you want more/less colors (max 6 including 'other' at this size), add locations below, increase slice in otherLocations(), and get new hex code in dataColors Object. Then update the colorLegendData array and the switch statement in the svg element that makes the circles
+  //console.log(sortedHikes)
+  //If you want more/less colors (max 6 including 'other' at this size), add locations below, increase slice in otherLocations(), and get new hex code in dataColors Object. Then update the colorLegendData array and the switch statement in the svg element that makes the circles
 
-  var topLocation = sortedHikes[0];
-  var secLocation = sortedHikes[1];
-  var thirdLocation = sortedHikes[2];
-  var fourthLocation = sortedHikes[3];
-  var fifthLocation = sortedHikes[4];
-  var otherLocationNames = sortedHikes.slice(5);
+  var topLocation;
+  var secLocation;
+  var thirdLocation;
+  var fourthLocation;
+  var fifthLocation;
+  var otherLocationNames;
+  var colorLegendData;
 
   var otherLocations = () => {
     var locations = sortedHikes.slice(4);
@@ -184,7 +200,51 @@
     return ['Other', count]
   };
 
-  var colorLegendData = [topLocation, secLocation, thirdLocation, fourthLocation, fifthLocation, otherLocations()]
+  switch (sortedHikes.length) {
+    case 0:
+      break;
+    case 1:
+      topLocation = sortedHikes[0];
+      colorLegendData = [topLocation]
+      break;
+    case 2:
+      topLocation = sortedHikes[0];
+      secLocation = sortedHikes[1];
+      colorLegendData = [topLocation, secLocation]
+      break;
+    case 3:
+      topLocation = sortedHikes[0];
+      secLocation = sortedHikes[1];
+      thirdLocation = sortedHikes[2];
+      colorLegendData = [topLocation, secLocation, thirdLocation]
+      break;
+    case 4:
+      topLocation = sortedHikes[0];
+      secLocation = sortedHikes[1];
+      thirdLocation = sortedHikes[2];
+      fourthLocation = sortedHikes[3];
+      colorLegendData = [topLocation, secLocation, thirdLocation, fourthLocation]
+      break;
+    case 5:
+      topLocation = sortedHikes[0];
+      secLocation = sortedHikes[1];
+      thirdLocation = sortedHikes[2];
+      fourthLocation = sortedHikes[3];
+      fifthLocation = sortedHikes[4];
+      colorLegendData = [topLocation, secLocation, thirdLocation, fourthLocation, fifthLocation]
+      break;
+    default:
+      topLocation = sortedHikes[0];
+      secLocation = sortedHikes[1];
+      thirdLocation = sortedHikes[2];
+      fourthLocation = sortedHikes[3];
+      fifthLocation = sortedHikes[4];
+      otherLocationNames = sortedHikes.slice(5);
+      colorLegendData = [topLocation, secLocation, thirdLocation, fourthLocation, fifthLocation, otherLocations()]
+      break;
+  }
+
+
     //console.log(colorLegendData)
 
   //scales
@@ -279,11 +339,11 @@
         .attr('r', selectedCircleRadius)
       tooltip
         .html('<b>Hike No. ' + hikeData[i].number + '</b><br/>' +
-              hikeData[i].name + '<br/>' +
+              hikeData[i].hike_name + '<br/>' +
               hikeData[i].location + '<br/><hr>' +
               hikeData[i].mileage + " mi & " + hikeData[i].elevation_gain + ' ft gain<br/>' +
               hikeData[i].time + ' duration<br/>' +
-              hikeData[i].date)
+              hikeData[i].hike_date)
         .style('left', d3.event.pageX + 'px')
         .style('top', d3.event.pageY - 28 + 'px')
         .style('opacity', 1);
@@ -317,7 +377,7 @@
       .attr('text-anchor', 'middle')
       .text(description);
 
-  //render footer
+  //render footer  ***UPDATE THIS
 
   svg.append('text')
       .attr('class', 'footer')
@@ -330,7 +390,7 @@
       .style('fill', '#137B80')
       .style('cursor', 'default')
       .text('Google Spreadsheet')
-      .on('click', function() { window.open(googleSpreadSheetURL); })
+      //.on('click', function() { window.open(googleSpreadSheetURL); })
 
   svg.append('text')
       .attr('class', 'footer')
@@ -472,7 +532,7 @@
   var averageGain =  d3.format(',.6d')(hikeData.map(d => d.elevation_gain).reduce((a, b) => a + b, 0)/hikeData.length)
   var totalGain = d3.format(',.6d')(hikeData.map(d => d.elevation_gain).reduce((a, b) => a + b, 0));
   var hikeNumber = hikeData.length;
-  var lastHikeDate = hikeData[hikeData.length - 1].date
+  var lastHikeDate = hikeData[hikeData.length - 1].hike_date
 
   var moreInfoArray = [[['As of '], [lastHikeDate + ', ' + hikeNumber + ' hikes']],
                        [['Average Distance: '], [averageMileage + " mi"]],

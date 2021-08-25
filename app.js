@@ -76,7 +76,7 @@ app.post('/api/users/:_id/exercises', bodyParser.urlencoded({ extended: false })
     hike_name: req.body.hike_name,
     hike_date: req.body.hike_date,
     mileage: parseFloat(req.body.mileage),
-    duration: req.body.duration,
+    time: req.body.time,
     elevation_gain: parseInt(req.body.elevation_gain),
     min_elevation: parseInt(req.body.min_elevation) || '',
     max_elevation: parseInt(req.body.max_elevation) || '',
