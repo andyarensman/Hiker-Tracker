@@ -1,55 +1,51 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-require('dotenv').config()
-var mongo = require('mongodb');
+const express = require('express');
+require('dotenv').config();
+const mongo = require('mongodb');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
+const hikeSchemas = require('./models/hikeSchemas');
+const HikeSession = hikeSchemas.HikeSession;
+const Hiker = hikeSchemas.Hiker;
 
+//express app
+const app = express();
+
+//connect to mongodb
 const uri = process.env['MONGO_URI']
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then((result) => app.listen(process.env.PORT || 3000))
+  .catch((err) => console.log(err));
 
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+//register viwe engine
+app.set('view engine', 'ejs');
+
+//not sure where to put this or if I need it
+mongoose.set('useFindAndModify', false);
+
+//middleware and static files
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true })); //allows you to use req.body
 
 
-app.use(cors())
-app.use(express.static('public'))
+//routes
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html')
+  res.render('index')
 });
 
+app.get('/users/:id', (req, res) => {
+  //practice id = '61252905f2362a1348516b85'
+  const id = req.params.id
 
-const listener = app.listen(process.env.PORT || 3000, () => {
-  console.log('Your app is listening on port ' + listener.address().port)
-})
-
-var hikeSessionSchema = new mongoose.Schema({
-    hike_name: {type: String, required: true},
-    hike_date: {type: String, required: true},
-    mileage: {type: Number, required: true},
-    duration: {type: String, required: true},
-    elevation_gain: {type: Number, required: true},
-    min_elevation: Number,
-    max_elevation: Number,
-    average_pace: String,
-    average_bpm: Number,
-    max_bpm: Number,
-    city: {type: String, required: true},
-    location: {type: String, required: true},
-    notes: String
+  Hiker.findById(id)
+  .then(result => {
+    res.render('graph', { data: result.log })
   })
-
-var hikerSchema = new mongoose.Schema({
-  username: {type: String, required: true},
-  log: [hikeSessionSchema]
+  .catch(err => {
+    console.log(err);
+  })
 })
 
-var HikeSession = mongoose.model('HikeSession', hikeSessionSchema)
-var Hiker = mongoose.model('Hiker', hikerSchema)
-
-////////////////////////////////////////////
-
-mongoose.set('useFindAndModify', false);
 
 
 //updated but I want to stay on same page
@@ -91,8 +87,8 @@ app.post('/api/users/:_id/exercises', bodyParser.urlencoded({ extended: false })
     location: req.body.location,
     notes: req.body.notes || ''
   })
-  
-  Hiker.findByIdAndUpdate( 
+
+  Hiker.findByIdAndUpdate(
     req.params._id,
     {$push : {log: newHike}},
     {new: true},
@@ -114,13 +110,13 @@ app.post('/api/users/:_id/exercises', bodyParser.urlencoded({ extended: false })
 app.get('/api/users/:_id/logs', (req, res) => {
   console.log(req.params)
   console.log(req.query.from)
-  
+
   Hiker.findById(req.params._id, (error, result) => {
     if(!error) {
       var responseObject = result
-      
+
       if (req.query.from || req.query.to) {
-        
+
         var fromDate = new Date(0)
         var toDate = new Date()
 
