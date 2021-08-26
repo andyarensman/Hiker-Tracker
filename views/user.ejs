@@ -6,6 +6,28 @@
 </head>
 <body>
   <div id="d3-graph"></div>
+
+  <form id="exercise-form" method="post">
+    <h3>Add New Hike</h3>
+    <input type="text" name="hike_name" placeholder="*Hike Name" required=''><br>
+    <input type="date" name="hike_date" placeholder="*Date" required=''><br>
+    <input type="text" name="mileage" placeholder="*Mileage" required=''><br>
+    <input type="text" name="time" placeholder="*Duration 00:00:00" required=''><br>
+    <input type="text" name="elevation_gain" placeholder="*Elevation Gain" required=''><br>
+    <input type="text" name="min_elevation" placeholder="(opt)Min Elevation"><br>
+    <input type="text" name="max_elevation" placeholder="(opt)Max Elevation" ><br>
+    <input type="text" name="average_pace" placeholder="(opt)Average Pace"><br>
+    <input type="text" name="average_bpm" placeholder="(opt)Average BPM"><br>
+    <input type="text" name="max_bpm" placeholder="(opt)Max BPM"><br>
+    <input type="text" name="city" placeholder="*City"><br>
+    <input type="text" name="location" placeholder="*Location" required=''><br>
+    <textarea type="text" name="notes" placeholder="Notes"></textarea><br>
+    <button type="submit">Log Hike</button>
+  </form>
+
+  <div id="table"></div>
+
 </body>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <%- include('./dataVis/d3.ejs') %>
+<%- include('./dataVis/table.ejs') %>

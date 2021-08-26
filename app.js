@@ -47,7 +47,42 @@ app.get('/users/:id', (req, res) => {
   })
 })
 
+app.post('/users/:id', (req, res) => {
+  const id = req.params.id
 
+  console.log(req.body)
+
+  var newHike = new HikeSession({
+    hike_name: req.body.hike_name,
+    hike_date: req.body.hike_date,
+    mileage: parseFloat(req.body.mileage),
+    time: req.body.time,
+    elevation_gain: parseInt(req.body.elevation_gain),
+    min_elevation: parseInt(req.body.min_elevation) || '',
+    max_elevation: parseInt(req.body.max_elevation) || '',
+    average_pace: req.body.average_pace || '',
+    average_bpm: parseInt(req.body.average_bpm) || '',
+    max_bpm: parseInt(req.body.max_bpm) || '',
+    city: req.body.city,
+    location: req.body.location,
+    notes: req.body.notes || ''
+  })
+
+  Hiker.findByIdAndUpdate(
+    id,
+    {$push : {log: newHike}},
+    {new: true},
+    (error, updatedUser) => {
+      if(!error) {
+        res.redirect('/users/' + id) //what's the better way to do this?
+      }
+    }
+
+  )
+})
+
+
+/////////////////////Gunna get rid of stuff below eventually///////////////////////////////
 
 //updated but I want to stay on same page
 app.post('/api/users', bodyParser.urlencoded({ extended: false }), (req, res) => {

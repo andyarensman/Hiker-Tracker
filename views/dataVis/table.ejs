@@ -1,0 +1,34 @@
+<script>
+  //may update this
+
+  var hikes = [<%- data %>];
+  var hikeTable = document.querySelector('#table');
+
+  var headers = ['Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location'];
+
+
+  let table = document.createElement('table');
+  let headerRow = document.createElement('tr');
+  headers.forEach(headerText => {
+      let header = document.createElement('th');
+      let textNode = document.createTextNode(headerText);
+      header.appendChild(textNode);
+      headerRow.appendChild(header);
+  });
+  table.appendChild(headerRow);
+  hikes.forEach(hike => {
+      let row = document.createElement('tr');
+      var hikeArray = Object.values(hike);
+      
+      for (var i = 0; i < hikeArray.length - 1; i++) {
+        let cell = document.createElement('td');
+        let textNode = document.createTextNode(hikeArray[i]);
+        cell.appendChild(textNode);
+        row.appendChild(cell);
+      }
+
+      table.appendChild(row);
+  });
+  hikeTable.appendChild(table);
+
+</script>
