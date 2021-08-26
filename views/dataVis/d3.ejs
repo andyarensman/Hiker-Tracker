@@ -1,59 +1,7 @@
-<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <title>Hiking Graph</title>
-  <link href="/graph.css" rel="stylesheet" type="text/css">
-</head>
-<body></body>
-<script src="https://d3js.org/d3.v5.min.js"></script>
 <script>
-  // var data = [{
-  //   hike_name: 'Baldy',
-  //   hike_date: '2021-08-10',
-  //   mileage: 2,
-  //   time: '10:25:25',
-  //   elevation_gain: 3400,
-  //   min_elevation: 34,
-  //   max_elevation: 5000,
-  //   average_pace: '23:43',
-  //   average_bpm: 149,
-  //   max_bpm: 160,
-  //   city: 'Castaic',
-  //   location: 'Valencia, CA',
-  //   notes: 'asdfasdfasdf'
-  // },
-  // {
-  //   hike_name: 'sdfsdf',
-  //   hike_date: '2021-08-04',
-  //   mileage: 12,
-  //   time: '12:25:13',
-  //   elevation_gain: 3400,
-  //   min_elevation: 1231,
-  //   max_elevation: 12312,
-  //   average_pace: '',
-  //   average_bpm: 143,
-  //   max_bpm: 144,
-  //   city: 'Castaic',
-  //   location: 'Baldy',
-  //   notes: '134134erwwerwer'
-  // },
-  // {
-  //   hike_name: 'yes',
-  //   hike_date: '2021-08-04',
-  //   mileage: 5,
-  //   time: '12:25:13',
-  //   elevation_gain: 2000,
-  //   min_elevation: 1231,
-  //   max_elevation: 12312,
-  //   average_pace: '',
-  //   average_bpm: 143,
-  //   max_bpm: 144,
-  //   city: 'Castaic',
-  //   location: 'Nowheres',
-  //   notes: '134134erwwerwer'
-  // }];
+
   var data = [<%- data %>];
-  console.log(data)
+
   var hikeData = [];
 
   for (var i = 0; i < data.length && data[i].mileage; i++) {
@@ -94,19 +42,19 @@
   };
 
   const svg = d3
-    .select('body')
+    .select('#d3-graph')
     .append('svg')
     .attr('width', width)
     .attr('height', height)
 
   const tooltip = d3
-    .select('body')
+    .select('#d3-graph')
     .append('div')
     .attr('class', 'tooltip')
     .attr('id', 'tooltip');
 
   const legendTooltip = d3
-    .select('body')
+    .select('#d3-graph')
     .append('div')
     .attr('class', 'legend-tooltip');
 
@@ -252,7 +200,7 @@
 
   const xScale = d3
     .scaleLinear()
-    .domain([1, mileDomainTop])
+    .domain([0, mileDomainTop])
     .range([margin.left, innerWidth + margin.left])
 
   const yScale = d3
@@ -262,9 +210,17 @@
 
 
   //rendering the Axes
+  var yTickDistance;
+  if (elevationMax < 400) {
+    yTickDistance = 50;
+  } else if (elevationMax < 800) {
+    yTickDistance = 100;
+  } else {
+    yTickDistance = 400;
+  }
 
   const xAxis = d3.axisBottom(xScale).tickSize(-innerHeight).tickPadding(8);
-  const yAxis = d3.axisLeft(yScale).tickSize(-innerWidth).tickPadding(8).tickValues(d3.range(0, yTickNumber, 400));
+  const yAxis = d3.axisLeft(yScale).tickSize(-innerWidth).tickPadding(8).tickValues(d3.range(0, yTickNumber, yTickDistance));
 
   svg.append('g')
       .attr('transform', 'translate(0, ' + (innerHeight + margin.top) + ')')
@@ -302,6 +258,7 @@
       .text(xAxisLabel);
 
   //rendering circles
+
   svg.selectAll('circle')
     .data(hikeData)
     .enter()
