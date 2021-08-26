@@ -37,8 +37,9 @@ app.get('/users/:id', (req, res) => {
   //practice id = '61252905f2362a1348516b85'
   const id = req.params.id
 
-  Hiker.findById(id)
+  Hiker.findById(id, '-log._id')
   .then(result => {
+    console.log(result.log)
     res.render('graph', { data: result.log })
   })
   .catch(err => {

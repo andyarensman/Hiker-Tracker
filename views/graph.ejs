@@ -7,51 +7,52 @@
 <body></body>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script>
-  var data = [{
-    hike_name: 'Baldy',
-    hike_date: '2021-08-10',
-    mileage: 2,
-    time: '10:25:25',
-    elevation_gain: 3400,
-    min_elevation: 34,
-    max_elevation: 5000,
-    average_pace: '23:43',
-    average_bpm: 149,
-    max_bpm: 160,
-    city: 'Castaic',
-    location: 'Valencia, CA',
-    notes: 'asdfasdfasdf'
-  },
-  {
-    hike_name: 'sdfsdf',
-    hike_date: '2021-08-04',
-    mileage: 12,
-    time: '12:25:13',
-    elevation_gain: 3400,
-    min_elevation: 1231,
-    max_elevation: 12312,
-    average_pace: '',
-    average_bpm: 143,
-    max_bpm: 144,
-    city: 'Castaic',
-    location: 'Baldy',
-    notes: '134134erwwerwer'
-  },
-  {
-    hike_name: 'yes',
-    hike_date: '2021-08-04',
-    mileage: 5,
-    time: '12:25:13',
-    elevation_gain: 2000,
-    min_elevation: 1231,
-    max_elevation: 12312,
-    average_pace: '',
-    average_bpm: 143,
-    max_bpm: 144,
-    city: 'Castaic',
-    location: 'Nowheres',
-    notes: '134134erwwerwer'
-  }];
+  // var data = [{
+  //   hike_name: 'Baldy',
+  //   hike_date: '2021-08-10',
+  //   mileage: 2,
+  //   time: '10:25:25',
+  //   elevation_gain: 3400,
+  //   min_elevation: 34,
+  //   max_elevation: 5000,
+  //   average_pace: '23:43',
+  //   average_bpm: 149,
+  //   max_bpm: 160,
+  //   city: 'Castaic',
+  //   location: 'Valencia, CA',
+  //   notes: 'asdfasdfasdf'
+  // },
+  // {
+  //   hike_name: 'sdfsdf',
+  //   hike_date: '2021-08-04',
+  //   mileage: 12,
+  //   time: '12:25:13',
+  //   elevation_gain: 3400,
+  //   min_elevation: 1231,
+  //   max_elevation: 12312,
+  //   average_pace: '',
+  //   average_bpm: 143,
+  //   max_bpm: 144,
+  //   city: 'Castaic',
+  //   location: 'Baldy',
+  //   notes: '134134erwwerwer'
+  // },
+  // {
+  //   hike_name: 'yes',
+  //   hike_date: '2021-08-04',
+  //   mileage: 5,
+  //   time: '12:25:13',
+  //   elevation_gain: 2000,
+  //   min_elevation: 1231,
+  //   max_elevation: 12312,
+  //   average_pace: '',
+  //   average_bpm: 143,
+  //   max_bpm: 144,
+  //   city: 'Castaic',
+  //   location: 'Nowheres',
+  //   notes: '134134erwwerwer'
+  // }];
+  var data = [<%- data %>];
   console.log(data)
   var hikeData = [];
 
