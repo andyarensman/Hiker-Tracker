@@ -86,3 +86,20 @@ hr { margin: 0.2em auto; }
   font-size: 1.8em;
   fill: #8E8883;
 }
+
+/* Table css below */
+
+#table {
+  background-color: #F8F8F8;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  text-align: left;
+  padding: 15px;
+  border: 1px solid black;
+}
