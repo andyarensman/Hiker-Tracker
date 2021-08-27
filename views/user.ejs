@@ -5,25 +5,70 @@
   <link href="/graph.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div id="d3-graph"></div>
+  <div class="flex-container">
+    <div id="d3-graph"></div>
 
-  <form id="exercise-form" method="post">
-    <h3>Add New Hike</h3>
-    <input type="text" name="hike_name" placeholder="*Hike Name" required=''><br>
-    <input type="date" name="hike_date" placeholder="*Date" required=''><br>
-    <input type="text" name="mileage" placeholder="*Mileage" required=''><br>
-    <input type="text" name="time" placeholder="*Duration 00:00:00" required=''><br>
-    <input type="text" name="elevation_gain" placeholder="*Elevation Gain" required=''><br>
-    <input type="text" name="min_elevation" placeholder="(opt)Min Elevation"><br>
-    <input type="text" name="max_elevation" placeholder="(opt)Max Elevation" ><br>
-    <input type="text" name="average_pace" placeholder="(opt)Average Pace"><br>
-    <input type="text" name="average_bpm" placeholder="(opt)Average BPM"><br>
-    <input type="text" name="max_bpm" placeholder="(opt)Max BPM"><br>
-    <input type="text" name="city" placeholder="*City"><br>
-    <input type="text" name="location" placeholder="*Location" required=''><br>
-    <textarea type="text" name="notes" placeholder="Notes"></textarea><br>
-    <button type="submit">Log Hike</button>
-  </form>
+    <div id="form-container">
+      <h3 class="form-title">Log a New Hike</h3>
+      <form id="exercise-form" method="post">
+
+        <div class="grid-item">
+          <label for="hike_name">Hike Name <span class="required">*</span></label>
+          <input id="hike_name" type="text" name="hike_name" placeholder="ex: Mount Wilson" required=''><br>
+        </div>
+        <div class="grid-item">
+          <label for="hike_date">Date <span class="required">*</span></label>
+          <input id="hike_date" type="date" name="hike_date" placeholder="*Date" required=''><br>
+        </div>
+        <div class="grid-item">
+          <label for="mileage">Distance (mi.) <span class="required">*</span></label>
+          <input id="mileage" type="text" name="mileage" placeholder="0.00" required='' pattern="^[0-9]\d*\.?\d{0,2}$" title="number with or without decimals"><br>
+        </div>
+        <div class="grid-item">
+          <label for="time">Duration <span class="required">*</span></label>
+          <input id="time" type="text" name="time" placeholder="00:00:00" required='' pattern="^\d{1,2}:\d{2}:\d{2}$" title="00:00:00"><br>
+        </div>
+        <div class="grid-item">
+          <label for="elevation_gain">Elevation Gain (ft.) <span class="required">*</span></label>
+          <input id="elevation_gain" type="text" name="elevation_gain" placeholder="0" required='' pattern="^[1-9]\d{0,5}$" title="number, no decimal"><br>
+        </div>
+        <div class="grid-item">
+          <label for="min_elevation">Minimum Elevation (ft.) <em>opt.</em></label>
+          <input id="min_elevation" type="text" name="min_elevation" placeholder="0" pattern="^[1-9]\d{0,5}$" title="number, no decimal"><br>
+        </div>
+        <div class="grid-item">
+          <label for="max_elevation">Maximum Elevation (ft.) <em>opt.</em></label>
+          <input id="max_elevation" type="text" name="max_elevation" placeholder="0" pattern="^[1-9]\d{0,5}$" title="number, no decimal"><br>
+        </div>
+        <div class="grid-item">
+          <label for="average_pace">Average Pace <em>opt.</em></label>
+          <input id="average_pace" type="text" name="average_pace" placeholder="00:00" pattern="^\d{1,2}:\d{2}$" title="00:00"><br>
+        </div>
+        <div class="grid-item">
+          <label for="average_bpm">Average BPM <em>opt.</em></label>
+          <input id="average_bpm" type="text" name="average_bpm" placeholder="0" pattern="^[1-9]\d{1,2}$" title="2 or 3 digit number, no decimal"><br>
+        </div>
+        <div class="grid-item">
+          <label for="max_bpm">Maximum BPM <em>opt.</em></label>
+          <input id="max_bpm" type="text" name="max_bpm" placeholder="0" pattern="^[1-9]\d{1,2}$" title="2 or 3 digit number, no decimal"><br>
+        </div>
+        <div class="grid-item">
+          <label for="city">City <span class="required">*</span></label>
+          <input id="city" type="text" name="city" placeholder="ex: Los Angeles" required=""><br>
+        </div>
+        <div class="grid-item">
+          <label for="location">Location <span class="required">*</span></label>
+          <input id="location" type="text" name="location" placeholder="ex: Angeles National Forest" required=''><br>
+        </div>
+        <div class="grid-item" id="grid-notes">
+          <label for="notes">Notes <em>(opt.)</em></label>
+          <textarea id="notes" type="text" name="notes" placeholder="Notes"></textarea><br>
+        </div>
+        <div class="form-note">* required</div>
+        <button type="submit">Log Hike</button>
+      </form>
+    </div>
+  </div>
 
   <div id="table"></div>
 
