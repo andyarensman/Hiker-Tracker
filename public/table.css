@@ -1,0 +1,26 @@
+/* Table CSS */
+
+#table {
+  background-color: #F8F8F8;
+  display: block;
+  padding: 0px 35px 22px;
+  background-color: #F8F8F8;
+  border: 0.75px solid #C0C0BB;
+  margin: 0px 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #EFECEA;
+  font-size: 12px;
+  color: #635F5D;
+}
+
+td, th {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #C0C0BB;
+}
+
+tr:nth-child(even) {background-color: #F5F3F2;}

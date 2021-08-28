@@ -38,7 +38,7 @@ app.get('/users/:id', (req, res) => {
 
   Hiker.findById(id, '-log._id')
   .then(result => {
-    res.render('user', { data: result.log })
+    res.render('user', { data: result.log, username: result.username })
   })
   .catch(err => {
     console.log(err);

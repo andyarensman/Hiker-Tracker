@@ -1,6 +1,8 @@
 <script>
 
   var data = [<%- data %>];
+  var username = <%- JSON.stringify(username) %>;
+  console.log(username)
 
   var hikeData = [];
 
@@ -23,7 +25,7 @@
         descriptionOffset = 28,
         footerMargin = 8;
 
-  const title = '52 Hike Challenge 2021';
+  const title = username + '\'s 52 Hike Challenge 2021';
   const description = 'Scatter plot comparing distance vs. elevation';
   const xAxisLabel = 'Distance (mi)';
   const yAxisLabel = 'Elevevation Gain (ft)';

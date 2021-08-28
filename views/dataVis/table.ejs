@@ -4,7 +4,7 @@
   var hikes = [<%- data %>];
   var hikeTable = document.querySelector('#table');
 
-  var headers = ['Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location'];
+  var headers = ['No.', 'Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Edit'];
 
 
   let table = document.createElement('table');
@@ -16,18 +16,31 @@
       headerRow.appendChild(header);
   });
   table.appendChild(headerRow);
+  var count = 1;
   hikes.forEach(hike => {
       let row = document.createElement('tr');
       var hikeArray = Object.values(hike);
-      
+
+      let countCell = document.createElement('td');
+      let textNode = document.createTextNode(count);
+      countCell.appendChild(textNode);
+      row.appendChild(countCell);
+
       for (var i = 0; i < hikeArray.length - 1; i++) {
         let cell = document.createElement('td');
-        let textNode = document.createTextNode(hikeArray[i]);
+        let textNode = document.createTextNode(hikeArray[i] ? hikeArray[i]: '');
         cell.appendChild(textNode);
         row.appendChild(cell);
+
       }
 
+      var editCell = document.createElement('td');
+      editCell.innerHTML = "<img src=\"/editicon.svg\" alt=\"edit icon\">"
+      row.appendChild(editCell);
+
       table.appendChild(row);
+
+      count++
   });
   hikeTable.appendChild(table);
 

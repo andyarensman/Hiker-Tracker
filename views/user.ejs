@@ -3,74 +3,21 @@
   <meta charset="utf-8">
   <title>Hiking Graph</title>
   <link href="/graph.css" rel="stylesheet" type="text/css">
+  <link href="/form.css" rel="stylesheet" type="text/css">
+  <link href="/table.css" rel="stylesheet" type="text/css">
 </head>
 <body>
   <div class="flex-container">
+
     <div id="d3-graph"></div>
 
-    <div id="form-container">
-      <h3 class="form-title">Log a New Hike</h3>
-      <form id="exercise-form" method="post">
+    <%- include("./dataVis/form.ejs") %>
 
-        <div class="grid-item">
-          <label for="hike_name">Hike Name <span class="required">*</span></label>
-          <input id="hike_name" type="text" name="hike_name" placeholder="ex: Mount Wilson" required=''><br>
-        </div>
-        <div class="grid-item">
-          <label for="hike_date">Date <span class="required">*</span></label>
-          <input id="hike_date" type="date" name="hike_date" placeholder="*Date" required=''><br>
-        </div>
-        <div class="grid-item">
-          <label for="mileage">Distance (mi.) <span class="required">*</span></label>
-          <input id="mileage" type="text" name="mileage" placeholder="0.00" required='' pattern="^[0-9]\d*\.?\d{0,2}$" title="number with or without decimals"><br>
-        </div>
-        <div class="grid-item">
-          <label for="time">Duration <span class="required">*</span></label>
-          <input id="time" type="text" name="time" placeholder="00:00:00" required='' pattern="^\d{1,2}:\d{2}:\d{2}$" title="00:00:00"><br>
-        </div>
-        <div class="grid-item">
-          <label for="elevation_gain">Elevation Gain (ft.) <span class="required">*</span></label>
-          <input id="elevation_gain" type="text" name="elevation_gain" placeholder="0" required='' pattern="^[1-9]\d{0,5}$" title="number, no decimal"><br>
-        </div>
-        <div class="grid-item">
-          <label for="min_elevation">Minimum Elevation (ft.) <em>opt.</em></label>
-          <input id="min_elevation" type="text" name="min_elevation" placeholder="0" pattern="^[1-9]\d{0,5}$" title="number, no decimal"><br>
-        </div>
-        <div class="grid-item">
-          <label for="max_elevation">Maximum Elevation (ft.) <em>opt.</em></label>
-          <input id="max_elevation" type="text" name="max_elevation" placeholder="0" pattern="^[1-9]\d{0,5}$" title="number, no decimal"><br>
-        </div>
-        <div class="grid-item">
-          <label for="average_pace">Average Pace <em>opt.</em></label>
-          <input id="average_pace" type="text" name="average_pace" placeholder="00:00" pattern="^\d{1,2}:\d{2}$" title="00:00"><br>
-        </div>
-        <div class="grid-item">
-          <label for="average_bpm">Average BPM <em>opt.</em></label>
-          <input id="average_bpm" type="text" name="average_bpm" placeholder="0" pattern="^[1-9]\d{1,2}$" title="2 or 3 digit number, no decimal"><br>
-        </div>
-        <div class="grid-item">
-          <label for="max_bpm">Maximum BPM <em>opt.</em></label>
-          <input id="max_bpm" type="text" name="max_bpm" placeholder="0" pattern="^[1-9]\d{1,2}$" title="2 or 3 digit number, no decimal"><br>
-        </div>
-        <div class="grid-item">
-          <label for="city">City <span class="required">*</span></label>
-          <input id="city" type="text" name="city" placeholder="ex: Los Angeles" required=""><br>
-        </div>
-        <div class="grid-item">
-          <label for="location">Location <span class="required">*</span></label>
-          <input id="location" type="text" name="location" placeholder="ex: Angeles National Forest" required=''><br>
-        </div>
-        <div class="grid-item" id="grid-notes">
-          <label for="notes">Notes <em>(opt.)</em></label>
-          <textarea id="notes" type="text" name="notes" placeholder="Notes"></textarea><br>
-        </div>
-        <div class="form-note">* required</div>
-        <button type="submit">Log Hike</button>
-      </form>
-    </div>
   </div>
 
-  <div id="table"></div>
+  <div id="table">
+    <h3 class="form-title">All Hikes</h3>
+  </div>
 
 </body>
 <script src="https://d3js.org/d3.v5.min.js"></script>
