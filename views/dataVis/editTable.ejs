@@ -1,0 +1,44 @@
+<script>
+  //may update this
+
+  var hikes = <%- JSON.stringify(data) %>;
+
+  var hikeTable = document.querySelector('#table');
+
+  var headers = ['Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Delete'];
+
+
+  var table = document.createElement('table');
+  var headerRow = document.createElement('tr');
+  headers.forEach(headerText => {
+      var header = document.createElement('th');
+      var textNode = document.createTextNode(headerText);
+      header.appendChild(textNode);
+      headerRow.appendChild(header);
+  });
+  table.appendChild(headerRow);
+
+
+  var row = document.createElement('tr');
+  var hikeArray = Object.values(hikes);
+
+
+  for (var i = 0; i < hikeArray.length - 2; i++) {
+    let cell = document.createElement('td');
+    let textNode = document.createTextNode(hikeArray[i] ? hikeArray[i]: '');
+    cell.appendChild(textNode);
+    row.appendChild(cell);
+
+  }
+
+  var editCell = document.createElement('td');
+  editCell.innerHTML = "<img src=\"/trashcanicon.svg\" alt=\"trash icon\">"
+  row.appendChild(editCell);
+
+  table.appendChild(row);
+
+
+
+  hikeTable.appendChild(table);
+
+</script>

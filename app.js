@@ -79,6 +79,44 @@ app.post('/users/:id', (req, res) => {
   )
 })
 
+// GET render edit page NEED TO TEST
+app.get('/users/:id/:hike', (req, res) => {
+  var id = req.params.id;
+  var hikeId = req.params.hike;
+
+  Hiker.findById(id, (err, hiker) => {
+    const hikeData = hiker.log.id(hikeId)
+    var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }))(hikeData);
+
+    var idStr = hikeData._id.toString()
+
+    hike.id = idStr;
+
+    console.log(hike)
+
+    res.render('editHike', { data: hike })
+  })
+
+
+
+
+  // Hiker.findById(id, (err, task) => {
+  //   HikeSession.findById(hikeId)
+  //     .then(result => {
+  //       console.log(result)
+  //       res.render('editHike', { data: result })
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // })
+
+})
+
+// PUT edit the corresponding hike - need user ID and hike ID
+
+
+
 
 /////////////////////Gunna get rid of stuff below eventually///////////////////////////////
 
