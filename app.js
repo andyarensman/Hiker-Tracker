@@ -36,9 +36,25 @@ app.get('/', (req, res) => {
 app.get('/users/:id', (req, res) => {
   const id = req.params.id
 
-  Hiker.findById(id, '-log._id')
+  Hiker.findById(id)
   .then(result => {
-    res.render('user', { data: result.log, username: result.username })
+    //duplicating the logs to avoid the error with _id
+    var hikesArray = result.log;
+    var newHikesArray = []
+
+    hikesArray.forEach(hikeObj => {
+      var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }))(hikeObj);
+
+      var idStr = hikeObj._id.toString()
+      hike.id = idStr;
+
+      newHikesArray.push(hike)
+    })
+
+    var userId = result._id.toString()
+
+
+    res.render('user', { data: newHikesArray, username: result.username, userId:userId })
   })
   .catch(err => {
     console.log(err);

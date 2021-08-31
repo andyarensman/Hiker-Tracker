@@ -1,8 +1,9 @@
 <script>
   //may update this
 
-  var hikes = [<%- data %>];
+  var hikes = <%- JSON.stringify(data) %>;
   var hikeTable = document.querySelector('#table');
+  var userId = <%- JSON.stringify(userId) %>;
 
   var headers = ['No.', 'Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Edit'];
 
@@ -26,7 +27,7 @@
       countCell.appendChild(textNode);
       row.appendChild(countCell);
 
-      for (var i = 0; i < hikeArray.length - 1; i++) {
+      for (var i = 0; i < 12; i++) {
         let cell = document.createElement('td');
         let textNode = document.createTextNode(hikeArray[i] ? hikeArray[i]: '');
         cell.appendChild(textNode);
@@ -35,7 +36,7 @@
       }
 
       var editCell = document.createElement('td');
-      editCell.innerHTML = "<img src=\"/editicon.svg\" alt=\"edit icon\">"
+      editCell.innerHTML = '<a href="/users/' + userId + '/' + hike.id + '"><img src="/editicon.svg" alt="edit icon"><\a>'
       row.appendChild(editCell);
 
       table.appendChild(row);
