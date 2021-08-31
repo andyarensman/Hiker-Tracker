@@ -3,6 +3,7 @@ require('dotenv').config();
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override')
 
 const hikeSchemas = require('./models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
@@ -26,7 +27,7 @@ mongoose.set('useFindAndModify', false);
 //middleware and static files
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); //allows you to use req.body
-
+app.use(methodOverride('_method')); //allows you to use PUT with a form
 
 //routes
 app.get('/', (req, res) => {
@@ -108,7 +109,7 @@ app.get('/users/:id/:hike', (req, res) => {
 
     hike.id = idStr;
 
-    res.render('editHike', { data: hike })
+    res.render('editHike', { data: hike, user_id: id, hikeId: hikeId })
   })
 
 })
@@ -117,31 +118,31 @@ app.get('/users/:id/:hike', (req, res) => {
 app.put('/users/:id/:hike', (req, res) => {
   var id = req.params.id;
   var hikeId = req.params.hike;
-  console.log(req.body)
 
   var updateObject = {};
   //adding key/values into object from form
   Object.keys(req.body).forEach(key => {
         if(req.body[key] != '') {
-          updateObject[key] = req.body[key];
+          updateObject['log.$.' + key] = req.body[key];
         }
       });
   //add logic if user doesn't enter anything//
-  var keyArray = Object.keys(hike);
+  console.log(updateObject)
 
-  Hiker.findById(id, (err, result) => {
-    keyArray.forEach(key => {
-      result.log.id(hikeId)[key] = updateObject[key];
-    });
-    result.markModified('posts');
-    result.save(function(saveerr, saveresult) {
-      if (!saveerr) {
-        res.redirect('/users/' + id + '/' + hikeId);
+
+  Hiker.updateOne(
+    { _id: id, 'log._id': hikeId },
+    { $set: updateObject},
+    // { $set: {'log.$.hike_name': req.body.hike_name }},
+    (err, doc) => {
+      if (err) {
+        console.log(err)
       } else {
-        res.status(400).send(saveerr.message);
+        res.redirect('/users/' + id + '/' + hikeId);
       }
-    });
-  })
+
+    }
+  )
 })
 
 

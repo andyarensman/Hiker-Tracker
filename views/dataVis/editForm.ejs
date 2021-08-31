@@ -1,7 +1,6 @@
 <div id="form-container">
   <h3 class="form-title">Edit Hike Here (Only fill in fields you want to change) </h3>
-  <form id="hike-edit-form" method="put">
-
+  <form id="hike-edit-form" method="POST" action="/users/<%= user_id %>/<%= hikeId %>?_method=PUT">
     <div class="grid-item">
       <label for="hike_name">Hike Name</label>
       <input id="hike_name" type="text" name="hike_name" placeholder="ex: Mount Wilson"><br>
