@@ -79,7 +79,7 @@ app.post('/users/:id', (req, res) => {
   )
 })
 
-// GET render edit page NEED TO TEST
+// GET render edit page
 app.get('/users/:id/:hike', (req, res) => {
   var id = req.params.id;
   var hikeId = req.params.hike;
@@ -92,29 +92,41 @@ app.get('/users/:id/:hike', (req, res) => {
 
     hike.id = idStr;
 
-    console.log(hike)
-
     res.render('editHike', { data: hike })
   })
-
-
-
-
-  // Hiker.findById(id, (err, task) => {
-  //   HikeSession.findById(hikeId)
-  //     .then(result => {
-  //       console.log(result)
-  //       res.render('editHike', { data: result })
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // })
 
 })
 
 // PUT edit the corresponding hike - need user ID and hike ID
+app.put('/users/:id/:hike', (req, res) => {
+  var id = req.params.id;
+  var hikeId = req.params.hike;
+  console.log(req.body)
 
+  var updateObject = {};
+  //adding key/values into object from form
+  Object.keys(req.body).forEach(key => {
+        if(req.body[key] != '') {
+          updateObject[key] = req.body[key];
+        }
+      });
+  //add logic if user doesn't enter anything//
+  var keyArray = Object.keys(hike);
+
+  Hiker.findById(id, (err, result) => {
+    keyArray.forEach(key => {
+      result.log.id(hikeId)[key] = updateObject[key];
+    });
+    result.markModified('posts');
+    result.save(function(saveerr, saveresult) {
+      if (!saveerr) {
+        res.redirect('/users/' + id + '/' + hikeId);
+      } else {
+        res.status(400).send(saveerr.message);
+      }
+    });
+  })
+})
 
 
 
