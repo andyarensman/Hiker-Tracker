@@ -127,20 +127,16 @@ app.put('/users/:id/:hike', (req, res) => {
         }
       });
   //add logic if user doesn't enter anything//
-  console.log(updateObject)
-
 
   Hiker.updateOne(
     { _id: id, 'log._id': hikeId },
     { $set: updateObject},
-    // { $set: {'log.$.hike_name': req.body.hike_name }},
     (err, doc) => {
       if (err) {
         console.log(err)
       } else {
         res.redirect('/users/' + id + '/' + hikeId);
       }
-
     }
   )
 })
