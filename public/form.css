@@ -11,6 +11,10 @@
   height: 588.75px;
 }
 
+.grid-item {
+  margin: 3px 0px;
+}
+
 #exercise-form {
   margin-top: 2px;
   display: grid;

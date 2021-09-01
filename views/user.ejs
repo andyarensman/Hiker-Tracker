@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <title>Hiking Graph</title>
-  <link href="/nav.css" rel="stylesheet" type="text/css">
-  <link href="/graph.css" rel="stylesheet" type="text/css">
-  <link href="/form.css" rel="stylesheet" type="text/css">
-  <link href="/table.css" rel="stylesheet" type="text/css">
-</head>
+<html lang="en">
+
+<%- include("./partials/head.ejs") %>
+
 <body>
   <%- include('./partials/nav.ejs') %>
 
@@ -26,3 +21,4 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <%- include('./dataVis/d3.ejs') %>
 <%- include('./dataVis/table.ejs') %>
+</html>

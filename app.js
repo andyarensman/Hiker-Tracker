@@ -59,6 +59,7 @@ app.get('/users/:id', (req, res) => {
   })
   .catch(err => {
     console.log(err);
+    res.status(404).render('404');
   })
 })
 
@@ -99,7 +100,8 @@ app.get('/users/:id/:hike', (req, res) => {
   var id = req.params.id;
   var hikeId = req.params.hike;
 
-  Hiker.findById(id, (err, hiker) => {
+  Hiker.findById(id)
+  .then(hiker => {
     const hikeData = hiker.log.id(hikeId)
     var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }))(hikeData);
 
@@ -108,6 +110,10 @@ app.get('/users/:id/:hike', (req, res) => {
     hike.id = idStr;
 
     res.render('editHike', { data: hike, user_id: id, hikeId: hikeId })
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(404).render('404');
   })
 
 })
@@ -156,6 +162,11 @@ app.delete('/users/:id/:hike', (req, res) => {
       res.json({ redirect: '/users/' + id })
     })
 
+})
+
+//404 - must be at bottom
+app.use((req, res) => {
+  res.status(404).render('404', { title: '404'})
 })
 
 /////////////////////Gunna get rid of stuff below eventually///////////////////////////////
