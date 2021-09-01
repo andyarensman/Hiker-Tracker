@@ -55,7 +55,7 @@ app.get('/users/:id', (req, res) => {
     var userId = result._id.toString()
 
 
-    res.render('user', { data: newHikesArray, username: result.username, userId:userId })
+    res.render('user', { data: newHikesArray, username: result.username, user_id:userId })
   })
   .catch(err => {
     console.log(err);

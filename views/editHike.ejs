@@ -2,12 +2,14 @@
 <head>
   <meta charset="utf-8">
   <title>Hiking Graph</title>
+  <link href="/nav.css" rel="stylesheet" type="text/css">
   <link href="/graph.css" rel="stylesheet" type="text/css">
   <link href="/form.css" rel="stylesheet" type="text/css">
   <link href="/table.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div id="table">
+  <%- include('./partials/nav.ejs') %>
+  <div id="table" style="margin-top: 11px">
     <h3 class="form-title">Current Data From Hike</h3>
   </div>
   <div class="flex-container">

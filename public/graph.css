@@ -4,6 +4,7 @@
 
 .flex-container {
   display: flex;
+  min-width: 1450px;
 }
 
 #d3-graph, #form-container {

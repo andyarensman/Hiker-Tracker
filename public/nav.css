@@ -1,0 +1,36 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+nav {
+  display: flex;
+  min-width: 1358px;
+  justify-content: space-between;
+  margin: 11px 11px 5px;
+  padding: 0px 35px 0px;
+  border-bottom: 1px solid #ddd;
+  background-color: #EFECEA;
+}
+nav ul{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+nav li{
+  list-style-type: none;
+  margin-left: 20px;
+}
+nav h1{
+  font-size: 3em;
+  color: #635F5D;
+  font-weight: normal;
+  margin-top: 22px;
+  margin-bottom: 11px;
+}
+nav p, nav li{
+  color: #777;
+  font-weight: 300;
+}
+
+nav a {
+  text-decoration: none;
+  color: #8E8883;
+}

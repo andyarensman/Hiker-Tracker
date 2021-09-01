@@ -335,19 +335,19 @@
       .attr('text-anchor', 'middle')
       .text(description);
 
-  //render footer  ***UPDATE THIS
+  //render footer
 
   svg.append('text')
       .attr('class', 'footer')
       .attr('y', height - footerMargin)
       .attr('x', footerMargin)
       .attr('text-anchor', 'left')
-      .text('*Graph is automatically updated when new hikes are added to the ')
-      .append('tspan')
-      .attr('text-decoration',"underline")
-      .style('fill', '#137B80')
-      .style('cursor', 'default')
-      .text('Google Spreadsheet')
+      .text('*Graph is automatically updated when new hikes are added')
+      // .append('tspan')
+      // .attr('text-decoration',"underline")
+      // .style('fill', '#137B80')
+      // .style('cursor', 'default')
+      // .text('Google Spreadsheet')
       //.on('click', function() { window.open(googleSpreadSheetURL); })
 
   svg.append('text')
