@@ -65,8 +65,6 @@ app.get('/users/:id', (req, res) => {
 app.post('/users/:id', (req, res) => {
   const id = req.params.id
 
-  console.log(req.body)
-
   var newHike = new HikeSession({
     hike_name: req.body.hike_name,
     hike_date: req.body.hike_date,
@@ -130,7 +128,7 @@ app.put('/users/:id/:hike', (req, res) => {
 
   Hiker.updateOne(
     { _id: id, 'log._id': hikeId },
-    { $set: updateObject},
+    { $set: updateObject },
     (err, doc) => {
       if (err) {
         console.log(err)
@@ -141,7 +139,24 @@ app.put('/users/:id/:hike', (req, res) => {
   )
 })
 
+//delete a hike
+app.delete('/users/:id/:hike', (req, res) => {
+  var id = req.params.id;
+  var hikeId = req.params.hike;
 
+  Hiker.updateOne(
+    { _id: id },
+    { $pull: { log: { _id: hikeId } } },
+    function (error, result) {
+      if (error) {
+        console.log(error)
+      }
+    })
+    .then(result => {
+      res.json({ redirect: '/users/' + id })
+    })
+
+})
 
 /////////////////////Gunna get rid of stuff below eventually///////////////////////////////
 

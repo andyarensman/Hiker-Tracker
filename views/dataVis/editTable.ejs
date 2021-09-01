@@ -2,6 +2,8 @@
   //may update this
 
   var hikes = <%- JSON.stringify(data) %>;
+  var hikeId = <%- JSON.stringify(hikeId) %>;
+  var id = <%- JSON.stringify(user_id) %>;
 
   var hikeTable = document.querySelector('#table');
 
@@ -32,7 +34,7 @@
   }
 
   var editCell = document.createElement('td');
-  editCell.innerHTML = "<img src=\"/trashcanicon.svg\" alt=\"trash icon\">"
+  editCell.innerHTML = '<a class="delete" data-doc="' + hikeId +'" data-id="' + id +'"><img src="/trashcanicon.svg\" alt="trash icon"></a>'
   row.appendChild(editCell);
 
   table.appendChild(row);
@@ -41,4 +43,16 @@
 
   hikeTable.appendChild(table);
 
+</script>
+<script>
+  const trashcan = document.querySelector('a.delete');
+  trashcan.addEventListener('click', (e) => {
+    const endpoint = `/users/${trashcan.dataset.id}/${trashcan.dataset.doc}`;
+    fetch(endpoint, {
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => window.location.href = data.redirect)
+    .catch(err => console.log(err));
+  });
 </script>
