@@ -1,13 +1,24 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
-require('dotenv').config();
+// require('dotenv').config();
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const flash = require('express-flash');
+const session = require('express-session');
 
 const hikeSchemas = require('./models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
 const Hiker = hikeSchemas.Hiker;
+
+const initializePassport = require('./passport-config')
+
 
 //express app
 const app = express();
@@ -17,6 +28,18 @@ const uri = process.env['MONGO_URI']
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => app.listen(process.env.PORT || 3000))
   .catch((err) => console.log(err));
+
+/////////////////////////////////THIS ISN'T WORKING//////////////////////////
+    //users isn't defined, need to connect to MongoDB somehow
+initializePassport(
+  passport,
+  // email => users.find(user => user.email === email)
+  (email => {
+    Hiker.findOne()
+  })
+)
+////////////////////////////////////////////////////////////////////////////
+
 
 //register viwe engine
 app.set('view engine', 'ejs');
@@ -28,11 +51,50 @@ mongoose.set('useFindAndModify', false);
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); //allows you to use req.body
 app.use(methodOverride('_method')); //allows you to use PUT with a form
+app.use(flash())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 //routes
 app.get('/', (req, res) => {
   res.render('index')
 });
+
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}))
+
+app.get('/register', (req, res) => {
+  res.render('register')
+})
+
+app.post('/register', async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    var newHiker = new Hiker({
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword
+      })
+    newHiker.save()
+      .then(result => {
+        res.redirect('/login')
+      })
+  } catch {
+    res.redirect('register')
+  }
+})
 
 app.get('/users/:id', (req, res) => {
   const id = req.params.id
