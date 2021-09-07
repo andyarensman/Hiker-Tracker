@@ -4,10 +4,16 @@ const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override')
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport')
 
 const hikeSchemas = require('./models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
 const Hiker = hikeSchemas.Hiker;
+
+//Passport config
+require('./config/passport')(passport);
 
 //express app
 const app = express();
@@ -28,6 +34,32 @@ mongoose.set('useFindAndModify', false);
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); //allows you to use req.body
 app.use(methodOverride('_method')); //allows you to use PUT with a form
+
+//Express Session Middleware
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}))
+
+//Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Connect flash
+app.use(flash());
+
+//Global Vars
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
+//New routes//////////////////////////////////////////////
+app.use('/', require('./routes/index'))
+app.use('/users', require('./routes/users'))
 
 //routes
 app.get('/', (req, res) => {
@@ -55,7 +87,7 @@ app.get('/users/:id', (req, res) => {
     var userId = result._id.toString()
 
 
-    res.render('user', { data: newHikesArray, username: result.username, user_id:userId })
+    res.render('user', { data: newHikesArray, username: result.name, user_id:userId })
   })
   .catch(err => {
     console.log(err);
