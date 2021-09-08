@@ -61,7 +61,9 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
 
-//routes
+
+
+// old routes//////////////////////////////////
 app.get('/', (req, res) => {
   res.render('index')
 });
@@ -87,7 +89,7 @@ app.get('/users/:id', (req, res) => {
     var userId = result._id.toString()
 
 
-    res.render('user', { data: newHikesArray, username: result.name, user_id:userId })
+    res.render('dashboard', { data: newHikesArray, user_id:userId })
   })
   .catch(err => {
     console.log(err);

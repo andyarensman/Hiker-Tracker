@@ -1,3 +1,24 @@
-<h1>Success!</h1>
-<p>Welcome <%= name %></p>
-<a href="/users/logout">Logout</a>
+<html lang="en">
+
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <%- include('./partials/nav.ejs') %>
+
+  <div class="flex-container">
+
+    <div id="d3-graph"></div>
+
+    <%- include("./dataVis/form.ejs") %>
+
+  </div>
+
+  <div id="table">
+    <h3 class="form-title">All Hikes</h3>
+  </div>
+
+</body>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<%- include('./dataVis/d3.ejs') %>
+<%- include('./dataVis/table.ejs') %>
+</html>

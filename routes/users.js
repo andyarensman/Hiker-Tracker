@@ -6,7 +6,6 @@ const passport = require('passport');
 const hikeSchemas = require('../models/hikeSchemas');
 const Hiker = hikeSchemas.Hiker;
 
-
 //Login Page
 router.get('/login', (req, res) => {
   res.render('login')
@@ -19,12 +18,12 @@ router.get('/register', (req, res) => {
 
 //Register Handle
 router.post('/register', (req, res) => {
-  const { name, email, password, password2 } = req.body;
+  const { name_first, name_last, email, password, password2 } = req.body;
 
   var errors = [];
 
   //Check required fields
-  if (!name || !email || !password || !password2) {
+  if (!name_first || !name_last || !email || !password || !password2) {
     errors.push({ msg: 'Please fill in all fields.' });
   }
 
@@ -40,7 +39,7 @@ router.post('/register', (req, res) => {
 
   if (errors.length > 0 ){
     res.render('register', {
-      errors, name, email, password, password2
+      errors, name_first, name_last, email, password, password2
     })
   } else {
     // Validation Pass
@@ -50,11 +49,12 @@ router.post('/register', (req, res) => {
           //User Exists
           errors.push({ msg: 'Email is already registered' })
           res.render('register', {
-            errors, name, email, password, password2
+            errors, name_first, name_last, email, password, password2
           });
         } else {
           const newHiker = new Hiker({
-            name,
+            name_first,
+            name_last,
             email,
             password
           });
