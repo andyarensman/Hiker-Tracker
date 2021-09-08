@@ -30,24 +30,20 @@
     let textNode = document.createTextNode(hikeArray[i] ? hikeArray[i]: '');
     cell.appendChild(textNode);
     row.appendChild(cell);
-
   }
 
   var editCell = document.createElement('td');
-  editCell.innerHTML = '<a class="delete" data-doc="' + hikeId +'" data-id="' + id +'"><img src="/trashcanicon.svg\" alt="trash icon"></a>'
+  editCell.innerHTML = '<a class="delete" style="cursor: pointer" data-doc="' + hikeId +'" data-id="' + id +'"><img src="/trashcanicon.svg\" alt="trash icon"></a>'
+
   row.appendChild(editCell);
-
   table.appendChild(row);
-
-
-
   hikeTable.appendChild(table);
 
 </script>
 <script>
   const trashcan = document.querySelector('a.delete');
   trashcan.addEventListener('click', (e) => {
-    const endpoint = `/users/${trashcan.dataset.id}/${trashcan.dataset.doc}`;
+    const endpoint = `/dashboard/${trashcan.dataset.doc}`;
     fetch(endpoint, {
       method: 'DELETE',
     })

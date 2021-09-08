@@ -44,7 +44,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 })
 
 //Add new Hike
-router.post('/dashboard', (req, res) => {
+router.post('/dashboard', ensureAuthenticated, (req, res) => {
   const id = req.user._id;
 
   var newHike = new HikeSession({
@@ -77,7 +77,7 @@ router.post('/dashboard', (req, res) => {
 })
 
 // GET render edit page
-router.get('/dashboard/:hike', (req, res) => {
+router.get('/dashboard/:hike', ensureAuthenticated, (req, res) => {
   const id = req.user._id;
   var hikeId = req.params.hike;
 
@@ -100,7 +100,7 @@ router.get('/dashboard/:hike', (req, res) => {
 })
 
 // PUT edit the corresponding hike - need user ID and hike ID
-router.put('/dashboard/:hike', (req, res) => {
+router.put('/dashboard/:hike', ensureAuthenticated, (req, res) => {
   var id = req.user._id;
   var hikeId = req.params.hike;
 
@@ -127,7 +127,7 @@ router.put('/dashboard/:hike', (req, res) => {
 })
 
 //delete a hike
-router.delete('/dashboard/:hike', (req, res) => {
+router.delete('/dashboard/:hike', ensureAuthenticated, (req, res) => {
   var id = req.user._id;
   var hikeId = req.params.hike;
 
