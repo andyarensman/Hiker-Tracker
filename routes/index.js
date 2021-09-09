@@ -99,6 +99,11 @@ router.get('/dashboard/:hike', ensureAuthenticated, (req, res) => {
 
     hike.id = idStr;
 
+    //Converts to MM/DD/YYYY
+    var newDate = new Date(hike.hike_date.replace(/-/g, '\/'))
+    hike['hike_date'] = newDate.toLocaleDateString('en-US');
+
+
     res.render('editHike', { data: hike, user_id: id, hikeId: hikeId })
   })
   .catch(err => {
