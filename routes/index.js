@@ -31,8 +31,17 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
       newHikesArray.push(hike)
     })
 
-    var userId = result._id.toString()
+    // Adding Date and Fixing Format of hike_date
+    newHikesArray.forEach(i => {
+      var newDate = new Date(i.hike_date.replace(/-/g, '\/'))
+      i['real_date'] = newDate;
+      i['hike_date'] = newDate.toLocaleDateString('en-US');  //Converts to MM/DD/YYYY
+    })
 
+    // Sorting Hikes by date
+    newHikesArray.sort((a, b) => a.real_date - b.real_date)
+
+    var userId = result._id.toString()
 
     res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId })
   })

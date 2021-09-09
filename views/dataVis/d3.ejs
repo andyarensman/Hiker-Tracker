@@ -9,6 +9,11 @@
     hikeData.push(data[i])
   }
 
+  //Adding Hike Numbers
+  hikeData.forEach((e, i) => {
+    hikeData[i]['number'] = i + 1;
+  })
+
   //Variables
   const width = 900,
         height = 600,
