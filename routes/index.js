@@ -3,6 +3,7 @@ const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 const template = require('../public/template.js');
 var csv = require('fast-csv');
+var mongoose = require('mongoose');
 
 const hikeSchemas = require('../models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
@@ -109,9 +110,30 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
 
   var updateObjectArray = [];
 
+  csv.fromString(hikesFile.data.toString('utf8'), {
+      headers: true,
+      ignoreEmpty: true
+    })
+    .on("data", function(data){
+      data['_id'] = new mongoose.Types.ObjectId();
+
+      updateObjectArray.push(data);
+      console.log(updateObjectArray)
+    })
+    .on('end', function(){
+      Hiker.findByIdAndUpdate(
+        id,
+        {$push : {log: { $each: updateObjectArray } } },
+        {new: true},
+        (error, updatedUser) => {
+          if(!error) {
+            res.redirect('/dashboard')
+          }
+        }
+      )
+    })
 
 
-  console.log(hikesFile.toString('utf8'))
 
   // var newHike = new HikeSession({
   //   hike_name: req.body.hike_name,
@@ -129,16 +151,7 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   //   notes: req.body.notes || ''
   // })
 
-  // Hiker.findByIdAndUpdate(
-  //   id,
-  //   {$push : {log: { $each: updateObjectArray } } },
-  //   {new: true},
-  //   (error, updatedUser) => {
-  //     if(!error) {
-  //       res.redirect('/dashboard')
-  //     }
-  //   }
-  // )
+
 })
 
 // GET render edit page
