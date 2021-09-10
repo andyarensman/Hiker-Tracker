@@ -1,0 +1,17 @@
+<html lang="en">
+
+<%- include("./partials/head.ejs") %>
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <p>Use the form below to upload a csv file of your hikes.
+        Click <a href="/template">here</a> for an example template.</p>
+    <form method="POST" encType="multipart/form-data">
+        <input type="file" name="file" accept="*.csv" /><br/><br/>
+        <input type="submit" value="Submit" />
+    </form>
+
+</body>
+
+
+</html>

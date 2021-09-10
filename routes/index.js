@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
+const template = require('../public/template.js');
+var csv = require('fast-csv');
 
 const hikeSchemas = require('../models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
@@ -81,8 +83,62 @@ router.post('/dashboard', ensureAuthenticated, (req, res) => {
         res.redirect('/dashboard')
       }
     }
-
   )
+})
+
+//Get CSV template
+router.get('/template', template.get);
+
+//Bulk Upload Page render
+router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
+  const id = req.user._id;
+
+  res.render('bulkUpload', { user_id: id })
+})
+
+
+//Add multiple Hikes -------------IN PROGRESS-------------
+router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
+  const id = req.user._id;
+
+  if (!req.files) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  var hikesFile = req.files.file;
+
+  var updateObjectArray = [];
+
+
+
+  console.log(hikesFile.toString('utf8'))
+
+  // var newHike = new HikeSession({
+  //   hike_name: req.body.hike_name,
+  //   hike_date: req.body.hike_date,
+  //   mileage: parseFloat(req.body.mileage),
+  //   time: req.body.time,
+  //   elevation_gain: parseInt(req.body.elevation_gain),
+  //   min_elevation: parseInt(req.body.min_elevation) || '',
+  //   max_elevation: parseInt(req.body.max_elevation) || '',
+  //   average_pace: req.body.average_pace || '',
+  //   average_bpm: parseInt(req.body.average_bpm) || '',
+  //   max_bpm: parseInt(req.body.max_bpm) || '',
+  //   city: req.body.city,
+  //   location: req.body.location,
+  //   notes: req.body.notes || ''
+  // })
+
+  // Hiker.findByIdAndUpdate(
+  //   id,
+  //   {$push : {log: { $each: updateObjectArray } } },
+  //   {new: true},
+  //   (error, updatedUser) => {
+  //     if(!error) {
+  //       res.redirect('/dashboard')
+  //     }
+  //   }
+  // )
 })
 
 // GET render edit page
