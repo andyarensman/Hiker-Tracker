@@ -4,8 +4,8 @@
 <body>
   <%- include("./partials/nav.ejs") %>
 
-  <p>Use the form below to upload a csv file of your hikes.
-        Click <a href="/template">here</a> for an example template.</p>
+  <p>Use the buttons below to upload a csv file of your hikes.
+        Click <a href="/template">here</a> for a template. Do not change the headers in the template and make sure to use the correct formats shown in row two. Delete the template row before uploading.</p>
     <form method="POST" encType="multipart/form-data">
         <input type="file" name="file" accept="*.csv" /><br/><br/>
         <input type="submit" value="Submit" />

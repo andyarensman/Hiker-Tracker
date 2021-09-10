@@ -98,7 +98,7 @@ router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
 })
 
 
-//Add multiple Hikes -------------IN PROGRESS-------------
+//Add multiple Hikes
 router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   const id = req.user._id;
 
@@ -107,20 +107,18 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   }
 
   var hikesFile = req.files.file;
-
   var updateObjectArray = [];
 
   csv.fromString(hikesFile.data.toString('utf8'), {
       headers: true,
       ignoreEmpty: true
     })
-    .on("data", function(data){
+    .on("data", (data) => {
       data['_id'] = new mongoose.Types.ObjectId();
 
       updateObjectArray.push(data);
-      console.log(updateObjectArray)
     })
-    .on('end', function(){
+    .on('end', () => {
       Hiker.findByIdAndUpdate(
         id,
         {$push : {log: { $each: updateObjectArray } } },
@@ -132,26 +130,6 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
         }
       )
     })
-
-
-
-  // var newHike = new HikeSession({
-  //   hike_name: req.body.hike_name,
-  //   hike_date: req.body.hike_date,
-  //   mileage: parseFloat(req.body.mileage),
-  //   time: req.body.time,
-  //   elevation_gain: parseInt(req.body.elevation_gain),
-  //   min_elevation: parseInt(req.body.min_elevation) || '',
-  //   max_elevation: parseInt(req.body.max_elevation) || '',
-  //   average_pace: req.body.average_pace || '',
-  //   average_bpm: parseInt(req.body.average_bpm) || '',
-  //   max_bpm: parseInt(req.body.max_bpm) || '',
-  //   city: req.body.city,
-  //   location: req.body.location,
-  //   notes: req.body.notes || ''
-  // })
-
-
 })
 
 // GET render edit page

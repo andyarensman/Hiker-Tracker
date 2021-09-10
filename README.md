@@ -106,6 +106,81 @@ To update the file, I used the following in my `PUT` method:
 
 By turning `req.body` into an array of keys, I was able to make the `updateObject` contain only the fields the user entered and to put the keys in the correct format for the `updateOne` method.
 
+## Bulk Upload with a CSV File
+
+I wanted to include an option for the user to add multiple hikes at once via a spreadsheet. I ended up finding this tutorial by Jamie Munro: [Bulk Import a CSV File Into MongoDB Using Mongoose With Node.js](https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574).
+
+*Important Note: If you want to follow this same tutorial, make sure you install version 2.4.1 of `fast-csv`. Newer versions did not work.*
+
+In Jamie's version, he only had one Mongoose schema, not a schema in a schema, so I had to alter the code a little. Here's what it looks like:
+
+    router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
+      const id = req.user._id;
+
+      if (!req.files) {
+        return res.status(400).send('No files were uploaded.');
+      }
+
+      var hikesFile = req.files.file;
+      var updateObjectArray = [];
+
+      csv.fromString(hikesFile.data.toString('utf8'), {
+          headers: true,
+          ignoreEmpty: true
+        })
+        .on("data", (data) => {
+          data['_id'] = new mongoose.Types.ObjectId();
+
+          updateObjectArray.push(data);
+        })
+        .on('end', () => {
+          //Different Code Here
+          Hiker.findByIdAndUpdate(
+            id,
+            {$push : {log: { $each: updateObjectArray } } },
+            {new: true},
+            (error, updatedUser) => {
+              if(!error) {
+                res.redirect('/dashboard')
+              }
+            }
+          )
+        })
+
+  In order to add multiple subdocuments at once, you need the line `{$push : {log: { $each: updateObjectArray } } }` within `findByIdAndUpdate` - `log` is the array of subdocuments, `$push` allows you to add to it, and `$each` allows you to add multiple.
+
+  For the csv template, I had to change a few lines from Jamie's as well. This is what worked for me:
+
+    const json2csv = require('json2csv').parse;
+
+    exports.get = function(req, res) {
+
+        var csv = json2csv({
+          hike_name: '',
+          hike_date: 'YYYY-MM-DD',
+          mileage: '0.00',
+          time: '00:00:00',
+          elevation_gain: '0',
+          min_elevation: '0',
+          max_elevation: '0',
+          average_pace: '00:00',
+          average_bpm: '0',
+          max_bpm: '0',
+          city: '',
+          location: '',
+          notes: ''
+        });
+
+        res.set("Content-Disposition", "attachment;filename=hikes_template.csv");
+        res.set("Content-Type", "application/octet-stream");
+
+        res.send(csv);
+        
+    };
+
+
+  There are still some bugs to work out - if the user doesn't follow the csv template corretly, there might be some problems. This will be looked into soon.
+
 # D3 Scatter Plot
 
 This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-scatter-plot) I used when first practicing D3. Here is an example of what it looks like:
@@ -122,3 +197,4 @@ After I get this version up and running, I want to incorporate React for the fro
 - FreeCodeCamp Data Visualization: [[freeCodeCamp certification]](https://www.freecodecamp.org/learn/data-visualization/)
 - Node.js Crash Course Tutorial by [The Net Ninja](https://www.youtube.com/c/TheNetNinja): [[videos]](https://www.youtube.com/playlist?list=PL4cUxeGkcC9jsz4LDYc6kv3ymONOKxwBU)
 - Node.js With Passport Authentication | Full Project by [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA): [[video]](https://www.youtube.com/watch?v=6FOq4cUdH8k&ab_channel=TraversyMedia) [[github]](https://github.com/bradtraversy/node_passport_login)
+- Bulk Import a CSV File Into MongoDB Using Mongoose With Node.js by Jamie Munro: [[article]](https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574)
