@@ -8,12 +8,12 @@ const Hiker = hikeSchemas.Hiker;
 
 //Login Page
 router.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login', { title: 'Login' })
 })
 
 //Register Page
 router.get('/register', (req, res) => {
-  res.render('register')
+  res.render('register', { title: 'Register' })
 })
 
 //Register Handle

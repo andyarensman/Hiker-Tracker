@@ -11,7 +11,7 @@ const Hiker = hikeSchemas.Hiker;
 
 //Welcome Page
 router.get('/', (req, res) => {
-  res.render('welcome')
+  res.render('welcome', { title: 'Welcome' })
 })
 
 //dashboard
@@ -46,7 +46,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 
     var userId = result._id.toString()
 
-    res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId })
+    res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId, title: 'Home' })
   })
   .catch(err => {
     console.log(err);
@@ -94,7 +94,7 @@ router.get('/template', template.get);
 router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   const id = req.user._id;
 
-  res.render('bulkUpload', { user_id: id })
+  res.render('bulkUpload', { user_id: id, title: 'Bulk Upload' })
 })
 
 
@@ -151,7 +151,7 @@ router.get('/dashboard/:hike', ensureAuthenticated, (req, res) => {
     hike['hike_date'] = newDate.toLocaleDateString('en-US');
 
 
-    res.render('editHike', { data: hike, user_id: id, hikeId: hikeId })
+    res.render('editHike', { data: hike, user_id: id, hikeId: hikeId, title: 'Edit' })
   })
   .catch(err => {
     console.log(err);
