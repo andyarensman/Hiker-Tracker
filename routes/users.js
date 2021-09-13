@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
 
   if (errors.length > 0 ){
     res.render('register', {
-      errors, name_first, name_last, email, password, password2
+      errors, name_first, name_last, email, password, password2, title: 'Register'
     })
   } else {
     // Validation Pass
@@ -49,7 +49,7 @@ router.post('/register', (req, res) => {
           //User Exists
           errors.push({ msg: 'Email is already registered' })
           res.render('register', {
-            errors, name_first, name_last, email, password, password2
+            errors, name_first, name_last, email, password, password2, title: 'Register'
           });
         } else {
           const newHiker = new Hiker({

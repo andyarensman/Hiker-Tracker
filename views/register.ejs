@@ -1,65 +1,67 @@
 <html lang="en">
 
 <%- include("./partials/head.ejs") %>
+
 <body>
+
   <%- include('./partials/nav-logout.ejs') %>
 
-  <h1>Register</h1>
-  <%- include("./partials/messages") %>
-  <form action="/users/register" method="POST">
-    <div>
-      <label for="name_first">First Name</label>
-      <input
-        type="name_first"
-        id="name_first"
-        name="name_first"
-        placeholder="Enter First Name"
-        value="<%= typeof name_first != 'undefined' ? name_first : '' %>"
-      />
-    </div>
-    <div>
-      <label for="name_last">Last Name</label>
-      <input
-        type="name_last"
-        id="name_last"
-        name="name_last"
-        placeholder="Enter Last Name"
-        value="<%= typeof name_last != 'undefined' ? name_last : '' %>"
-      />
-    </div>
-    <div>
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Enter Email"
-        value="<%= typeof email != 'undefined' ? email : '' %>"
-      />
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Create Password"
-        value="<%= typeof password != 'undefined' ? password : '' %>"
-      />
-    </div>
-    <div>
-      <label for="password2">Confirm Password</label>
-      <input
-        type="password"
-        id="password2"
-        name="password2"
-        placeholder="Confirm Password"
-        value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
-      />
-    </div>
-    <button type="submit">Register</button>
-  </form>
-  <p>Have An Account? <a href="/users/login">Login</a></p>
+  <div class="login-container">
 
+    <h3 class="login-form-title">Register</h3>
+
+    <%- include("./partials/messages") %>
+
+    <form id="login-form" action="/users/register" method="POST">
+      <div class="login-item">
+        <label for="name_first" id="login-label">First Name</label><br>
+        <input
+          type="name_first"
+          id="name_first"
+          name="name_first"
+          value="<%= typeof name_first != 'undefined' ? name_first : '' %>"
+        />
+      </div>
+      <div class="login-item">
+        <label for="name_last" id="login-label">Last Name</label><br>
+        <input
+          type="name_last"
+          id="name_last"
+          name="name_last"
+          value="<%= typeof name_last != 'undefined' ? name_last : '' %>"
+        />
+      </div>
+      <div class="login-item">
+        <label for="email" id="login-label">Email</label><br>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value="<%= typeof email != 'undefined' ? email : '' %>"
+        />
+      </div>
+      <div class="form-group login-item">
+        <label for="password" id="login-label">Password</label><br>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value="<%= typeof password != 'undefined' ? password : '' %>"
+        />
+      </div>
+      <div class="login-item">
+        <label for="password2" id="login-label">Confirm Password</label><br>
+        <input
+          type="password"
+          id="password2"
+          name="password2"
+          value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+        />
+      </div>
+      <button type="submit" id="login-button">Register</button>
+    </form>
+    <p class="login-route">Have An Account? <a href="/users/login">Login</a></p>
+  </div>
 </body>
+<%- include("./partials/footer.ejs") %>
 </html>
