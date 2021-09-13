@@ -67,7 +67,7 @@ router.post('/register', (req, res) => {
               newHiker.password = hash;
               newHiker.save()
                 .then(user => {
-                  req.flash('success_msg', 'You are now registered and can log in. ');
+                  req.flash('success_msg', 'You are registered and can log in. ');
                   res.redirect('/users/login')
                 })
                 .catch(err => console.log(err))

@@ -165,26 +165,39 @@ router.put('/dashboard/:hike', ensureAuthenticated, (req, res) => {
   var id = req.user._id;
   var hikeId = req.params.hike;
 
+  var namesObject = { hike_name: 'Hike Name', hike_date: 'Date', mileage: "Distance", time: 'Duration', elevation_gain: 'Elev Gain', min_elevation: 'Min Elev', max_elevation: 'Max Elev', average_pace: 'Avg Pace', average_bpm: 'Avg BPM', max_bpm: 'Max BPM', city: 'City', location: 'Location', notes: 'Notes'}
+
   var updateObject = {};
+  var updateArray = [];
+
   //adding key/values into object from form
   Object.keys(req.body).forEach(key => {
         if(req.body[key] != '') {
           updateObject['log.$.' + key] = req.body[key];
+          updateArray.push(namesObject[key])
         }
       });
-  //add logic if user doesn't enter anything//
 
-  Hiker.updateOne(
-    { _id: id, 'log._id': hikeId },
-    { $set: updateObject },
-    (err, doc) => {
-      if (err) {
-        console.log(err)
-      } else {
-        res.redirect('/dashboard/' + hikeId);
+  //logic if user doesn't enter anything
+  if (Object.keys(updateObject).length === 0) {
+    req.flash('error_msg', 'Please fill out at least one field');
+    res.redirect('/dashboard/' + hikeId);
+  } else {
+    Hiker.updateOne(
+      { _id: id, 'log._id': hikeId },
+      { $set: updateObject },
+      (err, doc) => {
+        if (err) {
+          console.log(err)
+        } else {
+          req.flash('success_msg', 'Successfully Updated: ' + updateArray.join(', '));
+          res.redirect('/dashboard/' + hikeId);
+        }
       }
-    }
-  )
+    )
+  }
+
+
 })
 
 //delete a hike
