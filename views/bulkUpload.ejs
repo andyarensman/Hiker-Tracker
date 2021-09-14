@@ -4,13 +4,27 @@
 <body>
   <%- include("./partials/nav.ejs") %>
 
-  <p>Use the buttons below to upload a csv file of your hikes.
-        Click <a href="/template">here</a> for a template. Do not change the headers in the template and make sure to use the correct formats shown in row two. Delete the template row before uploading.</p>
-    <form method="POST" encType="multipart/form-data">
-        <input type="file" name="file" accept="*.csv" /><br/><br/>
-        <input type="submit" value="Submit" />
-    </form>
+  <div class="bulk-container">
+    <h3 class="login-form-title">Bulk Upload</h3>
 
+    <%- include("./partials/messages") %>
+    <p>If you already have a spreadsheet of your hiking data, you can follow the steps below to upload them faster:</p>
+    <ol class="bulk-list">
+      <li>Download this <a href="/template">CSV template</a></li>
+      <li>Import into Google Sheets or Excel</li>
+      <li>Do not change the headers</li>
+      <li>Use the correct formats shown in row two</li>
+      <li>Delete the template row before finishing</li>
+      <li>Export as CSV and upload here</li><br>
+    </ol>
+    <form method="POST" encType="multipart/form-data" class="bulk-form">
+      <label for="upload-button" class="custom-file-upload">
+        <i class="fa fa-cloud-upload"></i> Choose File
+      </label>
+      <input type="file" name="file" accept="*.csv" id="upload-button"/>
+      <input type="submit" value="Submit" id="bulk-button"/>
+    </form>
+  </div>
 </body>
 
 

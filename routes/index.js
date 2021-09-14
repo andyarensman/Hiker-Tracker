@@ -81,6 +81,7 @@ router.post('/dashboard', ensureAuthenticated, (req, res) => {
     {new: true},
     (error, updatedUser) => {
       if(!error) {
+        req.flash('dashboard_success_msg', 'New Hike Added!');
         res.redirect('/dashboard')
       }
     }
@@ -102,34 +103,42 @@ router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
 router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   const id = req.user._id;
 
+
   if (!req.files) {
-    return res.status(400).send('No files were uploaded.');
+    req.flash('error_msg', 'No File Selected');
+    res.redirect('/dashboard/bulk_add');
+  } else if (/(\.csv)$/.test(req.files.file.name) != true) {
+    req.flash('error_msg', 'File name must end in .csv');
+    res.redirect('/dashboard/bulk_add');
+  } else {
+    var hikesFile = req.files.file;
+    var updateObjectArray = [];
+
+    csv.fromString(hikesFile.data.toString('utf8'), {
+        headers: true,
+        ignoreEmpty: true
+      })
+      .on("data", (data) => {
+        data['_id'] = new mongoose.Types.ObjectId();
+
+        updateObjectArray.push(data);
+      })
+      .on('end', () => {
+        Hiker.findByIdAndUpdate(
+          id,
+          {$push : {log: { $each: updateObjectArray } } },
+          {new: true},
+          (error, updatedUser) => {
+            if(!error) {
+              req.flash('dashboard_success_msg', 'Multiple Hikes Successfully Added!');
+              res.redirect('/dashboard')
+            }
+          }
+        )
+      })
   }
 
-  var hikesFile = req.files.file;
-  var updateObjectArray = [];
 
-  csv.fromString(hikesFile.data.toString('utf8'), {
-      headers: true,
-      ignoreEmpty: true
-    })
-    .on("data", (data) => {
-      data['_id'] = new mongoose.Types.ObjectId();
-
-      updateObjectArray.push(data);
-    })
-    .on('end', () => {
-      Hiker.findByIdAndUpdate(
-        id,
-        {$push : {log: { $each: updateObjectArray } } },
-        {new: true},
-        (error, updatedUser) => {
-          if(!error) {
-            res.redirect('/dashboard')
-          }
-        }
-      )
-    })
 })
 
 // GET render edit page
@@ -214,6 +223,7 @@ router.delete('/dashboard/:hike', ensureAuthenticated, (req, res) => {
       }
     })
     .then(result => {
+      req.flash('dashboard_info_msg', 'Hike Successfully Deleted!');
       res.json({ redirect: '/dashboard' })
     })
 

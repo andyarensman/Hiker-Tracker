@@ -175,7 +175,7 @@ In Jamie's version, he only had one Mongoose schema, not a schema in a schema, s
         res.set("Content-Type", "application/octet-stream");
 
         res.send(csv);
-        
+
     };
 
 
@@ -198,3 +198,4 @@ After I get this version up and running, I want to incorporate React for the fro
 - Node.js Crash Course Tutorial by [The Net Ninja](https://www.youtube.com/c/TheNetNinja): [[videos]](https://www.youtube.com/playlist?list=PL4cUxeGkcC9jsz4LDYc6kv3ymONOKxwBU)
 - Node.js With Passport Authentication | Full Project by [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA): [[video]](https://www.youtube.com/watch?v=6FOq4cUdH8k&ab_channel=TraversyMedia) [[github]](https://github.com/bradtraversy/node_passport_login)
 - Bulk Import a CSV File Into MongoDB Using Mongoose With Node.js by Jamie Munro: [[article]](https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574)
+- Error, Success, Warning, and Info Messages with CSS by Isabel Castillo: [[article]](https://isabelcastillo.com/error-info-messages-css)

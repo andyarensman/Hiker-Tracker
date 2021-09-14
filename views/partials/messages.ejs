@@ -27,3 +27,17 @@
     <%= error %>
   </div>
 <% } %>
+
+<% if(dashboard_success_msg != '') { %>
+  <div id="dashboard-message" class="isa_success">
+    <i class="fa fa-check"></i>
+    <%= dashboard_success_msg %>
+  </div>
+<% } %>
+
+<% if(dashboard_info_msg != '') { %>
+  <div id="dashboard-message" class="isa_info">
+    <i class="fa fa-info-circle"></i>
+    <%= dashboard_info_msg %>
+  </div>
+<% } %>

@@ -30,3 +30,8 @@
   font-size: 14px;
   vertical-align: middle;
 }
+
+#dashboard-message {
+  min-width: 1403px;
+  margin: 8px 11px -3px;
+}
