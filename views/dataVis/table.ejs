@@ -35,7 +35,13 @@
       }
 
       var editCell = document.createElement('td');
-      editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/editicon.svg" alt="edit icon"><\a>'
+
+      if (<%- JSON.stringify(isExample) %> == 'Yes') {
+        editCell.innerHTML = '<img src="/editicon.svg" alt="edit icon">'
+      } else {
+        editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/editicon.svg" alt="edit icon"><\a>'
+      }
+
       row.appendChild(editCell);
 
       table.appendChild(row);

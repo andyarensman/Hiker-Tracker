@@ -46,7 +46,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 
     var userId = result._id.toString()
 
-    res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId, title: 'Home' })
+    res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId, title: 'Home', isExample: 'No' })
   })
   .catch(err => {
     console.log(err);
@@ -103,7 +103,6 @@ router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
 router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   const id = req.user._id;
 
-
   if (!req.files) {
     req.flash('error_msg', 'No File Selected');
     res.redirect('/dashboard/bulk_add');
@@ -122,8 +121,33 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
         data['_id'] = new mongoose.Types.ObjectId();
 
         updateObjectArray.push(data);
+
       })
       .on('end', () => {
+
+        var date_regex = /^(0[1-9]|1[0-2]|[1-9])\/(0[1-9]|1\d|2\d|3[01]|[1-9])\/\d{2}$/
+
+        if (date_regex.test(updateObjectArray[0].hike_date) === true) {
+          updateObjectArray.forEach((e, i) => {
+
+            var dateArray = e.hike_date.split('/');
+            var mm = dateArray[0];
+            var dd = dateArray[1];
+            var yyyy = '20' + dateArray[2];
+
+            if (mm.length == 1) {
+              mm = '0' + mm;
+            }
+            if (dd.length == 1) {
+              dd = '0' + dd;
+            }
+
+            var newDateFormat = yyyy + '-' + mm + '-' + dd;
+
+            updateObjectArray[i].hike_date = newDateFormat;
+          })
+        }
+
         Hiker.findByIdAndUpdate(
           id,
           {$push : {log: { $each: updateObjectArray } } },

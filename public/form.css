@@ -7,6 +7,17 @@
   border: 0.75px solid #C0C0BB;
 }
 
+#form-container p {
+  color: #635F5D;
+  line-height: 1.45;
+  margin-bottom: 27px;
+}
+
+.signature {
+  text-align: right;
+  margin-right: 40px;
+}
+
 .login-container {
   margin: 100px auto;
   width: 250px;
