@@ -179,9 +179,51 @@ In Jamie's version, he only had one Mongoose schema, not a schema in a schema, s
     };
 
 
-  There are still some bugs to work out - if the user doesn't follow the csv template corretly, there might be some problems. This will be looked into soon.
+There are still some bugs to work out - if the user doesn't follow the csv template corretly, there might be some problems. This will be looked into soon.
 
-# D3 Scatter Plot
+## Always on the Bottom Footer
+
+There are quite a few Stack Overflow questions about how to get your footer to always be at the bottom of the page, but people mean different things when they ask this. Some people want the footer to be sticky - always at the bottom of the view window no matter how far you scroll. I wanted my footer to always be the last thing on the page, at the bottom of the view window, but not visible if you can scroll on the page.
+
+After much trial and error, I ended up finding [this CodePen](https://codepen.io/cbracco/pen/zekgx) by Chris Bracco which did the trick.
+
+HTML:
+
+    <html>
+      <body>
+        <PAGE CONTENT>
+        <FOOTER>
+      </body>
+    </html>
+
+CSS:
+
+    html {
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    body {
+      position: relative;
+      margin: 0;
+      padding-bottom: 6rem;
+      min-height: 100%;
+    }
+
+    footer {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+## D3 Scatter Plot
 
 This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-scatter-plot) I used when first practicing D3. Here is an example of what it looks like:
 
@@ -189,7 +231,7 @@ This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-
 
 # Future Plans
 
-After I get this version up and running, I want to incorporate React for the front end.
+After I get this version up and running, I may try to incorporate React for the front end.
 
 # Helpful Resources
 
@@ -199,3 +241,4 @@ After I get this version up and running, I want to incorporate React for the fro
 - Node.js With Passport Authentication | Full Project by [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA): [[video]](https://www.youtube.com/watch?v=6FOq4cUdH8k&ab_channel=TraversyMedia) [[github]](https://github.com/bradtraversy/node_passport_login)
 - Bulk Import a CSV File Into MongoDB Using Mongoose With Node.js by Jamie Munro: [[article]](https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574)
 - Error, Success, Warning, and Info Messages with CSS by Isabel Castillo: [[article]](https://isabelcastillo.com/error-info-messages-css)
+- CSS "Always on the Bottom" Footer by Chris Bracco: [[CodePen]](https://codepen.io/cbracco/pen/zekgx)
