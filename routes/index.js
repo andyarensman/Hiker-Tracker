@@ -46,7 +46,12 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 
     var userId = result._id.toString()
 
-    res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId, title: 'Home', isExample: 'No' })
+    var newUser = "No"
+    if (newHikesArray.length == 0) {
+      newUser = "Yes"
+    }
+
+    res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId, title: 'Home', isExample: 'No', new_user: newUser })
   })
   .catch(err => {
     console.log(err);

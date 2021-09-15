@@ -1,0 +1,6 @@
+<script>
+  if (<%- JSON.stringify(new_user) %> == "Yes") {
+    var messagebox = document.getElementById("new-user-message")
+    messagebox.innerHTML = "<div id=\"dashboard-message\" class=\"isa_info\"><i class=\"fa fa-info-circle\"></i> Welcome! To see your graph, log a hike below or click the 'Bulk Upload' link in the nav bar to upload a spreadsheet. </div>"
+  }
+</script>

@@ -124,7 +124,7 @@ router.get('/example', (req, res) => {
 
     var userId = result._id.toString()
 
-    res.render('exampleUser', { data: newHikesArray, username: 'Andy', user_id: userId, title: 'Example', isExample: 'Yes' })
+    res.render('exampleUser', { data: newHikesArray, username: 'Andy', user_id: userId, title: 'Example', isExample: 'Yes', new_user: 'No' })
   })
   .catch(err => {
     console.log(err);
