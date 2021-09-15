@@ -3,14 +3,14 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <%- include('./partials/nav-logout.ejs') %>
-
-    <h1>Welcome</h1>
-    <div class="row mt-5">
-      <p>Create an account or login</p>
-      <a href="/users/register">Register</a>
-      <a href="/users/login">Login</a>
+    <div class="welcome-container">
+    <h3 class="login-form-title">Welcome</h3>
+      <div class="row mt-5">
+        <p class="welcome-item">Create an account or login to begin logging hikes</p>
+        <p class="welcome-item"><a href="/users/register">Register</a></p>
+        <p class="welcome-item"><a href="/users/login">Login</a></p>
+      </div>
     </div>
-
     <%- include('./partials/footer.ejs') %>
   </body>
 </html>

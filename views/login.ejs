@@ -2,40 +2,38 @@
 
 <%- include("./partials/head.ejs") %>
 
-<body id="site_wrapper">
+<body>
   <%- include("./partials/nav-logout.ejs") %>
-  <div id="site_content">
-    <div class="login-container">
+  <div class="login-container">
 
-      <h3 class="login-form-title">Login</h3>
+    <h3 class="login-form-title">Login</h3>
 
-      <%- include("./partials/messages") %>
+    <%- include("./partials/messages") %>
 
-      <form id="login-form" action="/users/login" method="POST">
-        <div class="login-item">
-          <label for="email" id="login-label">Email</label><br>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter Email"
-          />
-        </div>
-        <div class="login-item">
-          <label for="password" id="login-label">Password</label><br>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter Password"
-          />
-        </div class="login-item">
-        <button type="submit" id="login-button">Login</button>
-      </form>
-      <p class="login-route">
-        No Account? <a href="/users/register">Register</a>
-      </p>
-    </div>
+    <form id="login-form" action="/users/login" method="POST">
+      <div class="login-item">
+        <label for="email" id="login-label">Email</label><br>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter Email"
+        />
+      </div>
+      <div class="login-item">
+        <label for="password" id="login-label">Password</label><br>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter Password"
+        />
+      </div class="login-item">
+      <button type="submit" id="login-button">Login</button>
+    </form>
+    <p class="login-route">
+      No Account? <a href="/users/register">Register</a>
+    </p>
   </div>
   <%- include("./partials/footer.ejs") %>
 </body>

@@ -27,6 +27,15 @@
   border: 0.75px solid #C0C0BB;
 }
 
+.welcome-container {
+  margin: 100px auto;
+  width: 300px;
+  padding: 0px 35px 10px;
+  background-color: #F8F8F8;
+  border: 0.75px solid #C0C0BB;
+  text-align: center;
+}
+
 .bulk-container {
   margin: 100px auto;
   width: 350px;
@@ -55,6 +64,10 @@
 
 .login-item {
   margin: 5px auto;
+}
+
+.welcome-item {
+  margin: 5px auto 10px;
 }
 
 .grid-item {
