@@ -2,15 +2,36 @@
 
   <%- include("./partials/head.ejs") %>
   <body>
-    <%- include('./partials/nav-logout.ejs') %>
+    <%- include("./partials/nav-logout.ejs") %>
     <div class="welcome-container">
-    <h3 class="login-form-title">Welcome</h3>
+    <h3 class="login-form-title">Welcome!</h3>
       <div class="row mt-5">
-        <p class="welcome-item">Create an account or login to begin logging hikes</p>
-        <p class="welcome-item"><a href="/users/register">Register</a></p>
-        <p class="welcome-item"><a href="/users/login">Login</a></p>
+        <p class="welcome-item">Log your hikes, keep track of your stats, and see visualizations of the data.</p>
+        <p class="welcome-item">Check out the example below to see what your page could look like.</p>
+        <p class="welcome-item">Create an account or login to begin logging hikes.</p>
+        <p class="welcome-item"><a href="/users/register">Register</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/users/login">Login</a></p>
       </div>
+    </div>
+
+    <div id="dashboard-message" class="isa_info">
+      <i class="fa fa-info-circle"></i>
+      This is an example of what your page could look like! <a href="/users/register">Create an account</a> or <a href="/users/login">login</a> to begin!
+    </div>
+
+    <div class="flex-container">
+
+      <div id="d3-graph"></div>
+
+      <%- include("./dataVis/exampleDescription.ejs") %>
+
+    </div>
+
+    <div id="table">
+      <h3 class="form-title">All Hikes</h3>
     </div>
     <%- include('./partials/footer.ejs') %>
   </body>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <%- include('./dataVis/d3.ejs') %>
+  <%- include('./dataVis/table.ejs') %>
 </html>

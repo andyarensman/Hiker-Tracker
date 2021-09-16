@@ -19,12 +19,19 @@
 #form-container p {
   color: #635F5D;
   line-height: 1.45;
-  margin-bottom: 27px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.example-user-container {
+  position: relative;
 }
 
 .signature {
-  text-align: right;
   margin-right: 40px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }
 
 .login-container {
@@ -36,8 +43,8 @@
 }
 
 .welcome-container {
-  margin: 100px auto;
-  width: 300px;
+  margin: 50px auto;
+  width: 600px;
   padding: 0px 35px 10px;
   background-color: #F8F8F8;
   border: 0.75px solid #C0C0BB;
@@ -75,7 +82,7 @@
 }
 
 .welcome-item {
-  margin: 5px auto 10px;
+  margin: 20px auto 10px;
 }
 
 .grid-item {
