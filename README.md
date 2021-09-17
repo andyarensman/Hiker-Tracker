@@ -231,7 +231,7 @@ This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-
 
 # Future Plans
 
-After I get this version up and running, I may try to incorporate React for the front end.
+After I get this version up and running, I may try to incorporate React for the front end. I'm also thinking about adding the option to upload one picture per hike using the Imgur API.
 
 # Helpful Resources
 
