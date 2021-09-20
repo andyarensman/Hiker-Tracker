@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
+const async = require('async');
+const crypto = require('crypto');
 
 const hikeSchemas = require('../models/hikeSchemas');
 const Hiker = hikeSchemas.Hiker;
@@ -63,7 +66,7 @@ router.post('/register', (req, res) => {
             bcrypt.hash(newHiker.password, salt, (err, hash) => {
               if (err) throw err;
 
-              //Set password to hased
+              //Set password to hashed
               newHiker.password = hash;
               newHiker.save()
                 .then(user => {
@@ -91,6 +94,153 @@ router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/users/login');
+});
+
+//Forgot Page
+router.get('/forgot', (req, res) => {
+  res.render('forgot', { title: 'Forgot Password' })
+})
+
+//Forgot Handle
+router.post('/forgot', function(req, res, next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      Hiker.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.');
+          return res.redirect('/users/forgot');
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'SendGrid',
+        auth: {
+          user: 'apikey',
+          pass: ''
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'andrew.arensman@gmail.com',
+        subject: 'Node.js Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/users/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        done(err, 'done');
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/users/forgot');
+  });
+});
+
+//Reset get
+router.get('/reset/:token', (req, res) => {
+  Hiker.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('/users/forgot');
+    }
+    res.render('reset', {
+      user: req.user,
+      title: 'Reset'
+    });
+  });
+});
+
+//Reset post
+router.post('/reset/:token', (req, res) => {
+  const { password, password2 } = req.body;
+  var errors = [];
+
+  //Check required fields
+  if (!password || !password2) {
+    errors.push({ msg: 'Please fill in all fields.' });
+  }
+
+  //Check passwords match
+  if (password != password2) {
+    errors.push({ msg: 'Passwords do not match' })
+  }
+
+  //Check pass length
+  if (password.length < 6) {
+    errors.push({ msg: 'Password should be at least 6 characters.' });
+  }
+
+  if ( errors.length > 0 ) {
+    res.render('reset', {errors, title: 'Reset'})
+  } else {
+    async.waterfall([
+      function(done) {
+        Hiker.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+          if (!user) {
+            req.flash('error', 'Password reset token is invalid or has expired.');
+            return res.redirect('back');
+          }
+
+          user.password = req.body.password;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+
+
+          bcrypt.genSalt(10, (error, salt) =>
+            bcrypt.hash(user.password, salt, (err, hash) => {
+              if (err) throw err;
+
+              //Set password to hashed
+              user.password = hash;
+              user.save(err => {
+                done(err, user);
+              })
+          }))
+        });
+      },
+      function(user, done) {
+        var smtpTransport = nodemailer.createTransport({
+          service: 'SendGrid',
+          auth: {
+            user: 'apikey',
+            pass: ''
+          }
+        });
+        var mailOptions = {
+          to: user.email,
+          from: 'andrew.arensman@gmail.com',
+          subject: 'Your password has been changed',
+          text: 'Hello,\n\n' +
+            'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err) {
+          done(err);
+        });
+      }
+    ], function(err) {
+      req.flash('success_msg', 'Success! Your password has been changed.');
+      res.redirect('/users/login');
+    });
+  }
+
+
 });
 
 //example user

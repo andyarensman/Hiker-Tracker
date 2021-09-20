@@ -1,0 +1,39 @@
+<html lang="en">
+
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <%- include("./partials/nav-logout.ejs") %>
+  <div class="login-container">
+
+    <h3 class="login-form-title">Forgot Password</h3>
+
+    <%- include("./partials/messages") %>
+
+    <form id="login-form" method="POST">
+      <div class="login-item">
+        <label for="password" id="login-label">New Password</label><br>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="New Password"
+        />
+      </div>
+      <div class="login-item">
+        <label for="password2" id="login-label">Confirm Password</label><br>
+        <input
+          type="password"
+          id="password2"
+          name="password2"
+          placeholder="Confirm Password"
+        />
+      </div>
+      <button type="submit" id="login-button">Update Password</button>
+    </form>
+  </div>
+  <%- include("./partials/footer.ejs") %>
+</body>
+
+
+</html>

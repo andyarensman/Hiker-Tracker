@@ -6,11 +6,11 @@
   <%- include("./partials/nav-logout.ejs") %>
   <div class="login-container">
 
-    <h3 class="login-form-title">Login</h3>
+    <h3 class="login-form-title">Forgot Password</h3>
 
     <%- include("./partials/messages") %>
 
-    <form id="login-form" action="/users/login" method="POST">
+    <form id="login-form" action="/users/forgot" method="POST">
       <div class="login-item">
         <label for="email" id="login-label">Email</label><br>
         <input
@@ -20,22 +20,10 @@
           placeholder="Enter Email"
         />
       </div>
-      <div class="login-item">
-        <label for="password" id="login-label">Password</label><br>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Enter Password"
-        />
-      </div class="login-item">
-      <button type="submit" id="login-button">Login</button>
+      <button type="submit" id="login-button">Reset Password</button>
     </form>
     <p class="login-route">
       No Account? <a href="/users/register">Register</a>
-    </p>
-    <p class="login-route">
-      <a href="/users/forgot">Forgot Password?</a>
     </p>
   </div>
   <%- include("./partials/footer.ejs") %>

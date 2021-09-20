@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const fileUpload = require('express-fileupload');
+const cookieParser = require('cookie-parser')
 
 const hikeSchemas = require('./models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
@@ -37,6 +38,7 @@ app.use(express.urlencoded({ extended: true })); //allows you to use req.body
 app.use(methodOverride('_method')); //allows you to use PUT with a form
 app.use(fileUpload()); //allows files to be uploaded
 
+app.use(cookieParser());
 //Express Session Middleware
 app.use(session({
   secret: 'secret',
@@ -56,6 +58,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.info = req.flash('info');
   res.locals.dashboard_success_msg = req.flash('dashboard_success_msg');
   res.locals.dashboard_info_msg = req.flash('dashboard_info_msg');
   next();
