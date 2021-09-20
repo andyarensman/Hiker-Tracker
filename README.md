@@ -28,6 +28,8 @@ For the schemas, I used the following setup:
       email: {type: String, required: true},
       password: {type: String, required: true},
       date: {type: Date, default: Date.now},
+      resetPasswordToken: String,
+      resetPasswordExpires: Date,
       log: [hikeSessionSchema]
     })
 
@@ -42,6 +44,12 @@ It took awhile to find a way to get a login system working with my set up. I fou
 After Passport is set up following the tutorial above, I could access all the user's info using `req.user` in my app methods. I use `req.user._id` a lot to `findById`, `findByIdAndUpdate`, etc. to update, delete, and add data to MongoDB.
 
 *(Note: The login system was one of the last main features I added.)*
+
+## Password reset
+
+To allow the user to reset their password if they forgot it, I used [this tutorial](http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/) by Sahat Yalkabov. The tutorial is a little outdated (2014), so I had to change a few things. To get `nodemailer` to work, remove the `'SMTP'` argument from the `createTransport` methods. To get `SendGrid` working, you need to make an account, then go under settings => api keys and create a key. Back in the `createTransport` method, `auth.user` will always be `apikey` and `auth.pass` will be the api key you created on `SendGrid`. You will likely want to use `.env` with your api key.
+
+Sahat also left out encrypting the new password, so I had to do that using `bcrypt` like I did for creating a new user.
 
 ## MongoDB to D3 via EJS
 
@@ -242,3 +250,4 @@ After I get this version up and running, I may try to incorporate React for the 
 - Bulk Import a CSV File Into MongoDB Using Mongoose With Node.js by Jamie Munro: [[article]](https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574)
 - Error, Success, Warning, and Info Messages with CSS by Isabel Castillo: [[article]](https://isabelcastillo.com/error-info-messages-css)
 - CSS "Always on the Bottom" Footer by Chris Bracco: [[CodePen]](https://codepen.io/cbracco/pen/zekgx)
+- How To Implement Password Reset In Node.js by Sahat Yalkabov: [[article]](http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/)

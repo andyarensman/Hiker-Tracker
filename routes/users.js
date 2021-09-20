@@ -130,7 +130,7 @@ router.post('/forgot', function(req, res, next) {
         service: 'SendGrid',
         auth: {
           user: 'apikey',
-          pass: ''
+          pass: process.env.SENDGRID_SECRET
         }
       });
       var mailOptions = {
@@ -220,7 +220,7 @@ router.post('/reset/:token', (req, res) => {
           service: 'SendGrid',
           auth: {
             user: 'apikey',
-            pass: ''
+            pass: process.env.SENDGRID_SECRET
           }
         });
         var mailOptions = {
