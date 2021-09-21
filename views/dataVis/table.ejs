@@ -29,6 +29,8 @@
 
       for (var i = 0; i < 12; i++) {
         let cell = document.createElement('td');
+        cell.setAttribute('onclick', 'location.href = \'/dashboard/hike_details/' + hike.id + '\'')
+        cell.setAttribute('class', 'clickable')
         let textNode = document.createTextNode(hikeArray[i] ? hikeArray[i]: '');
         cell.appendChild(textNode);
         row.appendChild(cell);
@@ -39,7 +41,7 @@
       if (<%- JSON.stringify(isExample) %> == 'Yes') {
         editCell.innerHTML = '<img src="/editicon.svg" alt="edit icon">'
       } else {
-        editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/editicon.svg" alt="edit icon"><\a>'
+        editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/editicon.svg" alt="edit icon"></a>'
       }
 
       row.appendChild(editCell);

@@ -1,0 +1,42 @@
+<html lang="en">
+
+<%- include("./partials/head.ejs") %>
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <div class="bulk-container">
+    <h3 class="login-form-title">Add Image</h3>
+
+    <%- include("./partials/messages") %>
+
+    <form method="POST" encType="multipart/form-data" class="bulk-form">
+      <label for="upload-button" class="custom-file-upload">
+        <i class="fa fa-cloud-upload"></i> Choose Image
+      </label>
+      <input type="file" name="file" accept="image/*" id="upload-button"/>
+      <input type="submit" value="Submit" id="bulk-button"/>
+    </form>
+  </div>
+
+  <div id="details" class="details-container">
+    <h3><%- hikeObject.hike_name %></h3>
+    <p><%- hikeObject.hike_date %></p>
+    <p><%- hikeObject.mileage %> miles</p>
+    <p><%- hikeObject.time %></p>
+    <p><%- hikeObject.elevation_gain %> ft</p>
+    <p><%- hikeObject.min_elevation %> ft</p>
+    <p><%- hikeObject.max_elevation %> ft</p>
+    <p><%- hikeObject.average_pace %></p>
+    <p><%- hikeObject.average_bpm %> BPM</p>
+    <p><%- hikeObject.max_bpm %> BPM</p>
+    <p><%- hikeObject.city %></p>
+    <p><%- hikeObject.location %></p>
+    <p><%- hikeObject.notes %></p>
+    <p><a id="edit-button" ><img src="/editicon.svg" alt="edit icon"> Edit Hike</a></p>
+  </div>
+  <%- include('./partials/footer.ejs') %>
+</body>
+<script>
+  document.getElementById('edit-button').setAttribute('href', '/dashboard/' + <%- JSON.stringify(hikeId) %>)
+</script>
+</html>

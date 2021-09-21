@@ -132,9 +132,8 @@ router.get('/template', template.get);
 
 //Bulk Upload Page render
 router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
-  const id = req.user._id;
 
-  res.render('bulkUpload', { user_id: id, title: 'Bulk Upload' })
+  res.render('bulkUpload', { title: 'Bulk Upload' })
 })
 
 
@@ -202,6 +201,23 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   }
 
 
+})
+
+// Get Hike Details
+router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
+  var hikeId = req.params.hike;
+  var hikeObject = req.user.log.find(obj => {
+    return obj._id == hikeId
+  });
+
+  //getting rid of _id
+  var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }))(hikeObject);
+
+  var newDate = new Date(hike.hike_date.replace(/-/g, '\/'))
+  hike['real_date'] = newDate;
+  hike['hike_date'] = newDate.toLocaleDateString('en-US');  //Converts to MM/DD/YYYY
+
+  res.render('hikeDetails', { title: 'Hike Details', hikeObject: hike, hikeId: hikeId })
 })
 
 // GET render edit page

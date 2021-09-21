@@ -9,6 +9,9 @@
   border: 0.75px solid #C0C0BB;
   margin: 5px 10px 0px;
 }
+#table td.clickable {
+  cursor: pointer;
+}
 
 table {
   border-collapse: collapse;
