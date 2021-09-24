@@ -21,14 +21,17 @@
 		"express-fileupload": "^1.2.1",
 		"express-session": "^1.17.2",
 		"fast-csv": "^2.4.1",
+		"imgur": "^1.0.2",
 		"json2csv": "^5.0.6",
 		"method-override": "^3.0.0",
 		"mongodb": "^3.6.9",
 		"mongoose": "^5.12.14",
+		"multer": "^1.4.3",
 		"nodemailer": "^6.6.3",
 		"nodemon": "^2.0.12",
 		"passport": "^0.4.1",
-		"passport-local": "^1.0.0"
+		"passport-local": "^1.0.0",
+		"tslib": "^2.3.1"
 	},
 	"repository": {
 		"url": "https://github.com/andyarensman/Hiker-Tracker"

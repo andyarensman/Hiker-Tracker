@@ -9,11 +9,11 @@
 
     <%- include("./partials/messages") %>
 
-    <form method="POST" encType="multipart/form-data" class="bulk-form">
+    <form method="POST" encType="multipart/form-data" class="bulk-form" id="image-form">
       <label for="upload-button" class="custom-file-upload">
         <i class="fa fa-cloud-upload"></i> Choose Image
       </label>
-      <input type="file" name="file" accept="image/*" id="upload-button"/>
+      <input type="file" name="myImage" accept="image/*" id="upload-button"/>
       <input type="submit" value="Submit" id="bulk-button"/>
     </form>
   </div>
@@ -38,5 +38,6 @@
 </body>
 <script>
   document.getElementById('edit-button').setAttribute('href', '/dashboard/' + <%- JSON.stringify(hikeId) %>)
+  document.getElementById('image-form').setAttribute('action', '/dashboard/hike_details/' + <%- JSON.stringify(hikeId) %>)
 </script>
 </html>

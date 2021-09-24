@@ -4,10 +4,58 @@ const { ensureAuthenticated } = require('../config/auth');
 const template = require('../public/template.js');
 var csv = require('fast-csv');
 var mongoose = require('mongoose');
+const imgur = require('imgur');
 
 const hikeSchemas = require('../models/hikeSchemas');
 const HikeSession = hikeSchemas.HikeSession;
 const Hiker = hikeSchemas.Hiker;
+
+//////////////////////////////////////////////
+
+//Multer
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+  destination: './public/uploads/',
+  filename: function(req, file, cb){
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+// Init Upload Multer
+const upload = multer({
+  storage: storage,
+  limits:{fileSize: 20000000},
+  fileFilter: function(req, file, cb){
+    checkFileType(file, cb);
+  }
+}).single('myImage');
+
+// Check File Type  ///////////////May need to change this for the bulk upload
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif|csv/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: Incorrect File Type!'); ///////////May need to change this
+  }
+}
+
+//////////////////////////////////////////////
+
+//imgur setup
+const clientId = process.env.CLIENT_ID;
+imgur.setClientId(clientId);
+imgur.setAPIUrl('https://api.imgur.com/3/');
 
 //Welcome Page
 router.get('/', (req, res) => {
@@ -111,7 +159,8 @@ router.post('/dashboard', ensureAuthenticated, (req, res) => {
     max_bpm: parseInt(req.body.max_bpm) || '',
     city: req.body.city,
     location: req.body.location,
-    notes: req.body.notes || ''
+    notes: req.body.notes || '',
+    image_url: ''
   })
 
   Hiker.findByIdAndUpdate(
@@ -137,7 +186,7 @@ router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
 })
 
 
-//Add multiple Hikes
+//Add multiple Hikes /////////////////NEEDS TO BE FIXED
 router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
   const id = req.user._id;
 
@@ -218,6 +267,57 @@ router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
   hike['hike_date'] = newDate.toLocaleDateString('en-US');  //Converts to MM/DD/YYYY
 
   res.render('hikeDetails', { title: 'Hike Details', hikeObject: hike, hikeId: hikeId })
+})
+
+//POST Imgur
+router.post('/dashboard/hike_details/:hike', async (req, res) => {
+  var hikeId = req.params.hike;
+  const id = req.user._id;
+
+  upload(req, res, (err) => {
+    if (err) {
+      console.log(err)  //CHANGE TO FLASH
+    } else {
+      if (req.file == undefined) {
+        console.log('Error: No File Selected') //CHANGE TO FLASH
+      } else {
+        console.log('File Uploading') //CHANGE TO FLASH
+
+        //Upload to imgur (file path is `uploads/${req.file.filename}`)
+        imgur
+          .uploadFile(`./public/uploads/${req.file.filename}`)
+          .then((json) => {
+            console.log(json);
+
+            //Add image link to mongodb
+            Hiker.updateOne(
+              { _id: id, 'log._id': hikeId },
+              { $set: { 'log.$.image_url': json.link } },
+              (err, doc) => {
+                if (err) {
+                  console.log(err)
+                } else {
+                  req.flash('success_msg', 'Successfully Added Image');
+                  res.redirect('/dashboard/hike_details/' + hikeId);
+                }
+                //Delete file locally
+                fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+                  if (err) {
+                    console.error(err)
+                    return
+                  }
+                  console.log('file deleted')
+                })
+              }
+            )
+
+          })
+          .catch((err) => {
+            console.error(err.message);
+          });
+      }
+    }
+  });
 })
 
 // GET render edit page

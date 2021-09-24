@@ -14,7 +14,8 @@ const hikeSessionSchema = new mongoose.Schema({
     max_bpm: Number,
     city: {type: String, required: true},
     location: {type: String, required: true},
-    notes: String
+    notes: String,
+    image_url: String
   })
 
 const hikerSchema = new mongoose.Schema({
