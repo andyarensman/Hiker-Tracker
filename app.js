@@ -7,7 +7,6 @@ const methodOverride = require('method-override')
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
-//const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 
 
@@ -37,7 +36,6 @@ mongoose.set('useFindAndModify', false);
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); //allows you to use req.body
 app.use(methodOverride('_method')); //allows you to use PUT with a form
-//app.use(fileUpload()); //allows files to be uploaded
 
 app.use(cookieParser());
 //Express Session Middleware

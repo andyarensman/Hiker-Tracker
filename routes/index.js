@@ -187,7 +187,7 @@ router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
 })
 
 
-//Add multiple Hikes /////////////////NEEDS TO BE FIXED
+//Add multiple Hikes
 router.post('/dashboard/bulk_add', ensureAuthenticated, uploadCSV.single('myCSV'), (req, res) => {
   const id = req.user._id;
 
@@ -263,10 +263,6 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, uploadCSV.single('myCSV'
       })
     deleteFile();
   }
-
-
-
-
 })
 
 // Get Hike Details

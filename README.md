@@ -120,25 +120,29 @@ I wanted to include an option for the user to add multiple hikes at once via a s
 
 *Important Note: If you want to follow this same tutorial, make sure you install version 2.4.1 of `fast-csv`. Newer versions did not work.*
 
-In Jamie's version, he only had one Mongoose schema, not a schema in a schema, so I had to alter the code a little. Here's what it looks like:
+There were a few things I had to alter from the guide. In Jamie's version, he only had one Mongoose schema, not a schema in a schema. For the photo upload section of my code, I had to use `multer` which clashes with `express-fileupload`, so I had to use multer here, too, which Jaime did not use. Here's what it looks like:
 
-    router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
+
+    const multer = require('multer');
+    const path = require('path');
+    const fs = require('fs');
+
+    router.post('/dashboard/bulk_add', uploadCSV.single('myCSV'), (req, res) => { //'myCSV' comes from the form
       const id = req.user._id;
 
-      if (!req.files) {
+      if (!req.file) {
         return res.status(400).send('No files were uploaded.');
       }
 
-      var hikesFile = req.files.file;
+      var hikesFile = \`./tmp/csv/${req.file.filename}\`;
       var updateObjectArray = [];
 
-      csv.fromString(hikesFile.data.toString('utf8'), {
+      csv.fromPath(hikesFile, { //needs to be fromPath for Multer
           headers: true,
           ignoreEmpty: true
         })
-        .on("data", (data) => {
+        .on('data', (data) => {
           data['_id'] = new mongoose.Types.ObjectId();
-
           updateObjectArray.push(data);
         })
         .on('end', () => {
@@ -154,8 +158,24 @@ In Jamie's version, he only had one Mongoose schema, not a schema in a schema, s
             }
           )
         })
+        //delete file locally
+        fs.unlink(\`./tmp/csv/${req.file.filename}\`, (err) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+          console.log('file deleted')
+          })
+      })
 
   In order to add multiple subdocuments at once, you need the line `{$push : {log: { $each: updateObjectArray } } }` within `findByIdAndUpdate` - `log` is the array of subdocuments, `$push` allows you to add to it, and `$each` allows you to add multiple.
+
+  This is what my basic form looks like:
+
+    <form method="POST" encType="multipart/form-data">
+      <input type="file" name="myCSV" accept="*.csv"/>
+      <input type="submit" value="Submit"/>
+    </form>
 
   For the csv template, I had to change a few lines from Jamie's as well. This is what worked for me:
 
@@ -188,6 +208,10 @@ In Jamie's version, he only had one Mongoose schema, not a schema in a schema, s
 
 
 There are still some bugs to work out - if the user doesn't follow the csv template corretly, there might be some problems. This will be looked into soon.
+
+## Uploading Photos with Imgur API
+
+*To be added*
 
 ## Always on the Bottom Footer
 
@@ -251,3 +275,4 @@ After I get this version up and running, I may try to incorporate React for the 
 - Error, Success, Warning, and Info Messages with CSS by Isabel Castillo: [[article]](https://isabelcastillo.com/error-info-messages-css)
 - CSS "Always on the Bottom" Footer by Chris Bracco: [[CodePen]](https://codepen.io/cbracco/pen/zekgx)
 - How To Implement Password Reset In Node.js by Sahat Yalkabov: [[article]](http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/)
+- Node.js Image Uploading With Multer by [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA): [[video]](https://www.youtube.com/watch?v=9Qzmri1WaaE)
