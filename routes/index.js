@@ -50,6 +50,7 @@ function checkFileType(file, cb){
   }
 }
 
+const uploadCSV = multer({ dest: 'tmp/csv/' });
 //////////////////////////////////////////////
 
 //imgur setup
@@ -187,26 +188,39 @@ router.get('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
 
 
 //Add multiple Hikes /////////////////NEEDS TO BE FIXED
-router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
+router.post('/dashboard/bulk_add', ensureAuthenticated, uploadCSV.single('myCSV'), (req, res) => {
   const id = req.user._id;
 
-  if (!req.files) {
+  console.log(req.file)
+
+  //delete file locally
+  const deleteFile = () => {
+    fs.unlink(`./tmp/csv/${req.file.filename}`, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      console.log('file deleted')
+      })
+  }
+
+  if (!req.file) {
     req.flash('error_msg', 'No File Selected');
     res.redirect('/dashboard/bulk_add');
-  } else if (/(\.csv)$/.test(req.files.file.name) != true) {
+  } else if (/(\.csv)$/.test(req.file.originalname) != true) {
+    deleteFile();
     req.flash('error_msg', 'File name must end in .csv');
     res.redirect('/dashboard/bulk_add');
   } else {
-    var hikesFile = req.files.file;
+    var hikesFile = `./tmp/csv/${req.file.filename}`;
     var updateObjectArray = [];
 
-    csv.fromString(hikesFile.data.toString('utf8'), {
+    csv.fromPath(hikesFile, {
         headers: true,
         ignoreEmpty: true
       })
-      .on("data", (data) => {
+      .on('data', (data) => {
         data['_id'] = new mongoose.Types.ObjectId();
-
         updateObjectArray.push(data);
 
       })
@@ -247,7 +261,10 @@ router.post('/dashboard/bulk_add', ensureAuthenticated, (req, res) => {
           }
         )
       })
+    deleteFile();
   }
+
+
 
 
 })
