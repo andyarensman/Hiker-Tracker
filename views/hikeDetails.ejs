@@ -3,25 +3,33 @@
 <%- include("./partials/head.ejs") %>
 <body>
   <%- include("./partials/nav.ejs") %>
+  <%- include("./partials/messages") %>
 
-  <div class="bulk-container">
-    <h3 class="login-form-title">Add Image</h3>
 
-    <%- include("./partials/messages") %>
 
-    <form method="POST" encType="multipart/form-data" class="bulk-form" id="image-form">
-      <label for="upload-button" class="custom-file-upload">
-        <i class="fa fa-cloud-upload"></i> Choose Image
-      </label>
-      <input type="file" name="myImage" accept="image/*" id="upload-button"/>
-      <input type="submit" value="Submit" id="bulk-button"/>
-    </form>
-  </div>
-
-  <div id="details-container" class="details-container">
-    <h3 class="login-form-title"><%- hikeObject.hike_name %> <a id="edit-button" ><img src="/editicon.svg" alt="edit icon"></a></h3>
+  <div id="details-container" class="details-container details-margins">
+    <h3 class="login-form-title"><a id="edit-button" ><img src="/editicon.svg" alt="edit icon" class="edit-icon-details"></a> <%- hikeObject.hike_name %></h3>
     <div <%- image_orientation %>>
+      <% if (image_orientation == "class=\"orientation_none\"") { %>
+
+        <div class="image-upload-box">
+          <div class="center-image-form">
+            <p class="add-image-label">Add Image</p>
+            <div class="image-form-container">
+              <form method="POST" encType="multipart/form-data" class="bulk-form" id="image-form">
+                <label for="upload-button" class="choose-image-button">
+                  <i class="fa fa-cloud-upload"></i> Select Image
+                </label>
+                <input type="file" name="myImage" accept="image/*" id="upload-button"/>
+                <input type="submit" value="Submit" id="upload-image-button"/>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      <% } else { %>
       <a href="<%- hikeObject.image_url.link %>" target="_blank"><img <%- image_link %> alt="image" class="details-image"></a>
+      <% } %>
       <div class="details-grid">
         <div class="grid-item">
           <h4>Date</h4>

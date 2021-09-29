@@ -10,10 +10,17 @@
 
 #details-container {
   width: 800px;
-  margin: auto;
   padding: 0px 30px 30px;
   background-color: #F8F8F8;
   border: 0.75px solid #C0C0BB;
+}
+
+.details-margins {
+  margin: 100px auto;
+}
+
+.edit-icon-details {
+  height: 22px;
 }
 
 .details-grid {
@@ -53,7 +60,7 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.portrait {
+.portrait, .orientation_none {
   display: grid;
   grid-template-columns: 1fr 3fr;
   column-gap: 30px;
@@ -69,6 +76,54 @@
 .landscape img {
   margin-bottom: 15px;
   margin-top: 5px;
+}
+
+.choose-image-button {
+  width: 20px;
+  background-color: #137B80;
+  color: #F8F8F8;
+  padding: 8px 19px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13.3px;
+}
+
+.add-image-label {
+  text-align: center;
+}
+
+#upload-image-button {
+  width: 75%;
+  background-color: #708259;
+  color: #F8F8F8;
+  padding: 8px 10px;
+  margin: 22px auto 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  /* grid-column: 2 / 3; */
+}
+
+.image-form {
+  text-align: center;
+}
+
+.image-form-container {
+  margin-top: 20px;
+}
+
+.image-upload-box {
+  border: 1px dotted #635F5D;
+  position: relative;
+}
+
+.center-image-form {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 #edit-form-container {

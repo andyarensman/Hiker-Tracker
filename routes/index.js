@@ -286,7 +286,7 @@ router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
   console.log(hike)
   //Checking if there's an image || Object.keys(hikeObject.image_url
   var image_link = '';
-  var image_orientation = 'none';
+  var image_orientation = "class=\"orientation_none\"";
   if (hike.image_url != undefined) {
     console.log('is in')
     if (Object.keys(hike.image_url).length != 0) {
