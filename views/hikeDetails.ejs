@@ -18,21 +18,63 @@
     </form>
   </div>
 
-  <div id="details" class="details-container">
-    <h3><%- hikeObject.hike_name %></h3>
-    <p><%- hikeObject.hike_date %></p>
-    <p><%- hikeObject.mileage %> miles</p>
-    <p><%- hikeObject.time %></p>
-    <p><%- hikeObject.elevation_gain %> ft</p>
-    <p><%- hikeObject.min_elevation %> ft</p>
-    <p><%- hikeObject.max_elevation %> ft</p>
-    <p><%- hikeObject.average_pace %></p>
-    <p><%- hikeObject.average_bpm %> BPM</p>
-    <p><%- hikeObject.max_bpm %> BPM</p>
-    <p><%- hikeObject.city %></p>
-    <p><%- hikeObject.location %></p>
-    <p><%- hikeObject.notes %></p>
-    <p><a id="edit-button" ><img src="/editicon.svg" alt="edit icon"> Edit Hike</a></p>
+  <div id="details-container" class="details-container">
+    <h3 class="login-form-title"><%- hikeObject.hike_name %> <a id="edit-button" ><img src="/editicon.svg" alt="edit icon"></a></h3>
+    <div <%- image_orientation %>>
+      <a href="<%- hikeObject.image_url.link %>" target="_blank"><img <%- image_link %> alt="image" class="details-image"></a>
+      <div class="details-grid">
+        <div class="grid-item">
+          <h4>Date</h4>
+          <p><%- hikeObject.hike_date %></p>
+        </div>
+        <div class="grid-item">
+          <h4>City</h4>
+          <p><%- hikeObject.city %></p>
+        </div>
+        <div id="details-location" class="grid-item">
+          <h4>Location</h4>
+          <p><%- hikeObject.location %></p>
+        </div>
+        <div id="details-distance" class="grid-item">
+          <h4>Distance</h4>
+          <p><%- hikeObject.mileage %> miles</p>
+        </div>
+        <div class="grid-item">
+          <h4>Duration</h4>
+          <p><%- hikeObject.time %></p>
+        </div>
+        <div class="grid-item">
+          <h4>Elevation Gain</h4>
+          <p><%- hikeObject.elevation_gain %> ft</p>
+        </div>
+        <div class="grid-item">
+          <h4>Average Pace</h4>
+          <p><%- hikeObject.average_pace %></p>
+        </div>
+        <div class="grid-item">
+          <h4>Min Elevation</h4>
+          <p><%- hikeObject.min_elevation %> ft</p>
+        </div>
+        <div class="grid-item">
+          <h4>Max Elevation</h4>
+          <p><%- hikeObject.max_elevation %> ft</p>
+        </div>
+        <div class="grid-item">
+          <h4>Average BPM</h4>
+          <p><%- hikeObject.average_bpm %> BPM</p>
+        </div>
+        <div class="grid-item">
+          <h4>Max BPM</h4>
+          <p><%- hikeObject.max_bpm %> BPM</p>
+        </div>
+
+        <div id="details-notes" class="grid-item">
+          <h4>Notes</h4>
+          <p id='details-notes-p'><%- hikeObject.notes %></p>
+        </div>
+      </div>
+    </div>
+
   </div>
   <%- include('./partials/footer.ejs') %>
 </body>

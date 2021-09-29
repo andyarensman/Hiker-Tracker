@@ -272,14 +272,37 @@ router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
     return obj._id == hikeId
   });
 
+  // console.log(hikeObject.toJSON())
+
+
+
   //getting rid of _id
-  var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }))(hikeObject);
+  var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes, image_url }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes, image_url }))(hikeObject.toJSON());
 
   var newDate = new Date(hike.hike_date.replace(/-/g, '\/'))
   hike['real_date'] = newDate;
   hike['hike_date'] = newDate.toLocaleDateString('en-US');  //Converts to MM/DD/YYYY
 
-  res.render('hikeDetails', { title: 'Hike Details', hikeObject: hike, hikeId: hikeId })
+  console.log(hike)
+  //Checking if there's an image || Object.keys(hikeObject.image_url
+  var image_link = '';
+  var image_orientation = 'none';
+  if (hike.image_url != undefined) {
+    console.log('is in')
+    if (Object.keys(hike.image_url).length != 0) {
+      image_link = 'src=' + hike.image_url.link;
+      if (hike.image_url.width > hike.image_url.height){
+        console.log('image is in landscape');
+        image_orientation = "class=\"landscape\"";
+      } else {
+        console.log('image is in portrait');
+        image_orientation = "class=\"portrait\"";
+      }
+    }
+  }
+  console.log(image_link)
+
+  res.render('hikeDetails', { title: 'Hike Details', hikeObject: hike, hikeId: hikeId, image_link: image_link, image_orientation: image_orientation })
 })
 
 //POST Imgur
@@ -305,7 +328,7 @@ router.post('/dashboard/hike_details/:hike', async (req, res) => {
             //Add image link to mongodb
             Hiker.updateOne(
               { _id: id, 'log._id': hikeId },
-              { $set: { 'log.$.image_url': json.link } },
+              { $set: { 'log.$.image_url': json } },
               (err, doc) => {
                 if (err) {
                   console.log(err)

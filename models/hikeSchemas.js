@@ -15,7 +15,7 @@ const hikeSessionSchema = new mongoose.Schema({
     city: {type: String, required: true},
     location: {type: String, required: true},
     notes: String,
-    image_url: String
+    image_url: Schema.Types.Mixed,
   })
 
 const hikerSchema = new mongoose.Schema({
