@@ -42,6 +42,13 @@
   </div>
 <% } %>
 
+<% if(dashboard_error_msg != '') { %>
+  <div id="dashboard-message" class="isa_error">
+    <i class="fa fa-times-circle"></i>
+    <%= dashboard_error_msg %>
+  </div>
+<% } %>
+
 <% if(info != '') { %>
   <div class="isa_info">
     <i class="fa fa-info-circle"></i>

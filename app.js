@@ -60,6 +60,7 @@ app.use((req, res, next) => {
   res.locals.info = req.flash('info');
   res.locals.dashboard_success_msg = req.flash('dashboard_success_msg');
   res.locals.dashboard_info_msg = req.flash('dashboard_info_msg');
+  res.locals.dashboard_error_msg = req.flash('dashboard_error_msg');
   next();
 });
 

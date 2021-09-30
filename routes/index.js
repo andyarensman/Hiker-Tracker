@@ -306,7 +306,7 @@ router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
 })
 
 //POST Imgur
-router.post('/dashboard/hike_details/:hike', async (req, res) => {
+router.post('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
   var hikeId = req.params.hike;
   const id = req.user._id;
 
@@ -316,8 +316,12 @@ router.post('/dashboard/hike_details/:hike', async (req, res) => {
     } else {
       if (req.file == undefined) {
         console.log('Error: No File Selected') //CHANGE TO FLASH
+        req.flash('dashboard_error_msg', 'No File Selected');
+        res.redirect('/dashboard/hike_details/' + hikeId);
       } else {
         console.log('File Uploading') //CHANGE TO FLASH
+
+        
 
         //Upload to imgur (file path is `uploads/${req.file.filename}`)
         imgur
@@ -333,7 +337,7 @@ router.post('/dashboard/hike_details/:hike', async (req, res) => {
                 if (err) {
                   console.log(err)
                 } else {
-                  req.flash('success_msg', 'Successfully Added Image');
+                  req.flash('dashboard_success_msg', 'Successfully Added Image');
                   res.redirect('/dashboard/hike_details/' + hikeId);
                 }
                 //Delete file locally
@@ -404,7 +408,7 @@ router.put('/dashboard/:hike', ensureAuthenticated, (req, res) => {
 
   //logic if user doesn't enter anything
   if (Object.keys(updateObject).length === 0) {
-    req.flash('error_msg', 'Please fill out at least one field');
+    req.flash('dashboard_error_msg', 'Please fill out at least one field');
     res.redirect('/dashboard/' + hikeId);
   } else {
     Hiker.updateOne(
@@ -414,7 +418,7 @@ router.put('/dashboard/:hike', ensureAuthenticated, (req, res) => {
         if (err) {
           console.log(err)
         } else {
-          req.flash('success_msg', 'Successfully Updated: ' + updateArray.join(', '));
+          req.flash('dashboard_success_msg', 'Successfully Updated: ' + updateArray.join(', '));
           res.redirect('/dashboard/' + hikeId);
         }
       }
