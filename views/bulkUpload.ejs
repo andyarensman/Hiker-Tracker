@@ -18,15 +18,24 @@
       <li>Export as CSV and upload here</li><br>
     </ol>
     <form method="POST" encType="multipart/form-data" class="bulk-form">
-      <label for="upload-button" class="custom-file-upload">
+      <label for="upload-button" class="bulk-file-upload">
         <i class="fa fa-cloud-upload"></i> Choose File
       </label>
       <input type="file" name="myCSV" accept="*.csv" id="upload-button"/>
       <input type="submit" value="Submit" id="bulk-button"/>
     </form>
+    <p id="bulk-file-selected"></p>
   </div>
   <%- include('./partials/footer.ejs') %>
 </body>
 
+<script type="text/javascript">
+  document.getElementById('upload-button').onchange = function () {
+    var fileName = this.value
+    console.log(fileName)
+    fileName = fileName.replace(/.*[\/\\]/, '');
+    document.getElementById('bulk-file-selected').innerHTML = fileName;
+  };
+</script>
 
 </html>

@@ -21,9 +21,10 @@
                   <i class="fa fa-cloud-upload"></i> Select Image
                 </label>
                 <input type="file" name="myImage" accept="image/*" id="upload-button"/>
-                <input type="submit" value="Submit" id="upload-image-button"/>
+                <input type="submit" value="Submit" id="upload-image-button" onclick="loadingSpin()"/>
               </form>
-              
+              <p id="file-selected"></p>
+              <div id="loading-spin"></div>
             </div>
           </div>
         </div>
@@ -90,5 +91,23 @@
 <script>
   document.getElementById('edit-button').setAttribute('href', '/dashboard/' + <%- JSON.stringify(hikeId) %>)
   document.getElementById('image-form').setAttribute('action', '/dashboard/hike_details/' + <%- JSON.stringify(hikeId) %>)
+</script>
+<script type="text/javascript">
+  loadingSpin = () => {
+    var img = document.createElement('img');
+    img.setAttribute('src', '/loading-spin.svg');
+    img.setAttribute('alt', 'Uploading...');
+    img.setAttribute('class', 'loading-spin');
+
+    document.getElementById('loading-spin').appendChild(img);
+    // <img src="/loading-spin.svg" alt="Uploading..." class="loading-spin">
+  }
+</script>
+<script type="text/javascript">
+  document.getElementById('upload-button').onchange = function () {
+    var fileName = this.value
+    fileName = fileName.replace(/.*[\/\\]/, '');
+    document.getElementById('file-selected').innerHTML = fileName;
+  };
 </script>
 </html>

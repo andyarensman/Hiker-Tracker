@@ -274,8 +274,6 @@ router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
 
   // console.log(hikeObject.toJSON())
 
-
-
   //getting rid of _id
   var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes, image_url }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes, image_url }))(hikeObject.toJSON());
 
@@ -283,24 +281,19 @@ router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
   hike['real_date'] = newDate;
   hike['hike_date'] = newDate.toLocaleDateString('en-US');  //Converts to MM/DD/YYYY
 
-  console.log(hike)
   //Checking if there's an image || Object.keys(hikeObject.image_url
   var image_link = '';
   var image_orientation = "class=\"orientation_none\"";
   if (hike.image_url != undefined) {
-    console.log('is in')
     if (Object.keys(hike.image_url).length != 0) {
       image_link = 'src=' + hike.image_url.link;
       if (hike.image_url.width > hike.image_url.height){
-        console.log('image is in landscape');
         image_orientation = "class=\"landscape\"";
       } else {
-        console.log('image is in portrait');
         image_orientation = "class=\"portrait\"";
       }
     }
   }
-  console.log(image_link)
 
   res.render('hikeDetails', { title: 'Hike Details', hikeObject: hike, hikeId: hikeId, image_link: image_link, image_orientation: image_orientation })
 })
@@ -321,13 +314,12 @@ router.post('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => 
       } else {
         console.log('File Uploading') //CHANGE TO FLASH
 
-        
+
 
         //Upload to imgur (file path is `uploads/${req.file.filename}`)
         imgur
           .uploadFile(`./public/uploads/${req.file.filename}`)
           .then((json) => {
-            console.log(json);
 
             //Add image link to mongodb
             Hiker.updateOne(
