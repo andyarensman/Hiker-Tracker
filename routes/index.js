@@ -308,11 +308,11 @@ router.post('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => 
       console.log(err)  //CHANGE TO FLASH
     } else {
       if (req.file == undefined) {
-        console.log('Error: No File Selected') //CHANGE TO FLASH
+        console.log('Error: No File Selected')
         req.flash('dashboard_error_msg', 'No File Selected');
         res.redirect('/dashboard/hike_details/' + hikeId);
       } else {
-        console.log('File Uploading') //CHANGE TO FLASH
+        console.log('File Uploading');
 
 
 
@@ -345,7 +345,7 @@ router.post('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => 
 
           })
           .catch((err) => {
-            console.error(err.message);
+            console.error(err.message); //does this need to change?
           });
       }
     }
@@ -381,25 +381,77 @@ router.get('/dashboard/:hike', ensureAuthenticated, (req, res) => {
 })
 
 // PUT edit the corresponding hike - need user ID and hike ID
-router.put('/dashboard/:hike', ensureAuthenticated, (req, res) => {
+router.put('/dashboard/:hike', ensureAuthenticated, upload, (req, res) => {
   var id = req.user._id;
   var hikeId = req.params.hike;
+  var currentHikeObj = req.user.log.find(obj => obj._id == hikeId);
 
-  var namesObject = { hike_name: 'Hike Name', hike_date: 'Date', mileage: "Distance", time: 'Duration', elevation_gain: 'Elev Gain', min_elevation: 'Min Elev', max_elevation: 'Max Elev', average_pace: 'Avg Pace', average_bpm: 'Avg BPM', max_bpm: 'Max BPM', city: 'City', location: 'Location', notes: 'Notes'}
+  var namesObject = { hike_name: 'Hike Name', hike_date: 'Date', mileage: "Distance", time: 'Duration', elevation_gain: 'Elev Gain', min_elevation: 'Min Elev', max_elevation: 'Max Elev', average_pace: 'Avg Pace', average_bpm: 'Avg BPM', max_bpm: 'Max BPM', city: 'City', location: 'Location', notes: 'Notes', 'delete-image': 'Old Image Deleted' }
 
   var updateObject = {};
   var updateArray = [];
 
+  console.log(req.body)
+
   //adding key/values into object from form
   Object.keys(req.body).forEach(key => {
-        if(req.body[key] != '') {
+        if(req.body[key] != '' && key != 'delete-image') {
           updateObject['log.$.' + key] = req.body[key];
           updateArray.push(namesObject[key])
+        } else if (key == 'delete-image' && currentHikeObj.image_url != undefined) {
+          //Delete image if box is checked and there's an image to delete
+          updateArray.push(namesObject[key]);
+
+          var deleteHash = currentHikeObj.image_url.deletehash;
+
+          Hiker.updateOne(
+            { _id: id, 'log._id': hikeId },
+            { $unset: { 'log.$.image_url': 1 } },
+            (err, doc) => {
+              if (err) {
+                console.log(err)
+              } else {
+                imgur
+                  .deleteImage(deleteHash)
+                  .then((status) => {
+                    console.log('Image deleted from imgur: ' + status);
+                  })
+                  .catch((err) => {
+                    console.error(err.message);
+                  });
+              }
+            }
+          )
         }
       });
 
+  //UPLOAD TO IMGUR - MAY CHANGE SPOTS
+  if (req.file != undefined) {
+    imgur
+      .uploadFile(`./public/uploads/${req.file.filename}`)
+      .then((json) => {
+        updateObject['log.$.image_url'] = json;
+        updateArray.push('New Image Added');
+      })
+      .catch(err => {
+        console.log('catch message from imgur: ')
+        console.error(err.message); //does this need to change?
+      });
+
+    fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      console.log('file deleted')
+    })
+
+  }
+
+
+
   //logic if user doesn't enter anything
-  if (Object.keys(updateObject).length === 0) {
+  if (updateArray.length === 0) {
     req.flash('dashboard_error_msg', 'Please fill out at least one field');
     res.redirect('/dashboard/' + hikeId);
   } else {

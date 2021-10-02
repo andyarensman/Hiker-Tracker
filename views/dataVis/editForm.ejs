@@ -1,6 +1,6 @@
 <div id="edit-form-container" class="edit-form-container">
   <h3 class="form-title">Edit Hike Here (Only fill in fields you want to change) </h3>
-  <form id="hike-edit-form" method="POST" action="/dashboard/<%= hikeId %>?_method=PUT">
+  <form id="hike-edit-form" encType="multipart/form-data" method="POST" action="/dashboard/<%= hikeId %>?_method=PUT">
     <div class="grid-item">
       <label for="hike_name">Hike Name</label>
       <input id="hike_name" type="text" name="hike_name" placeholder="ex: Mount Wilson"><br>
@@ -53,6 +53,39 @@
       <label for="notes">Notes</label>
       <textarea id="notes" type="text" name="notes" placeholder="Notes..."></textarea><br>
     </div>
-    <button type="submit" id="edit-button">Update Hike</button>
+    <div class="grid-item">
+      <label for="delete-image">Delete Current Image</label><br>
+      <div class="edit-checkbox">
+        <label for="delete-image">
+          <input id="delete-image" type="checkbox" name="delete-image" placeholder="Select Image"><span><em>Check to delete current image</em></span>
+        </label>
+      </div>
+    </div>
+    <div class="grid-item">
+      <label for="upload-button">New Image</label><br>
+      <label for="upload-button" class="edit-choose-image"><em id="edit-file-selected">Select Image</em></label>
+      <input type="file" name="myImage" accept="image/*" id="upload-button"/><br>
+    </div>
+    <div id="loading-spin" class="edit-loading-container"></div>
+    <button type="submit" id="edit-button" onclick="loadingSpin()">Update Hike</button>
   </form>
 </div>
+
+<script type="text/javascript">
+  document.getElementById('upload-button').onchange = function () {
+    var fileName = this.value
+    fileName = fileName.replace(/.*[\/\\]/, '');
+    document.getElementById('edit-file-selected').innerHTML = fileName;
+  };
+</script>
+<script type="text/javascript">
+  loadingSpin = () => {
+    var img = document.createElement('img');
+    img.setAttribute('src', '/loading-spin.svg');
+    img.setAttribute('alt', 'Uploading...');
+    img.setAttribute('class', 'edit-loading-spin');
+
+    document.getElementById('loading-spin').appendChild(img);
+    // <img src="/loading-spin.svg" alt="Uploading..." class="edit-loading-spin">
+  }
+</script>
