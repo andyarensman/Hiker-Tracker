@@ -149,6 +149,11 @@
 
 /* EDIT PAGE */
 
+.edit-flex-container {
+  display: flex;
+  min-width: 1450px;
+}
+
 #edit-form-container {
   display: block;
   padding: 0px 35px 12px;
@@ -157,13 +162,49 @@
   margin: 12px 10px 0;
 }
 
+#edit-image-container {
+  width: 270px;
+  padding: 0px 30px 30px;
+  background-color: #F8F8F8;
+  border: 0.75px solid #C0C0BB;
+  margin: 12px 5px 0 10px;
+  flex: none;
+}
+
+.edit-image-upload-box {
+  border: 1px dotted #635F5D;
+  position: relative;
+  height: 195px;
+  background-color: #EFECEA;
+}
+
+.center-image-edit-form {
+  margin-top: 35px;
+}
+
+#edit-upload-image-button {
+  width: 135px;
+  background-color: #708259;
+  color: #F8F8F8;
+  padding: 8px 10px;
+  margin: 22px auto 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  /* grid-column: 2 / 3; */
+}
+
 .edit-loading-spin {
   height: 30px;
   float: right;
 }
+.delete-image-container {
+  grid-column: 4 / 5;
+}
 
 .edit-loading-container {
   padding-top: 30px;
+  grid-column: 5 / 6;
 }
 
 input[type=checkbox] {

@@ -4,10 +4,12 @@
   var hikes = <%- JSON.stringify(data) %>;
   var hikeId = <%- JSON.stringify(hikeId) %>;
   var id = <%- JSON.stringify(user_id) %>;
+  var imageLink = <%- JSON.stringify(image_link) %>;
+  console.log(imageLink)
 
   var hikeTable = document.querySelector('#table');
 
-  var headers = ['Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Delete'];
+  var headers = ['Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Image', 'Delete'];
 
 
   var table = document.createElement('table');
@@ -27,15 +29,21 @@
 
   for (var i = 0; i < hikeArray.length - 2; i++) {
     let cell = document.createElement('td');
+    cell.setAttribute('onclick', 'location.href = \'/dashboard/hike_details/' + hikeId + '\'')
+    cell.setAttribute('class', 'clickable')
     let textNode = document.createTextNode(hikeArray[i] ? hikeArray[i]: '');
     cell.appendChild(textNode);
     row.appendChild(cell);
   }
 
-  var editCell = document.createElement('td');
-  editCell.innerHTML = '<a class="delete" style="cursor: pointer" data-doc="' + hikeId +'" data-id="' + id +'"><img src="/trashcanicon.svg\" alt="trash icon"></a>'
+  var imageCell = document.createElement('td');
+  imageCell.innerHTML = imageLink;
+  row.appendChild(imageCell);
 
-  row.appendChild(editCell);
+  var deleteCell = document.createElement('td');
+  deleteCell.innerHTML = '<a class="delete" style="cursor: pointer" data-doc="' + hikeId +'" data-id="' + id +'"><img src="/trashcanicon.svg\" alt="trash icon"></a>'
+  row.appendChild(deleteCell);
+
   table.appendChild(row);
   hikeTable.appendChild(table);
 

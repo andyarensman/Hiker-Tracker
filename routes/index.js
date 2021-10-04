@@ -298,7 +298,7 @@ router.get('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
   res.render('hikeDetails', { title: 'Hike Details', hikeObject: hike, hikeId: hikeId, image_link: image_link, image_orientation: image_orientation })
 })
 
-//POST Imgur
+//POST Imgur DETAILS PAGE
 router.post('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => {
   var hikeId = req.params.hike;
   const id = req.user._id;
@@ -313,8 +313,6 @@ router.post('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => 
         res.redirect('/dashboard/hike_details/' + hikeId);
       } else {
         console.log('File Uploading');
-
-
 
         //Upload to imgur (file path is `uploads/${req.file.filename}`)
         imgur
@@ -342,7 +340,6 @@ router.post('/dashboard/hike_details/:hike', ensureAuthenticated, (req, res) => 
                 })
               }
             )
-
           })
           .catch((err) => {
             console.error(err.message); //does this need to change?
@@ -360,7 +357,7 @@ router.get('/dashboard/:hike', ensureAuthenticated, (req, res) => {
   Hiker.findById(id)
   .then(hiker => {
     const hikeData = hiker.log.id(hikeId)
-    var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }))(hikeData);
+    var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes }))(hikeData.toJSON());
 
     var idStr = hikeData._id.toString()
 
@@ -370,8 +367,15 @@ router.get('/dashboard/:hike', ensureAuthenticated, (req, res) => {
     var newDate = new Date(hike.hike_date.replace(/-/g, '\/'))
     hike['hike_date'] = newDate.toLocaleDateString('en-US');
 
+    //Checking if there's an image
+    var image_link = 'None';
+    if (hikeData.image_url != undefined) {
+      if (Object.keys(hikeData.image_url).length != 0) {
+        image_link = '<a style="cursor: pointer" href=' + hikeData.image_url.link  + ' target="_blank"><img src="/imageicon.svg\" alt="image icon" style="height: 24"></a>'
+      }
+    }
 
-    res.render('editHike', { data: hike, user_id: id, hikeId: hikeId, title: 'Edit' })
+    res.render('editHike', { data: hike, user_id: id, hikeId: hikeId, title: 'Edit', image_link: image_link })
   })
   .catch(err => {
     console.log(err);
@@ -425,29 +429,28 @@ router.put('/dashboard/:hike', ensureAuthenticated, upload, (req, res) => {
         }
       });
 
-  //UPLOAD TO IMGUR - MAY CHANGE SPOTS
-  if (req.file != undefined) {
-    imgur
-      .uploadFile(`./public/uploads/${req.file.filename}`)
-      .then((json) => {
-        updateObject['log.$.image_url'] = json;
-        updateArray.push('New Image Added');
-      })
-      .catch(err => {
-        console.log('catch message from imgur: ')
-        console.error(err.message); //does this need to change?
-      });
-
-    fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
-      if (err) {
-        console.error(err)
-        return
-      }
-      console.log('file deleted')
-    })
-
-  }
-
+  //OLD UPLOAD TO IMGUR - TO BE DELETED
+  // if (req.file != undefined) {
+  //   imgur
+  //     .uploadFile(`./public/uploads/${req.file.filename}`)
+  //     .then((json) => {
+  //       updateObject['log.$.image_url'] = json;
+  //       updateArray.push('New Image Added');
+  //     })
+  //     .catch(err => {
+  //       console.log('catch message from imgur: ')
+  //       console.error(err.message); //does this need to change?
+  //     });
+  //
+  //   fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+  //     if (err) {
+  //       console.error(err)
+  //       return
+  //     }
+  //     console.log('file deleted')
+  //   })
+  //
+  // }
 
 
   //logic if user doesn't enter anything
@@ -472,10 +475,90 @@ router.put('/dashboard/:hike', ensureAuthenticated, upload, (req, res) => {
 
 })
 
+//EDIT PAGE TO IMGUR
+router.post('/dashboard/:hike', ensureAuthenticated, (req, res) => {
+  var hikeId = req.params.hike;
+  const id = req.user._id;
+  var currentHikeObj = req.user.log.find(obj => obj._id == hikeId);
+
+  upload(req, res, (err) => {
+    if (err) {
+      console.log(err)  //CHANGE TO FLASH
+    } else {
+      if (req.file == undefined) {
+        console.log('Error: No File Selected')
+        req.flash('dashboard_error_msg', 'No File Selected');
+        res.redirect('/dashboard/' + hikeId);
+      } else {
+        console.log('File Uploading');
+
+        //Upload to imgur (file path is `uploads/${req.file.filename}`)
+        imgur
+          .uploadFile(`./public/uploads/${req.file.filename}`)
+          .then((json) => {
+
+            //If there's already an image
+            if (currentHikeObj.image_url != undefined) {
+              var deleteHash = currentHikeObj.image_url.deletehash;
+              imgur
+                .deleteImage(deleteHash)
+                .then((status) => {
+                  console.log('Image deleted from imgur: ' + status);
+                })
+                .catch((err) => {
+                  console.error(err.message);
+                });
+            }
+
+            //Add image link to mongodb
+            Hiker.updateOne(
+              { _id: id, 'log._id': hikeId },
+              { $set: { 'log.$.image_url': json } },
+              (err, doc) => {
+                if (err) {
+                  console.log(err)
+                } else {
+                  req.flash('dashboard_success_msg', 'Successfully Added Image');
+                  res.redirect('/dashboard/' + hikeId);
+                }
+                //Delete file locally
+                fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+                  if (err) {
+                    console.error(err)
+                    return
+                  }
+                  console.log('file deleted')
+                })
+              }
+            )
+
+          })
+          .catch((err) => {
+            console.error(err.message); //does this need to change?
+          });
+      }
+    }
+  });
+})
+
 //delete a hike
 router.delete('/dashboard/:hike', ensureAuthenticated, (req, res) => {
   var id = req.user._id;
   var hikeId = req.params.hike;
+  var currentHikeObj = req.user.log.find(obj => obj._id == hikeId);
+
+  //If there's an image
+  if (currentHikeObj.image_url != undefined) {
+    var deleteHash = currentHikeObj.image_url.deletehash;
+    imgur
+      .deleteImage(deleteHash)
+      .then((status) => {
+        console.log('Image deleted from imgur: ' + status);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+    }
 
   Hiker.updateOne(
     { _id: id },

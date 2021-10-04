@@ -53,19 +53,19 @@
       <label for="notes">Notes</label>
       <textarea id="notes" type="text" name="notes" placeholder="Notes..."></textarea><br>
     </div>
-    <div class="grid-item">
+    <div class="grid-item delete-image-container">
       <label for="delete-image">Delete Current Image</label><br>
       <div class="edit-checkbox">
         <label for="delete-image">
-          <input id="delete-image" type="checkbox" name="delete-image" placeholder="Select Image"><span><em>Check to delete current image</em></span>
+          <input id="delete-image" type="checkbox" name="delete-image" placeholder="Select Image"><span><em>Check to delete</em></span>
         </label>
       </div>
     </div>
-    <div class="grid-item">
+    <!-- <div class="grid-item">
       <label for="upload-button">New Image</label><br>
       <label for="upload-button" class="edit-choose-image"><em id="edit-file-selected">Select Image</em></label>
       <input type="file" name="myImage" accept="image/*" id="upload-button"/><br>
-    </div>
+    </div> -->
     <div id="loading-spin" class="edit-loading-container"></div>
     <button type="submit" id="edit-button" onclick="loadingSpin()">Update Hike</button>
   </form>

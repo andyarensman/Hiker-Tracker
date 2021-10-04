@@ -7,12 +7,52 @@
   <div id="table" style="margin-top: 11px">
     <h3 class="form-title">Current Data From Hike</h3>
   </div>
-  <div class="flex-container">
+  <div class="edit-flex-container">
+    <div id="edit-image-container" class="details-container">
+      <h3 class="login-form-title">Add/Edit Image</h3>
+      <div class="">
+        <div class="edit-image-upload-box">
+          <div class="center-image-edit-form">
 
+            <div class="image-form-container">
+              <form method="POST" encType="multipart/form-data" class="bulk-form" id="image-form">
+                <label for="upload-button" class="choose-image-button">
+                  <i class="fa fa-cloud-upload"></i> Select Image
+                </label><br>
+                <input type="file" name="myImage" accept="image/*" id="upload-button"/>
+                <input type="submit" value="Submit" id="edit-upload-image-button" onclick="imageLoadingSpin()"/>
+              </form>
+              <p id="file-selected"></p>
+              <div id="image-loading-spin"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <%- include("./dataVis/editForm.ejs") %>
 
   </div>
   <%- include('./partials/footer.ejs') %>
+
+
 </body>
 <%- include('./dataVis/editTable.ejs') %>
+<script type="text/javascript">
+  document.getElementById('upload-button').onchange = function () {
+    var fileName = this.value
+    fileName = fileName.replace(/.*[\/\\]/, '');
+    document.getElementById('file-selected').innerHTML = fileName;
+  };
+</script>
+<script type="text/javascript">
+  imageLoadingSpin = () => {
+    var img = document.createElement('img');
+    img.setAttribute('src', '/loading-spin.svg');
+    img.setAttribute('alt', 'Uploading...');
+    img.setAttribute('class', 'loading-spin');
+
+    document.getElementById('image-loading-spin').appendChild(img);
+    // <img src="/loading-spin.svg" alt="Uploading..." class="edit-loading-spin">
+  }
+</script>
 </html>
