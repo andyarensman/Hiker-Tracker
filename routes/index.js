@@ -18,9 +18,7 @@ const clientId = process.env.CLIENT_ID;
 imgur.setClientId(clientId);
 imgur.setAPIUrl('https://api.imgur.com/3/');
 
-
 //ROUTES
-
 //Welcome Page
 router.get('/', otherControllers.welcome_get);
 
