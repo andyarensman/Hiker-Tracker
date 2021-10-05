@@ -1,9 +1,7 @@
-const hikeSchemas = require('../models/hikeSchemas');
-const HikeSession = hikeSchemas.HikeSession;
-const Hiker = hikeSchemas.Hiker;
 const mongoose = require('mongoose');
+const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
-
+//Dashboard Get
 const dashboard_get = (req, res) => {
   const id = req.user._id
 
@@ -39,7 +37,14 @@ const dashboard_get = (req, res) => {
       newUser = "Yes"
     }
 
-    res.render('dashboard', { data: newHikesArray, username: result.name_first, user_id: userId, title: 'Home', isExample: 'No', new_user: newUser })
+    res.render('dashboard', {
+      data: newHikesArray,
+      username: result.name_first,
+      user_id: userId,
+      title: 'Home',
+      isExample: 'No',
+      new_user: newUser
+    })
   })
   .catch(err => {
     console.log(err);
@@ -47,6 +52,7 @@ const dashboard_get = (req, res) => {
   })
 }
 
+//Dashboard Add Hike
 const dashboard_add_hike = (req, res) => {
   const id = req.user._id;
 

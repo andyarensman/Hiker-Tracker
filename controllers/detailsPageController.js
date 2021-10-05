@@ -1,6 +1,3 @@
-const hikeSchemas = require('../models/hikeSchemas');
-const HikeSession = hikeSchemas.HikeSession;
-const Hiker = hikeSchemas.Hiker;
 const mongoose = require('mongoose');
 const imgur = require('imgur');
 const multer = require('multer');
@@ -8,15 +5,14 @@ const path = require('path');
 const fs = require('fs');
 
 const { upload } = require('../config/multer')
+const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
+//Detail Get
 const details_get = (req, res) => {
-
   var hikeId = req.params.hike;
   var hikeObject = req.user.log.find(obj => {
     return obj._id == hikeId
   });
-
-  // console.log(hikeObject.toJSON())
 
   //getting rid of _id
   var hike = (({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes, image_url }) => ({ hike_name, hike_date, mileage, time, elevation_gain, min_elevation, max_elevation, average_pace, average_bpm, max_bpm, city, location, notes, image_url }))(hikeObject.toJSON());
@@ -38,17 +34,23 @@ const details_get = (req, res) => {
       }
     }
   }
-
-  res.render('hikeDetails', { title: 'Hike Details', hikeObject: hike, hikeId: hikeId, image_link: image_link, image_orientation: image_orientation })
+  res.render('hikeDetails', {
+    title: 'Hike Details',
+    hikeObject: hike,
+    hikeId: hikeId,
+    image_link: image_link,
+    image_orientation: image_orientation
+  })
 }
 
+//Details Image Post
 const details_image_post = (req, res) => {
   var hikeId = req.params.hike;
   const id = req.user._id;
 
   upload(req, res, (err) => {
     if (err) {
-      console.log(err)  //CHANGE TO FLASH
+      console.log(err)
     } else {
       if (req.file == undefined) {
         console.log('Error: No File Selected')
@@ -57,7 +59,6 @@ const details_image_post = (req, res) => {
       } else {
         console.log('File Uploading');
 
-        //Upload to imgur (file path is `uploads/${req.file.filename}`)
         imgur
           .uploadFile(`./public/uploads/${req.file.filename}`)
           .then((json) => {
@@ -85,7 +86,7 @@ const details_image_post = (req, res) => {
             )
           })
           .catch((err) => {
-            console.error(err.message); //does this need to change?
+            console.error(err.message);
           });
       }
     }

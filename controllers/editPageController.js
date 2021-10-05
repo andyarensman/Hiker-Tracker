@@ -1,6 +1,3 @@
-const hikeSchemas = require('../models/hikeSchemas');
-const HikeSession = hikeSchemas.HikeSession;
-const Hiker = hikeSchemas.Hiker;
 const mongoose = require('mongoose');
 const imgur = require('imgur');
 const multer = require('multer');
@@ -8,7 +5,9 @@ const path = require('path');
 const fs = require('fs');
 
 const { upload } = require('../config/multer')
+const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
+//Edit Get
 const edit_get = (req, res) => {
   const id = req.user._id;
   var hikeId = req.params.hike;
@@ -33,8 +32,13 @@ const edit_get = (req, res) => {
         image_link = '<a style="cursor: pointer" href=' + hikeData.image_url.link  + ' target="_blank"><img src="/imageicon.svg\" alt="image icon" style="height: 24"></a>'
       }
     }
-
-    res.render('editHike', { data: hike, user_id: id, hikeId: hikeId, title: 'Edit', image_link: image_link })
+    res.render('editHike', {
+      data: hike,
+      user_id: id,
+      hikeId: hikeId,
+      title: 'Edit',
+      image_link: image_link
+    })
   })
   .catch(err => {
     console.log(err);
@@ -42,6 +46,7 @@ const edit_get = (req, res) => {
   })
 }
 
+//Edit Put
 const edit_put = (req, res) => {
   var id = req.user._id;
   var hikeId = req.params.hike;
@@ -51,8 +56,6 @@ const edit_put = (req, res) => {
 
   var updateObject = {};
   var updateArray = [];
-
-  console.log(req.body)
 
   //adding key/values into object from form
   Object.keys(req.body).forEach(key => {
@@ -86,30 +89,6 @@ const edit_put = (req, res) => {
         }
       });
 
-  //OLD UPLOAD TO IMGUR - TO BE DELETED
-  // if (req.file != undefined) {
-  //   imgur
-  //     .uploadFile(`./public/uploads/${req.file.filename}`)
-  //     .then((json) => {
-  //       updateObject['log.$.image_url'] = json;
-  //       updateArray.push('New Image Added');
-  //     })
-  //     .catch(err => {
-  //       console.log('catch message from imgur: ')
-  //       console.error(err.message); //does this need to change?
-  //     });
-  //
-  //   fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
-  //     if (err) {
-  //       console.error(err)
-  //       return
-  //     }
-  //     console.log('file deleted')
-  //   })
-  //
-  // }
-
-
   //logic if user doesn't enter anything
   if (updateArray.length === 0) {
     req.flash('dashboard_error_msg', 'Please fill out at least one field');
@@ -130,6 +109,7 @@ const edit_put = (req, res) => {
   }
 }
 
+//Edit Post Image
 const edit_image_post = (req, res) => {
   var hikeId = req.params.hike;
   const id = req.user._id;
@@ -137,7 +117,7 @@ const edit_image_post = (req, res) => {
 
   upload(req, res, (err) => {
     if (err) {
-      console.log(err)  //CHANGE TO FLASH
+      console.log(err)
     } else {
       if (req.file == undefined) {
         console.log('Error: No File Selected')
@@ -146,7 +126,6 @@ const edit_image_post = (req, res) => {
       } else {
         console.log('File Uploading');
 
-        //Upload to imgur (file path is `uploads/${req.file.filename}`)
         imgur
           .uploadFile(`./public/uploads/${req.file.filename}`)
           .then((json) => {
@@ -185,7 +164,6 @@ const edit_image_post = (req, res) => {
                 })
               }
             )
-
           })
           .catch((err) => {
             console.error(err.message); //does this need to change?
@@ -195,6 +173,7 @@ const edit_image_post = (req, res) => {
   });
 }
 
+//Edit Delete
 const edit_delete = (req, res) => {
   var id = req.user._id;
   var hikeId = req.params.hike;

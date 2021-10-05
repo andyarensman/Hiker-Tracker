@@ -1,19 +1,19 @@
-const hikeSchemas = require('../models/hikeSchemas');
-const HikeSession = hikeSchemas.HikeSession;
-const Hiker = hikeSchemas.Hiker;
-
 const fs = require('fs');
 const csv = require('fast-csv');
 const mongoose = require('mongoose');
 
+const { HikeSession, Hiker } = require('../models/hikeSchemas');
+
+// Bulk Index
 const bulk_index = (req, res) => {
   res.render('bulkUpload', { title: 'Bulk Upload' });
 }
 
+//Bulk Add
 const bulk_add = (req, res) => {
   const id = req.user._id;
 
-  //delete file locally
+  //delete file locally function
   const deleteFile = () => {
     fs.unlink(`./tmp/csv/${req.file.filename}`, (err) => {
       if (err) {

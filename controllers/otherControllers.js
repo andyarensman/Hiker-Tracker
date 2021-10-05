@@ -1,7 +1,6 @@
-const hikeSchemas = require('../models/hikeSchemas');
-const HikeSession = hikeSchemas.HikeSession;
-const Hiker = hikeSchemas.Hiker;
+const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
+//Welcome Get
 const welcome_get = (req, res) => {
 
     const email = 'andrew.arensman@gmail.com'
@@ -33,7 +32,14 @@ const welcome_get = (req, res) => {
 
       var userId = result._id.toString()
 
-      res.render('welcome', { data: newHikesArray, username: 'Andy', user_id: userId, title: 'Welcome', isExample: 'Yes', new_user: 'No' })
+      res.render('welcome', {
+        data: newHikesArray,
+        username: 'Andy',
+        user_id: userId,
+        title: 'Welcome',
+        isExample: 'Yes',
+        new_user: 'No'
+      })
     })
     .catch(err => {
       console.log(err);

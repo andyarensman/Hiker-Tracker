@@ -6,8 +6,7 @@ const nodemailer = require('nodemailer');
 const async = require('async');
 const crypto = require('crypto');
 
-const hikeSchemas = require('../models/hikeSchemas');
-const Hiker = hikeSchemas.Hiker;
+const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
 //Login Page
 router.get('/login', (req, res) => {
