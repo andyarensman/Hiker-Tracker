@@ -3,7 +3,7 @@ const router = express.Router();
 const imgur = require('imgur');
 
 const { ensureAuthenticated } = require('../config/auth');
-const template = require('../public/template.js');
+const template = require('../public/js/template.js');
 const { upload, uploadCSV } = require('../config/multer')
 
 //controllers

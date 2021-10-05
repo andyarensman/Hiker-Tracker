@@ -8,7 +8,7 @@
 
 
   <div id="details-container" class="details-container details-margins">
-    <h3 class="login-form-title"><a id="edit-button" ><img src="/editicon.svg" alt="edit icon" class="edit-icon-details"></a> <%- hikeObject.hike_name %></h3>
+    <h3 class="login-form-title"><a id="edit-button" ><img src="/assets/images/editicon.svg" alt="edit icon" class="edit-icon-details"></a> <%- hikeObject.hike_name %></h3>
     <div <%- image_orientation %>>
       <% if (image_orientation == "class=\"orientation_none\"") { %>
 
@@ -95,7 +95,7 @@
 <script type="text/javascript">
   loadingSpin = () => {
     var img = document.createElement('img');
-    img.setAttribute('src', '/loading-spin.svg');
+    img.setAttribute('src', '/assets/images/loading-spin.svg');
     img.setAttribute('alt', 'Uploading...');
     img.setAttribute('class', 'loading-spin');
 

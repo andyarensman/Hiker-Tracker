@@ -25,12 +25,10 @@ const uri = process.env['MONGO_URI']
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => app.listen(process.env.PORT || 3000))
   .catch((err) => console.log(err));
-
-//register viwe engine
-app.set('view engine', 'ejs');
-
-//not sure where to put this or if I need it
 mongoose.set('useFindAndModify', false);
+
+//register view engine
+app.set('view engine', 'ejs');
 
 //middleware and static files
 app.use(express.static('public'));
