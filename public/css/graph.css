@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
+/* GRAPH CSS */
 
 /*Graph and Form CSS */
 
@@ -12,17 +12,7 @@
   margin: 11px;
 }
 
-
 /* Graph CSS */
-
-svg {
-  /* display: block;
-  margin: 30px auto; */
-}
-body {
-  font-family: 'Roboto';
-  background-color: #635F5D;
-}
 
 .tick line, #y-axis {
   color: #C0C0BB;

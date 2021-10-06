@@ -15,7 +15,6 @@ body {
   min-height: 100%;
 }
 
-
 footer {
   position: absolute;
   right: 0;
@@ -23,11 +22,9 @@ footer {
   left: 0;
   padding: 1rem;
   text-align: center;
-
   display: flex;
   min-width: 1358px;
   margin: 15px 11px 0px;
-  /* padding: 8px 0px 0px; */
   background-color: #635F5D;
   color: #E5E2E0;
   font-size: 12px;

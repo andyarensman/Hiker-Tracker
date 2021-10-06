@@ -39,7 +39,7 @@
       var editCell = document.createElement('td');
 
       if (<%- JSON.stringify(isExample) %> == 'Yes') {
-        editCell.innerHTML = '<img src="/editicon.svg" alt="edit icon">'
+        editCell.innerHTML = '<img src="/assets/images/editicon.svg" alt="edit icon">'
       } else {
         editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/assets/images/editicon.svg" alt="edit icon"></a>'
       }

@@ -10,10 +10,8 @@
   <div class="edit-flex-container">
     <div id="edit-image-container" class="details-container">
       <h3 class="login-form-title">Add/Edit Image</h3>
-      <div class="">
         <div class="edit-image-upload-box">
           <div class="center-image-edit-form">
-
             <div class="image-form-container">
               <form method="POST" encType="multipart/form-data" class="bulk-form" id="image-form">
                 <label for="upload-button" class="choose-image-button">
@@ -27,13 +25,11 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
     <%- include("./dataVis/editForm.ejs") %>
 
   </div>
   <%- include('./partials/footer.ejs') %>
-
 
 </body>
 <%- include('./dataVis/editTable.ejs') %>
@@ -52,7 +48,6 @@
     img.setAttribute('class', 'loading-spin');
 
     document.getElementById('image-loading-spin').appendChild(img);
-    // <img src="/loading-spin.svg" alt="Uploading..." class="edit-loading-spin">
   }
 </script>
 </html>

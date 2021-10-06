@@ -1,0 +1,59 @@
+/* BULK PAGE */
+
+.bulk-form {
+  text-align: center;
+}
+
+.bulk-container {
+  margin: 100px auto;
+  width: 350px;
+  padding: 0px 35px 10px;
+  background-color: #F8F8F8;
+  border: 0.75px solid #C0C0BB;
+}
+
+.bulk-container p, .bulk-container li {
+  color: #635F5D;
+}
+
+.bulk-list {
+  padding-left: 1.2em;
+}
+
+.bulk-list li {
+  padding-left: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.bulk-file-upload {
+  background-color: #137B80;
+  color: #F8F8F8;
+  padding: 8px 60px;
+  margin: 22px auto 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13.3px;
+}
+
+#bulk-button {
+  width: 75%;
+  background-color: #708259;
+  color: #F8F8F8;
+  padding: 8px 10px;
+  margin: 22px auto 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#bulk-file-selected {
+  text-align: center;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: auto;
+  margin-right: auto;
+}
