@@ -211,7 +211,95 @@ There are still some bugs to work out - if the user doesn't follow the csv templ
 
 ## Uploading Photos with Imgur API
 
-*To be added*
+I wanted to have a way for users to include a photo with each of their hikes, but as I understand it, MongoDB doesn't really allow you to store photos. So I decided to use Imgur to store the image and then put a link the image in the `hikeSession` schema in MongoDB.
+
+To get this to work, I needed to use `multer` and `imgur` version 1.0.2 (there is a version 2 in the works, but I had trouble with it). The user uploads the photo via multer to a folder in my server, then my server send it to Imgur, Imgur sends back an object with a link to the image, my server updates MongoDB, and then deletes the image from the server folder.
+
+    const mongoose = require('mongoose');
+    const imgur = require('imgur');
+    const multer = require('multer');
+    const path = require('path');
+    const fs = require('fs');
+    const { HikeSession, Hiker } = require('../models/hikeSchemas');
+
+    // Set The Storage Engine
+    const storage = multer.diskStorage({
+      destination: './public/uploads/',
+      filename: function(req, file, cb){
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+      }
+    });
+
+    // Init Upload Multer
+    const upload = multer({
+      storage: storage,
+      limits:{fileSize: 20000000}
+    }).single('myImage');
+
+    app.post('/dashboard/hike_details/:hike', (req, res) => {
+      var hikeId = req.params.hike;
+      const id = req.user._id;
+
+      upload(req, res, (err) => {
+        if (err) {
+          console.log(err)
+        } else {
+          if (req.file == undefined) {
+            console.log('Error: No File Selected')
+            req.flash('dashboard_error_msg', 'No File Selected');
+            res.redirect('/dashboard/hike_details/' + hikeId);
+          } else {
+            console.log('File Uploading');
+
+            //Send to imgur
+            imgur
+              .uploadFile(`./public/uploads/${req.file.filename}`)
+              .then((json) => {
+
+                //Add image link and information to mongodb
+                Hiker.updateOne(
+                  { _id: id, 'log._id': hikeId },
+                  { $set: { 'log.$.image_url': json } },
+                  (err, doc) => {
+                    if (err) {
+                      console.log(err)
+                    } else {
+                      req.flash('dashboard_success_msg', 'Successfully Added Image');
+                      res.redirect('/dashboard/hike_details/' + hikeId);
+                    }
+                    //Delete file locally
+                    fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+                      if (err) {
+                        console.error(err)
+                        return
+                      }
+                      console.log('file deleted')
+                    })
+                  }
+                )
+              })
+              .catch((err) => {
+                console.error(err.message);
+              });
+          }
+        }
+      });
+    })
+
+The json object that Imgur sends you, after uploading your image, includes a deletehash that can be used to remove the image from Imgur.
+
+  imgur
+    .deleteImage(deletehash)
+    .then((status) => {
+      console.log(status);
+    })
+    .catch((err) => {
+      console.error(err.message);
+    });
+
+I tried to implement the image uploader on my edit page, but ran into some problems. For some reason Imgur would not except the image when it was in the edit form I made earlier. I kept getting an error that read: `EPERM: operation not permitted, stat '(path to the file)'`. I wasn't able to figure out why this was happening, so as a work around I made a separate form and `POST` and that seemed to work fine.
+
+Another weird thing was that according to the Imgur API docs, you need a client ID to be able to work with them. I went through the steps to set that up, but with `npm imgur` installed, it didn't seem like I actually needed the client ID to make it work. It's possible I misunderstood this step though.
 
 ## Always on the Bottom Footer
 
@@ -263,7 +351,7 @@ This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-
 
 # Future Plans
 
-After I get this version up and running, I may try to incorporate React for the front end. I'm also thinking about adding the option to upload one picture per hike using the Imgur API.
+After I get this version up and running, there are a few features I may try to add. I want the users to be able to select a date range for what hikes are being displayed and I would like the users to be able to share their profiles somehow. I may also implement some setting features like allowing the user to hike data fields that they don't use such as BPM.
 
 # Helpful Resources
 
