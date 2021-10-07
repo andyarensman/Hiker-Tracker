@@ -1,0 +1,53 @@
+<script>
+  //may update this
+
+  var hikes = <%- JSON.stringify(data) %>;
+  var hikeTable = document.querySelector('#table');
+  var userId = <%- JSON.stringify(user_id) %>;
+
+  var headers = ['No.', 'Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Edit'];
+
+
+  let table = document.createElement('table');
+  let headerRow = document.createElement('tr');
+  headers.forEach(headerText => {
+      let header = document.createElement('th');
+      let textNode = document.createTextNode(headerText);
+      header.appendChild(textNode);
+      headerRow.appendChild(header);
+  });
+  table.appendChild(headerRow);
+  var count = 1;
+  hikes.forEach(hike => {
+      let row = document.createElement('tr');
+      var hikeArray = Object.values(hike);
+
+      let countCell = document.createElement('td');
+      let textNode = document.createTextNode(count);
+      countCell.appendChild(textNode);
+      row.appendChild(countCell);
+
+      for (var i = 0; i < 12; i++) {
+        let cell = document.createElement('td');
+        let textNode = document.createTextNode(hikeArray[i] ? hikeArray[i]: '');
+        cell.appendChild(textNode);
+        row.appendChild(cell);
+      }
+
+      var editCell = document.createElement('td');
+
+      if (<%- JSON.stringify(isExample) %> == 'Yes') {
+        editCell.innerHTML = '<img src="/assets/images/editicon.svg" alt="edit icon">'
+      } else {
+        editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/assets/images/editicon.svg" alt="edit icon"></a>'
+      }
+
+      row.appendChild(editCell);
+
+      table.appendChild(row);
+
+      count++
+  });
+  hikeTable.appendChild(table);
+
+</script>
