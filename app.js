@@ -9,11 +9,6 @@ const session = require('express-session');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 
-
-const hikeSchemas = require('./models/hikeSchemas');
-const HikeSession = hikeSchemas.HikeSession;
-const Hiker = hikeSchemas.Hiker;
-
 //Passport config
 require('./config/passport')(passport);
 
