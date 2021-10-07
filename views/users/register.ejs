@@ -1,16 +1,16 @@
 <html lang="en">
 
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 
 <body>
 
-  <%- include('./partials/nav-logout.ejs') %>
+  <%- include('../partials/nav-logout.ejs') %>
 
   <div class="login-container">
 
     <h3 class="login-form-title">Register</h3>
 
-    <%- include("./partials/messages") %>
+    <%- include("../partials/messages") %>
 
     <form id="login-form" action="/users/register" method="POST">
       <div class="login-item">
@@ -62,6 +62,6 @@
     </form>
     <p class="login-route">Have An Account? <a href="/users/login">Login</a></p>
   </div>
-  <%- include('./partials/footer.ejs') %>
+  <%- include('../partials/footer.ejs') %>
 </body>
 </html>

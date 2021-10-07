@@ -1,9 +1,9 @@
 <html lang="en">
 
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 <body>
-  <%- include("./partials/nav.ejs") %>
-  <%- include("./partials/messages") %>
+  <%- include("../partials/nav.ejs") %>
+  <%- include("../partials/messages") %>
   <div id="table" style="margin-top: 11px">
     <h3 class="form-title">Current Data From Hike</h3>
   </div>
@@ -26,13 +26,13 @@
           </div>
         </div>
     </div>
-    <%- include("./dataVis/editForm.ejs") %>
+    <%- include("../dataVis/editForm.ejs") %>
 
   </div>
-  <%- include('./partials/footer.ejs') %>
+  <%- include('../partials/footer.ejs') %>
 
 </body>
-<%- include('./dataVis/editTable.ejs') %>
+<%- include('../dataVis/editTable.ejs') %>
 <script type="text/javascript">
   document.getElementById('upload-button').onchange = function () {
     var fileName = this.value

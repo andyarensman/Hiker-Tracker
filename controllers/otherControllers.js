@@ -32,7 +32,7 @@ const welcome_get = (req, res) => {
 
       var userId = result._id.toString()
 
-      res.render('welcome', {
+      res.render('users/welcome', {
         data: newHikesArray,
         username: 'Andy',
         user_id: userId,

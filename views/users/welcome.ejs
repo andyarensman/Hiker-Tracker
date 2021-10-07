@@ -1,8 +1,8 @@
 <html lang="en">
 
-  <%- include("./partials/head.ejs") %>
+  <%- include("../partials/head.ejs") %>
   <body>
-    <%- include("./partials/nav-logout.ejs") %>
+    <%- include("../partials/nav-logout.ejs") %>
     <div class="welcome-container">
     <h3 class="login-form-title">Welcome!</h3>
       <div class="row mt-5">
@@ -22,16 +22,16 @@
 
       <div id="d3-graph"></div>
 
-      <%- include("./dataVis/exampleDescription.ejs") %>
+      <%- include("../dataVis/exampleDescription.ejs") %>
 
     </div>
 
     <div id="table">
       <h3 class="form-title">All Hikes</h3>
     </div>
-    <%- include('./partials/footer.ejs') %>
+    <%- include('../partials/footer.ejs') %>
   </body>
   <script src="https://d3js.org/d3.v5.min.js"></script>
-  <%- include('./dataVis/d3.ejs') %>
-  <%- include('./dataVis/table.ejs') %>
+  <%- include('../dataVis/d3.ejs') %>
+  <%- include('../dataVis/table.ejs') %>
 </html>

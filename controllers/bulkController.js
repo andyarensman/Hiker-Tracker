@@ -6,7 +6,7 @@ const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
 // Bulk Index
 const bulk_index = (req, res) => {
-  res.render('bulkUpload', { title: 'Bulk Upload' });
+  res.render('dashboard/bulkUpload', { title: 'Bulk Upload' });
 }
 
 //Bulk Add

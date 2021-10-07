@@ -37,7 +37,7 @@ const dashboard_get = (req, res) => {
       newUser = "Yes"
     }
 
-    res.render('dashboard', {
+    res.render('dashboard/dashboard', {
       data: newHikesArray,
       username: result.name_first,
       user_id: userId,

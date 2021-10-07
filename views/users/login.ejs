@@ -1,14 +1,14 @@
 <html lang="en">
 
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 
 <body>
-  <%- include("./partials/nav-logout.ejs") %>
+  <%- include("../partials/nav-logout.ejs") %>
   <div class="login-container">
 
     <h3 class="login-form-title">Login</h3>
 
-    <%- include("./partials/messages") %>
+    <%- include("../partials/messages") %>
 
     <form id="login-form" action="/users/login" method="POST">
       <div class="login-item">
@@ -38,8 +38,7 @@
       <a href="/users/forgot">Forgot Password?</a>
     </p>
   </div>
-  <%- include("./partials/footer.ejs") %>
+  <%- include("../partials/footer.ejs") %>
 </body>
-
 
 </html>

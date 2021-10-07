@@ -1,9 +1,9 @@
 <html lang="en">
 
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 <body>
-  <%- include("./partials/nav.ejs") %>
-  <%- include("./partials/messages") %>
+  <%- include("../partials/nav.ejs") %>
+  <%- include("../partials/messages") %>
 
 
 
@@ -86,7 +86,7 @@
     </div>
 
   </div>
-  <%- include('./partials/footer.ejs') %>
+  <%- include('../partials/footer.ejs') %>
 </body>
 <script>
   document.getElementById('edit-button').setAttribute('href', '/dashboard/' + <%- JSON.stringify(hikeId) %>)

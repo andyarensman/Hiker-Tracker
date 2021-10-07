@@ -8,12 +8,12 @@ const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
 //Login Page
 const user_login_get = (req, res) => {
-  res.render('login', { title: 'Login' })
+  res.render('users/login', { title: 'Login' })
 }
 
 //Register Page
 const user_register_get = (req, res) => {
-  res.render('register', { title: 'Register' })
+  res.render('users/register', { title: 'Register' })
 }
 
 //Register Handle
@@ -38,7 +38,7 @@ const register_handle = (req, res) => {
   }
 
   if (errors.length > 0 ){
-    res.render('register', {
+    res.render('users/register', {
       errors, name_first, name_last, email, password, password2, title: 'Register'
     })
   } else {
@@ -48,7 +48,7 @@ const register_handle = (req, res) => {
         if(user) {
           //User Exists
           errors.push({ msg: 'Email is already registered' })
-          res.render('register', {
+          res.render('users/register', {
             errors, name_first, name_last, email, password, password2, title: 'Register'
           });
         } else {
@@ -95,7 +95,7 @@ const logout_handle = (req, res) => {
 
 // Forgot Page
 const forgot_page = (req, res) => {
-  res.render('forgot', { title: 'Forgot Password' })
+  res.render('users/forgot', { title: 'Forgot Password' })
 }
 
 // Forgot Handle
@@ -157,7 +157,7 @@ const reset_get = (req, res) => {
       req.flash('error', 'Password reset token is invalid or has expired.');
       return res.redirect('/users/forgot');
     }
-    res.render('reset', {
+    res.render('users/reset', {
       user: req.user,
       title: 'Reset'
     });
@@ -185,7 +185,7 @@ const reset_post = (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render('reset', {errors, title: 'Reset'})
+    res.render('users/reset', {errors, title: 'Reset'})
   } else {
     async.waterfall([
       function(done) {
@@ -268,7 +268,7 @@ const example_user_get = (req, res) => {
 
     var userId = result._id.toString()
 
-    res.render('exampleUser', {
+    res.render('users/exampleUser', {
       data: newHikesArray,
       username: 'Andy',
       user_id: userId,

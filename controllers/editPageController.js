@@ -32,7 +32,7 @@ const edit_get = (req, res) => {
         image_link = '<a style="cursor: pointer" href=' + hikeData.image_url.link  + ' target="_blank"><img src="/assets/images/imageicon.svg\" alt="image icon" style="height: 24"></a>'
       }
     }
-    res.render('editHike', {
+    res.render('dashboard/editHike', {
       data: hike,
       user_id: id,
       hikeId: hikeId,

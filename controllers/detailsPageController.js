@@ -34,7 +34,7 @@ const details_get = (req, res) => {
       }
     }
   }
-  res.render('hikeDetails', {
+  res.render('dashboard/hikeDetails', {
     title: 'Hike Details',
     hikeObject: hike,
     hikeId: hikeId,

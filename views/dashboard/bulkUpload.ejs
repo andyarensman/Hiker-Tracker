@@ -1,13 +1,13 @@
 <html lang="en">
 
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 <body>
-  <%- include("./partials/nav.ejs") %>
+  <%- include("../partials/nav.ejs") %>
 
   <div class="bulk-container">
     <h3 class="login-form-title">Bulk Upload</h3>
 
-    <%- include("./partials/messages") %>
+    <%- include("../partials/messages") %>
     <p>If you already have a spreadsheet of your hiking data, you can follow the steps below to upload them faster:</p>
     <ol class="bulk-list">
       <li>Download this <a href="/template">CSV template</a></li>
@@ -26,7 +26,7 @@
     </form>
     <p id="bulk-file-selected"></p>
   </div>
-  <%- include('./partials/footer.ejs') %>
+  <%- include('../partials/footer.ejs') %>
 </body>
 
 <script type="text/javascript">
