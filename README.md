@@ -2,7 +2,23 @@
 
 This web app is being built as a way to practice full stack development with Node, Express, MongoDB, Mongoose, EJS, and D3. It will allow the user to log in, input data they collect from hiking, then see a visualization of the data.
 
-## Mongoose Schemas
+## Table of Contents
+
+1. [Mongoose Schemas](#mongoose-schemas)
+2. [Challenges](#challenges)
+  - [Login Systems with Passport](#login)
+  - [Password Reset](#reset)
+  - [MongoDB to D3 via EJS](#d3)
+  - [PUT Request with HTML Forms](#put)
+  - [Bulk Upload with a CSV File](#bulk)
+  - [Uploading Photos with Imgur API](#imgur)
+  - [Always on the Bottom Footer](#footer)
+  - [D3 Scatter Plot](#graph)
+3. [Future Plans](#future)
+4. [Helpful Resources](#helpful)
+
+<a name="mongoose-schemas"></a>
+### Mongoose Schemas
 
 For the schemas, I used the following setup:
 
@@ -19,7 +35,8 @@ For the schemas, I used the following setup:
         max_bpm: Number,
         city: {type: String, required: true},
         location: {type: String, required: true},
-        notes: String
+        notes: String,
+        image_url: Schema.Types.Mixed
       })
 
     const hikerSchema = new mongoose.Schema({
@@ -35,9 +52,11 @@ For the schemas, I used the following setup:
 
 *(Note: This will likely change before the app is complete.)*
 
-# Challenges
+<a name="challenges"></a>
+## Challenges
 
-## Login Systems with Passport
+<a name="login"></a>
+### Login Systems with Passport
 
 It took awhile to find a way to get a login system working with my set up. I found a lot of tutorials on using Passport without MongoDB and/or Mongoose, but very few with both. I ended up finding [this tutorial](https://www.youtube.com/watch?v=6FOq4cUdH8k&ab_channel=TraversyMedia) by [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA), which suited all my needs.
 
@@ -45,13 +64,15 @@ After Passport is set up following the tutorial above, I could access all the us
 
 *(Note: The login system was one of the last main features I added.)*
 
-## Password reset
+<a name="reset"></a>
+### Password Reset
 
 To allow the user to reset their password if they forgot it, I used [this tutorial](http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/) by Sahat Yalkabov. The tutorial is a little outdated (2014), so I had to change a few things. To get `nodemailer` to work, remove the `'SMTP'` argument from the `createTransport` methods. To get `SendGrid` working, you need to make an account, then go under settings => api keys and create a key. Back in the `createTransport` method, `auth.user` will always be `apikey` and `auth.pass` will be the api key you created on `SendGrid`. You will likely want to use `.env` with your api key.
 
 Sahat also left out encrypting the new password, so I had to do that using `bcrypt` like I did for creating a new user.
 
-## MongoDB to D3 via EJS
+<a name="d3"></a>
+### MongoDB to D3 via EJS
 
 One of the biggest challenges I faced was getting the MongoDB data into D3. I originally had my D3 in a js file as a module and ran the module in a `GET` request. I couldn't get this to work because D3 wouldn't import correctly. I settled on putting the D3 function as a script in an EJS file. This allowed me to send the data from the `GET` request to the EJS file.
 
@@ -75,7 +96,8 @@ And this is the line I used to import the data into an EJS file:
 
 Originally I imported using an equals sign: `<%= data %>`. This messed up the formatting of the data, so I had to change it to the minus sign: `<%- data %>`.
 
-## PUT Request with HTML Forms
+<a name="put"></a>
+### PUT Request with HTML Forms
 
 I struggled to figure out how to do a `PUT` request with an HTML form. HTML only allow you to use `POST` and `GET` methods, so I had to install [method-override](http://expressjs.com/en/resources/middleware/method-override.html). Inside your form element you have to put this:
 
@@ -114,7 +136,8 @@ To update the file, I used the following in my `PUT` method:
 
 By turning `req.body` into an array of keys, I was able to make the `updateObject` contain only the fields the user entered and to put the keys in the correct format for the `updateOne` method.
 
-## Bulk Upload with a CSV File
+<a name="bulk"></a>
+### Bulk Upload with a CSV File
 
 I wanted to include an option for the user to add multiple hikes at once via a spreadsheet. I ended up finding this tutorial by Jamie Munro: [Bulk Import a CSV File Into MongoDB Using Mongoose With Node.js](https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574).
 
@@ -209,7 +232,8 @@ There were a few things I had to alter from the guide. In Jamie's version, he on
 
 There are still some bugs to work out - if the user doesn't follow the csv template corretly, there might be some problems. This will be looked into soon.
 
-## Uploading Photos with Imgur API
+<a name="imgur"></a>
+### Uploading Photos with Imgur API
 
 I wanted to have a way for users to include a photo with each of their hikes, but as I understand it, MongoDB doesn't really allow you to store photos. So I decided to use Imgur to store the image and then put a link the image in the `hikeSession` schema in MongoDB.
 
@@ -301,7 +325,8 @@ I tried to implement the image uploader on my edit page, but ran into some probl
 
 Another weird thing was that according to the Imgur API docs, you need a client ID to be able to work with them. I went through the steps to set that up, but with `npm imgur` installed, it didn't seem like I actually needed the client ID to make it work. It's possible I misunderstood this step though.
 
-## Always on the Bottom Footer
+<a name="footer"></a>
+### Always on the Bottom Footer
 
 There are quite a few Stack Overflow questions about how to get your footer to always be at the bottom of the page, but people mean different things when they ask this. Some people want the footer to be sticky - always at the bottom of the view window no matter how far you scroll. I wanted my footer to always be the last thing on the page, at the bottom of the view window, but not visible if you can scroll on the page.
 
@@ -343,17 +368,20 @@ CSS:
       left: 0;
     }
 
-## D3 Scatter Plot
+<a name="graph"></a>
+### D3 Scatter Plot
 
 This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-scatter-plot) I used when first practicing D3. Here is an example of what it looks like:
 
 ![Example Image](https://i.imgur.com/zIaEz3Q.gif)
 
-# Future Plans
+<a name="future"></a>
+## Future Plans
 
 After I get this version up and running, there are a few features I may try to add. I want the users to be able to select a date range for what hikes are being displayed and I would like the users to be able to share their profiles somehow. I may also implement some setting features like allowing the user to hike data fields that they don't use such as BPM.
 
-# Helpful Resources
+<a name="helpful"></a>
+## Helpful Resources
 
 - Sunlight StyleGuide DataViz by Amy Cesal: [[github]](https://github.com/amycesal/dataviz-style-guide/blob/master/Sunlight-StyleGuide-DataViz.pdf)
 - FreeCodeCamp Data Visualization: [[freeCodeCamp certification]](https://www.freecodecamp.org/learn/data-visualization/)
