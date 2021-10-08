@@ -12,6 +12,7 @@ const dashboardController = require('../controllers/dashboardController');
 const bulkController = require('../controllers/bulkController');
 const detailsPageController = require('../controllers/detailsPageController');
 const editPageController = require('../controllers/editPageController');
+const settingsController = require('../controllers/settingsController');
 
 //imgur setup - may not be needed
 const clientId = process.env.CLIENT_ID;
@@ -27,6 +28,18 @@ router.get('/dashboard', ensureAuthenticated, dashboardController.dashboard_get)
 
 //dashboard - add new hike
 router.post('/dashboard', ensureAuthenticated, dashboardController.dashboard_add_hike);
+
+// GET settings
+router.get('/dashboard/settings', ensureAuthenticated, settingsController.settings_get);
+
+// GET change password
+router.get('/dashboard/settings/change_password', ensureAuthenticated, settingsController.change_password_get);
+
+// Get change email
+router.get('/dashboard/settings/change_email', ensureAuthenticated, settingsController.change_email_get);
+
+//Get delete account
+router.get('/dashboard/settings/delete_account', ensureAuthenticated, settingsController.delete_account_get);
 
 //Bulk Upload - Page render
 router.get('/dashboard/bulk_add', ensureAuthenticated, bulkController.bulk_index);

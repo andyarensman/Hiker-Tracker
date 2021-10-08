@@ -1,3 +1,10 @@
+<% if(warning_msg != '') { %>
+  <div class="isa_warning">
+    <i class="fa fa-exclamation-triangle"></i>
+    <%= warning_msg %>
+  </div>
+<% } %>
+
 <% if(typeof errors != 'undefined') { %>
   <% errors.forEach(function (error) { %>
     <div class="isa_error">

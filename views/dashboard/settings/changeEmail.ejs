@@ -1,0 +1,54 @@
+<html lang="en">
+
+<%- include("../../partials/head.ejs") %>
+
+<body>
+  <%- include("../../partials/nav.ejs") %>
+  <div class="login-container">
+
+    <h3 class="login-form-title">Change Email</h3>
+
+    <%- include("../../partials/messages") %>
+
+    <form id="login-form" action="" method="POST">
+      <div class="login-item">
+        <label for="email" id="login-label">New Email</label><br>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter Email"
+        />
+      </div>
+      <div class="login-item">
+        <label for="password" id="login-label">Password</label><br>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter Password"
+        />
+      </div>
+      <div class="login-item">
+        <label for="password2" id="login-label">Confirm Password</label><br>
+        <input
+          type="password"
+          id="password2"
+          name="password2"
+          placeholder="Confirm Password"
+        />
+      </div>
+      <button type="submit" id="login-button">Update Email</button>
+    </form>
+    <p class="login-route">
+      <a href="/dashboard/settings">Back</a>
+    </p>
+    <p class="login-route">
+      <a href="/users/forgot">Forgot Password?</a>
+    </p>
+
+  </div>
+  <%- include("../../partials/footer.ejs") %>
+</body>
+
+</html>
