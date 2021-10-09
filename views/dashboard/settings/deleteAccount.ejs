@@ -12,12 +12,23 @@
 
     <form id="login-form" action="" method="POST">
       <div class="login-item">
+        <label for="email" id="login-label">Email</label><br>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter Email"
+          required=''
+        />
+      </div>
+      <div class="login-item">
         <label for="password" id="login-label">Password</label><br>
         <input
           type="password"
           id="password"
           name="password"
           placeholder="Enter Password"
+          required=''
         />
       </div>
       <div class="login-item">
@@ -27,6 +38,7 @@
           id="password2"
           name="password2"
           placeholder="Confirm Password"
+          required=''
         />
       </div>
       <div class="login-item">

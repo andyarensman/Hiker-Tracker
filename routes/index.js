@@ -35,11 +35,20 @@ router.get('/dashboard/settings', ensureAuthenticated, settingsController.settin
 // GET change password
 router.get('/dashboard/settings/change_password', ensureAuthenticated, settingsController.change_password_get);
 
+// GET change password
+router.post('/dashboard/settings/change_password', ensureAuthenticated, settingsController.change_password_post);
+
 // Get change email
 router.get('/dashboard/settings/change_email', ensureAuthenticated, settingsController.change_email_get);
 
-//Get delete account
+// Get change email
+router.post('/dashboard/settings/change_email', ensureAuthenticated, settingsController.change_email_post);
+
+// Get delete account
 router.get('/dashboard/settings/delete_account', ensureAuthenticated, settingsController.delete_account_get);
+
+// Delete Account
+router.post('/dashboard/settings/delete_account', ensureAuthenticated, settingsController.delete_account);
 
 //Bulk Upload - Page render
 router.get('/dashboard/bulk_add', ensureAuthenticated, bulkController.bulk_index);
