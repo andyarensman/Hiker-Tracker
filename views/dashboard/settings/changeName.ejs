@@ -1,0 +1,77 @@
+<html lang="en">
+
+<%- include("../../partials/head.ejs") %>
+
+<body>
+  <%- include("../../partials/nav.ejs") %>
+  <div class="login-container">
+
+    <h3 class="login-form-title">Change Name</h3>
+
+    <%- include("../../partials/messages") %>
+
+    <form id="login-form" method="POST" action="/dashboard/settings/change_name?_method=PUT" autocomplete="off">
+      <div class="login-item">
+        <label for="name_first" id="login-label">First Name</label><br>
+        <input
+          type="text"
+          id="name_first"
+          name="name_first"
+          placeholder="Enter First Name"
+          autocomplete="given-name"
+        />
+      </div>
+      <div class="login-item">
+        <label for="name_last" id="login-label">Last Name</label><br>
+        <input
+          type="text"
+          id="name_last"
+          name="name_last"
+          placeholder="Enter Last Name"
+          autocomplete="family-name"
+        />
+      </div>
+      <div class="login-item">
+        <label for="email" id="login-label">Email</label><br>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter Email"
+          required=''
+        />
+      </div>
+      <div class="login-item">
+        <label for="password" id="login-label">Password</label><br>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter Password"
+          required=''
+        />
+      </div>
+      <div class="login-item">
+        <label for="password2" id="login-label">Confirm Password</label><br>
+        <input
+          type="password"
+          id="password2"
+          name="password2"
+          placeholder="Confirm Password"
+          required=''
+        />
+      </div>
+      <button type="submit" id="login-button">Change Name</button>
+    </form>
+    <p class="login-route">
+      <a href="/dashboard/settings">Back</a>
+    </p>
+    <p class="login-route">
+      <a href="/users/forgot">Forgot Password?</a>
+    </p>
+
+  </div>
+  <%- include("../../partials/footer.ejs") %>
+</body>
+
+</html>

@@ -9,8 +9,12 @@
     <h3 class="login-form-title">Account</h3>
 
     <%- include("../../partials/messages") %>
-    <p><a href="/dashboard/settings/change_password">Change Password</a></p>
+    <p>First Name: <%- name_first %></p>
+    <p>Last Name: <%- name_last %></p>
+    <p>Email: <%- email %></p>
+    <p><a href="/dashboard/settings/change_name">Change Name</a></p>
     <p><a href="/dashboard/settings/change_email">Change Email</a></p>
+    <p><a href="/dashboard/settings/change_password">Change Password</a></p>
     <p><a href="/dashboard/settings/delete_account">Delete Account</a></p>
 
   </div>

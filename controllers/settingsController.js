@@ -5,9 +5,77 @@ const { HikeSession, Hiker } = require('../models/hikeSchemas');
 
 //Setting Get
 const settings_get = (req, res) => {
+  var { name_first, name_last, email } = req.user;
   res.render('dashboard/settings/settings', {
+    title: 'Settings',
+    name_first,
+    name_last,
+    email
+  })
+}
+
+//Name Get
+const name_get = (req, res) => {
+  res.render('dashboard/settings/changeName', {
     title: 'Settings'
   })
+}
+
+//Name Post
+const name_post = (req, res) => {
+  var id = req.user._id;
+  var current_password = req.user.password;
+  var { name_first, name_last, password, password2 } = req.body;
+  var updateObject = {};
+  var errors = [];
+
+  if (name_first != '') {
+    updateObject.name_first = name_first;
+  }
+
+  if (name_last != '') {
+    updateObject.name_last = name_last;
+  }
+
+  if (name_first == '' && name_last == '') {
+    errors.push({ msg: 'Enter at least one name.' });
+  }
+
+  if (password != password2) {
+    errors.push({ msg: 'Passwords do not match.' });
+  }
+
+  if (errors.length > 0) {
+    res.render('dashboard/settings/changeName', {
+      errors,
+      title: 'Settings'
+    })
+  } else {
+    //check if password is Incorrect
+    bcrypt.compare(password, current_password, (err, isMatch) => {
+      if (err) throw err;
+
+      if(!isMatch) {
+        res.render('dashboard/settings/changeName', {
+          title: 'Settings',
+          error_msg: 'Incorrect password.'
+        })
+      } else {
+        Hiker.updateOne(
+          { _id: id },
+          updateObject,
+          (err, doc) => {
+            if (err) {
+              console.log(err)
+            } else {
+              req.flash('success_msg', 'Successfully Updated Name');
+              res.redirect('/dashboard/settings/change_name');
+            }
+          }
+        )
+      }
+    });
+  }
 }
 
 //Password Get
@@ -148,7 +216,7 @@ const delete_account = (req, res) => {
     errors.push({ msg: 'Box is not checked.' });
   }
 
-  if (errors.length > 0 ){
+  if (errors.length > 0){
     res.render('dashboard/settings/deleteAccount', {
       errors,
       title: 'Settings',
@@ -203,6 +271,8 @@ const delete_account = (req, res) => {
 
 module.exports = {
   settings_get,
+  name_get,
+  name_post,
   change_password_get,
   change_password_post,
   change_email_get,

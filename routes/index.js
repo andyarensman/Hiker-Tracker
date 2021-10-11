@@ -32,16 +32,22 @@ router.post('/dashboard', ensureAuthenticated, dashboardController.dashboard_add
 // GET settings
 router.get('/dashboard/settings', ensureAuthenticated, settingsController.settings_get);
 
+// GET change name
+router.get('/dashboard/settings/change_name', ensureAuthenticated, settingsController.name_get);
+
+// PUT change name
+router.put('/dashboard/settings/change_name', ensureAuthenticated, settingsController.name_post);
+
 // GET change password
 router.get('/dashboard/settings/change_password', ensureAuthenticated, settingsController.change_password_get);
 
-// GET change password
+// POST change password
 router.post('/dashboard/settings/change_password', ensureAuthenticated, settingsController.change_password_post);
 
 // Get change email
 router.get('/dashboard/settings/change_email', ensureAuthenticated, settingsController.change_email_get);
 
-// Get change email
+// Post change email
 router.post('/dashboard/settings/change_email', ensureAuthenticated, settingsController.change_email_post);
 
 // Get delete account
