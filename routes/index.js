@@ -48,7 +48,7 @@ router.post('/dashboard/settings/change_email', ensureAuthenticated, settingsCon
 router.get('/dashboard/settings/delete_account', ensureAuthenticated, settingsController.delete_account_get);
 
 // Delete Account
-router.post('/dashboard/settings/delete_account', ensureAuthenticated, settingsController.delete_account);
+router.put('/dashboard/settings/delete_account', ensureAuthenticated, settingsController.delete_account);
 
 //Bulk Upload - Page render
 router.get('/dashboard/bulk_add', ensureAuthenticated, bulkController.bulk_index);

@@ -177,25 +177,25 @@ const delete_account = (req, res) => {
           }
         })
 
-        console.log(hikes_to_delete)
-
-        //delete all images from IMGUR
-        var delete_count = 0;
-        hikes_to_delete.forEach(image => {
-          console.log(image)
-          imgur
-            .deleteImage(image)
+        //delete all images from IMGUR (seems to be working)
+        for (var i = 0; i < hikes_to_delete.length; i++) {
+            imgur
+            .deleteImage(hikes_to_delete[i])
             .then((status) => {
-              delete_count += 1;
+              console.log(status)
             })
             .catch((err) => {
               console.error(err.message);
             });
-        });
-        console.log(delete_count + " images deleted of " + hikes_to_delete.length)
+        }
 
         //delete from mongodb
-
+        Hiker.deleteOne({ _id: id })
+          .then(result => {
+            req.logout();
+            req.flash('dashboard_success_msg', 'Account Deleted');
+            res.redirect('/');
+          })
       }
     });
   }
