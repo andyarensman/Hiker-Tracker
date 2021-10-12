@@ -105,3 +105,49 @@ label {
   font-size: 12px;
   color: #635F5D;
 }
+
+/* Settings Page */
+
+.setting-container {
+  margin: 100px auto;
+  width: 350px;
+  padding: 0px 35px 10px;
+  background-color: #F8F8F8;
+  border: 0.75px solid #C0C0BB;
+}
+
+.setting-container h4, .setting-container p {
+  color: #635F5D;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  font-size: 14px;
+}
+
+.setting-container h4 {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.setting-container p {
+  margin-top: 0px;
+  margin-bottom: 16px;
+}
+
+.settings-nav {
+  font-size: 14px;
+  text-align: center;
+  color: #635F5D;
+  font-weight: 300;
+  margin: 35px 0px 11px;
+}
+
+.delete-checkbox {
+  margin-left: 30px;
+  margin-top: 5px;
+}
+
+
+
+input[name="delete-checkbox"] {
+  margin-left: 0px;
+}

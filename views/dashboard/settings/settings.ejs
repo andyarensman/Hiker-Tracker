@@ -4,19 +4,23 @@
 
 <body>
   <%- include("../../partials/nav.ejs") %>
-  <div class="login-container">
+  <div class="setting-container">
 
     <h3 class="login-form-title">Account</h3>
 
     <%- include("../../partials/messages") %>
-    <p>First Name: <%- name_first %></p>
-    <p>Last Name: <%- name_last %></p>
-    <p>Email: <%- email %></p>
-    <p><a href="/dashboard/settings/change_name">Change Name</a></p>
-    <p><a href="/dashboard/settings/change_email">Change Email</a></p>
-    <p><a href="/dashboard/settings/change_password">Change Password</a></p>
-    <p><a href="/dashboard/settings/delete_account">Delete Account</a></p>
-
+    <h4>First Name</h4>
+    <p><%- name_first %></p>
+    <h4>Last Name</h4>
+    <p><%- name_last %></p>
+    <h4>Email</h4>
+    <p><%- email %></p>
+    <div class="settings-nav">
+      <p><a href="/dashboard/settings/change_name">Change Name</a></p>
+      <p><a href="/dashboard/settings/change_email">Change Email</a></p>
+      <p><a href="/dashboard/settings/change_password">Change Password</a></p>
+      <p><a href="/dashboard/settings/delete_account">Delete Account</a></p>
+    </div>
   </div>
   <%- include("../../partials/footer.ejs") %>
 </body>
