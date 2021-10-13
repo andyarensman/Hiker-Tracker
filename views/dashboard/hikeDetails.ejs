@@ -57,31 +57,42 @@
           <h4>Elevation Gain</h4>
           <p><%- hikeObject.elevation_gain %> ft</p>
         </div>
-        <div class="grid-item">
-          <h4>Average Pace</h4>
-          <p><%- hikeObject.average_pace %></p>
-        </div>
-        <div class="grid-item">
-          <h4>Min Elevation</h4>
-          <p><%- hikeObject.min_elevation %> ft</p>
-        </div>
-        <div class="grid-item">
-          <h4>Max Elevation</h4>
-          <p><%- hikeObject.max_elevation %> ft</p>
-        </div>
-        <div class="grid-item">
-          <h4>Average BPM</h4>
-          <p><%- hikeObject.average_bpm %> BPM</p>
-        </div>
-        <div class="grid-item">
-          <h4>Max BPM</h4>
-          <p><%- hikeObject.max_bpm %> BPM</p>
-        </div>
-
-        <div id="details-notes" class="grid-item">
-          <h4>Notes</h4>
-          <p id='details-notes-p'><%- hikeObject.notes %></p>
-        </div>
+        <% if (hikeObject.average_pace) { %>
+          <div class="grid-item">
+            <h4>Average Pace</h4>
+            <p><%- hikeObject.average_pace %></p>
+          </div>
+        <% } %>
+        <% if (hikeObject.min_elevation) { %>
+          <div class="grid-item">
+            <h4>Min Elevation</h4>
+            <p><%- hikeObject.min_elevation %> ft</p>
+          </div>
+        <% } %>
+        <% if (hikeObject.max_elevation) { %>
+          <div class="grid-item">
+            <h4>Max Elevation</h4>
+            <p><%- hikeObject.max_elevation %> ft</p>
+          </div>
+        <% } %>
+        <% if (hikeObject.average_bpm) { %>
+          <div class="grid-item">
+            <h4>Average BPM</h4>
+            <p><%- hikeObject.average_bpm %> BPM</p>
+          </div>
+        <% } %>
+        <% if (hikeObject.max_bpm) { %>
+          <div class="grid-item">
+            <h4>Max BPM</h4>
+            <p><%- hikeObject.max_bpm %> BPM</p>
+          </div>
+        <% } %>
+        <% if (hikeObject.notes) { %>
+          <div id="details-notes" class="grid-item">
+            <h4>Notes</h4>
+            <p id='details-notes-p'><%- hikeObject.notes %></p>
+          </div>
+        <% } %>
       </div>
     </div>
 
@@ -90,7 +101,9 @@
 </body>
 <script>
   document.getElementById('edit-button').setAttribute('href', '/dashboard/' + <%- JSON.stringify(hikeId) %>)
-  document.getElementById('image-form').setAttribute('action', '/dashboard/hike_details/' + <%- JSON.stringify(hikeId) %>)
+   if (<%- JSON.stringify(image_orientation) %> == "class=\"orientation_none\"") {
+     document.getElementById('image-form').setAttribute('action', '/dashboard/hike_details/' + <%- JSON.stringify(hikeId) %>)
+   }
 </script>
 <script type="text/javascript">
   loadingSpin = () => {
