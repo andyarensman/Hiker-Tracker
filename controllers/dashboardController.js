@@ -48,7 +48,7 @@ const dashboard_get = (req, res) => {
   })
   .catch(err => {
     console.log(err);
-    res.status(404).render('404');
+    res.status(404).render('404', { title: '404' });
   })
 }
 
