@@ -86,6 +86,14 @@ const details_image_post = (req, res) => {
             )
           })
           .catch((err) => {
+            //Delete file locally in case something goes wrong
+            fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+              if (err) {
+                console.error(err)
+                return
+              }
+              console.log('file deleted')
+            })
             console.error(err.message);
           });
       }

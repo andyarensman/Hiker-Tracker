@@ -139,6 +139,14 @@ const edit_image_post = (req, res) => {
                   console.log('Image deleted from imgur: ' + status);
                 })
                 .catch((err) => {
+                  //Delete file locally
+                  fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+                    if (err) {
+                      console.error(err)
+                      return
+                    }
+                    console.log('file deleted')
+                  })
                   console.error(err.message);
                 });
             }
@@ -166,6 +174,14 @@ const edit_image_post = (req, res) => {
             )
           })
           .catch((err) => {
+            //Delete file locally if error
+            fs.unlink(`./public/uploads/${req.file.filename}`, (err) => {
+              if (err) {
+                console.error(err)
+                return
+              }
+              console.log('file deleted')
+            })
             console.error(err.message); //does this need to change?
           });
       }
