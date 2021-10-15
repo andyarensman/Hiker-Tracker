@@ -57,3 +57,15 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+#bulk_form_cell {
+  resize: none;
+  margin: 0;
+  background-color: inherit;
+  font: inherit;
+  border: none;
+}
+
+#input_cell {
+  padding: 0;
+}

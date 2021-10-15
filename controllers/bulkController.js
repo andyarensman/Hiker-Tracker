@@ -9,7 +9,7 @@ const bulk_index = (req, res) => {
   res.render('dashboard/bulkUpload', { title: 'Bulk Upload' });
 }
 
-//Bulk Add
+//Bulk Add POST
 const bulk_add = (req, res) => {
   const id = req.user._id;
 
@@ -20,7 +20,7 @@ const bulk_add = (req, res) => {
         console.error(err)
         return
       }
-      console.log('file deleted')
+      // console.log('file deleted')
       })
   }
 
@@ -40,7 +40,7 @@ const bulk_add = (req, res) => {
         ignoreEmpty: true
       })
       .on('data', (data) => {
-        data['_id'] = new mongoose.Types.ObjectId();
+        // data['_id'] = new mongoose.Types.ObjectId(); //might not need this?
         updateObjectArray.push(data);
 
       })
@@ -69,17 +69,26 @@ const bulk_add = (req, res) => {
           })
         }
 
-        Hiker.findByIdAndUpdate(
-          id,
-          {$push : {log: { $each: updateObjectArray } } },
-          {new: true},
-          (error, updatedUser) => {
-            if(!error) {
-              req.flash('dashboard_success_msg', 'Multiple Hikes Successfully Added!');
-              res.redirect('/dashboard')
-            }
-          }
-        )
+        //console.log(updateObjectArray)
+
+
+        // Hiker.findByIdAndUpdate(
+        //   id,
+        //   {$push : {log: { $each: updateObjectArray } } },
+        //   {new: true},
+        //   (error, updatedUser) => {
+        //     if(!error) {
+        //       req.flash('dashboard_success_msg', 'Multiple Hikes Successfully Added!');
+        //       res.redirect('/dashboard')
+        //     }
+        //   }
+        // )
+        res.render('dashboard/bulkUploadCheck', {
+          title: 'Bulk Upload',
+          data: updateObjectArray
+        })
+
+
       })
     deleteFile();
   }
