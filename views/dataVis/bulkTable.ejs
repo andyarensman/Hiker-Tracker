@@ -1,0 +1,48 @@
+<script>
+  var hikes = <%- JSON.stringify(data) %>;
+  var hikeTable = document.querySelector('#table');
+
+  var headers = ['Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Notes'];
+
+
+  var table = document.createElement('table');
+  var headerRow = document.createElement('tr');
+
+  headers.forEach(headerText => {
+      var header = document.createElement('th');
+      var textNode = document.createTextNode(headerText);
+      header.appendChild(textNode);
+      headerRow.appendChild(header);
+  });
+
+  table.appendChild(headerRow);
+
+  hikes.forEach(hike => {
+      var row = document.createElement('tr');
+      var hikeArray = Object.values(hike);
+      var hikeKeys = Object.keys(hike);
+
+      for (var i = 0; i < 13; i++) {
+        var cell = document.createElement('td');
+        cell.setAttribute('id', 'input_cell')
+        var cellHTML;
+
+        if (hikeArray[i]) {
+          cellHTML = `<textarea id='bulk_form_cell' rows='4' name='${hikeKeys[i]}'>${hikeArray[i]}</textarea>`
+        } else {
+          cellHTML = `<textarea id='${hikeKeys[i]}' rows='4' name='${hikeKeys[i]}'></textarea>`
+        }
+
+        cell.innerHTML = cellHTML;
+
+        row.appendChild(cell);
+      }
+
+      table.appendChild(row);
+
+  });
+  hikeTable.appendChild(table);
+
+</script>
+
+<!-- `<input type='text' id='hikeArray[i]'' value=hikeArray[i]' name='hikeArray[i]' pattern='DIFFERENT' title=DIFFERENT required='DIFFERENT'></input> -->
