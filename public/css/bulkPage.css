@@ -69,3 +69,30 @@
 #input_cell {
   padding: 0;
 }
+
+#text_cell {
+  padding: 0;
+}
+
+#bulkDate, #bulkMileage, #bulkDuration, #bulkElGainft, #bulkMinElft, #bulkMaxElft, #bulkAvgPace , #bulkAvgBPM, #bulkMaxBPM {
+  width: 90px;
+}
+
+#bulkCity {
+  width: 110px;
+}
+
+#bulkLocation {
+  width: 130px;
+}
+
+#bulk-submit-button {
+  width: 120px;
+  background-color: #708259;
+  color: #F8F8F8;
+  padding: 8px 10px;
+  margin: 22px auto 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

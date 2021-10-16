@@ -10,12 +10,22 @@
 
   headers.forEach(headerText => {
       var header = document.createElement('th');
+      header.setAttribute('id', 'bulk' + headerText.replace(/[\s\.()]/g, ''));
       var textNode = document.createTextNode(headerText);
       header.appendChild(textNode);
       headerRow.appendChild(header);
   });
 
   table.appendChild(headerRow);
+
+  //Helper function to set multiple attributes
+  function setAttributes(el, attrs) {
+    for(var key in attrs) {
+      el.setAttribute(key, attrs[key]);
+    }
+  }
+
+  var count = 1;
 
   hikes.forEach(hike => {
       var row = document.createElement('tr');
@@ -24,25 +34,126 @@
 
       for (var i = 0; i < 13; i++) {
         var cell = document.createElement('td');
-        cell.setAttribute('id', 'input_cell')
-        var cellHTML;
 
-        if (hikeArray[i]) {
-          cellHTML = `<textarea id='bulk_form_cell' rows='4' name='${hikeKeys[i]}'>${hikeArray[i]}</textarea>`
+
+        //if Name or Notes: Text area
+        if (hikeKeys[i] == 'hike_name' || hikeKeys[i] == 'notes') {
+          cell.setAttribute('id', 'input_cell')
+          var dataPoint = document.createElement('textarea');
+
+          setAttributes(dataPoint, {
+            'id': 'bulk_form_cell',
+            'rows': '3',
+            'name': hikeKeys[i] + count
+          })
+
+          var cellHTML = `${hikeArray[i]}`;
+          dataPoint.innerHTML = cellHTML;
+
         } else {
-          cellHTML = `<textarea id='${hikeKeys[i]}' rows='4' name='${hikeKeys[i]}'></textarea>`
-        }
+          cell.setAttribute('id', 'text_cell')
+          hikeArray[i] = hikeArray[i].replace(/,/g, '');
 
-        cell.innerHTML = cellHTML;
+          var dataPoint = document.createElement('input')
+          setAttributes(dataPoint, {
+            'type': 'text',
+            'id': 'bulk_form_cell',
+            'value': `${hikeArray[i]}`,
+            'name': hikeKeys[i] + count
+          })
+
+          switch (hikeKeys[i]) {
+            case 'hike_date':
+              setAttributes(dataPoint, {
+                'pattern': '^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$',
+                'title': 'YYYY-MM-DD',
+                'required': ''
+              })
+              break;
+            case 'mileage':
+              setAttributes(dataPoint, {
+                'pattern': "^[0-9]\\d*\.?\\d{0,2}$",
+                'title': 'number with or without decimals',
+                'required': ''
+              })
+              break;
+            case 'time':
+              setAttributes(dataPoint, {
+                'pattern': '^\\d{1,2}:\\d{2}:\\d{2}$',
+                'title': '00:00:00',
+                'required': ''
+              })
+              break;
+            case 'elevation_gain':
+              setAttributes(dataPoint, {
+                'pattern': '^[1-9]\\d{0,5}$',
+                'title': 'number, no decimal or comma',
+                'required': ''
+              })
+              break;
+            case 'min_elevation':
+              setAttributes(dataPoint, {
+                'pattern': '^[1-9]\\d{0,5}$',
+                'title': 'number, no decimal or comma'
+              })
+              break;
+            case 'max_elevation':
+              setAttributes(dataPoint, {
+                'pattern': '^[1-9]\\d{0,5}$',
+                'title': 'number, no decimal or comma'
+              })
+              break;
+            case 'average_pace':
+              setAttributes(dataPoint, {
+                'pattern': '^\\d{1,2}:\\d{2}$',
+                'title': '00:00'
+              })
+              break;
+            case 'average_bpm':
+              setAttributes(dataPoint, {
+                'pattern': '^[1-9]\\d{1,2}$',
+                'title': '2 or 3 digit number, no decimal'
+              })
+              break;
+            case 'max_bpm':
+              setAttributes(dataPoint, {
+                'pattern': '^[1-9]\\d{1,2}$',
+                'title': '2 or 3 digit number, no decimal'
+              })
+              break;
+            case 'city':
+              setAttributes(dataPoint, {
+                'title': 'ex: Los Angeles',
+                'required': ''
+              })
+              break;
+            case 'location':
+              setAttributes(dataPoint, {
+                'title': 'ex: Angeles National Forest',
+                'required': ''
+              })
+              break;
+          }
+        }
+        cell.appendChild(dataPoint);
 
         row.appendChild(cell);
       }
 
       table.appendChild(row);
+      count++;
 
   });
+
   hikeTable.appendChild(table);
 
-</script>
+  var button = document.createElement('input')
+  setAttributes(button, {
+    'type': 'submit',
+    'value': 'Submit',
+    'id': 'bulk-submit-button'
+  })
 
-<!-- `<input type='text' id='hikeArray[i]'' value=hikeArray[i]' name='hikeArray[i]' pattern='DIFFERENT' title=DIFFERENT required='DIFFERENT'></input> -->
+  hikeTable.appendChild(button);
+
+</script>
