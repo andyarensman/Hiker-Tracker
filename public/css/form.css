@@ -149,3 +149,7 @@ label {
 input[name="delete-checkbox"] {
   margin-left: 0px;
 }
+
+textarea {
+  resize: none;
+}

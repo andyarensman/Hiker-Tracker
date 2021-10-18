@@ -30,4 +30,14 @@
 <%- include('../dataVis/newUser.ejs') %>
 <%- include('../dataVis/d3.ejs') %>
 <%- include('../dataVis/table.ejs') %>
+<script type="text/javascript">
+  if (<%- JSON.stringify(new_user) %> == "Yes") {
+    var tableElement = document.getElementById('table');
+    tableElement.setAttribute('style', 'display:none;');
+    var d3graph = document.getElementById('d3-graph');
+    d3graph.setAttribute('style', 'display:none;');
+    var formContainer = document.getElementById('form-container');
+    formContainer.setAttribute('style', 'width:600px;margin-left:300px;margin-right:300px');
+  }
+</script>
 </html>
