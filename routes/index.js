@@ -62,8 +62,11 @@ router.get('/dashboard/bulk_add', ensureAuthenticated, bulkController.bulk_index
 // Bulk Upload - Get CSV template
 router.get('/template', template.get);
 
-//Bulk Upload - Add multiple Hikes
+//Bulk Upload - Post and Review
 router.post('/dashboard/bulk_add', ensureAuthenticated, uploadCSV.single('myCSV'), bulkController.bulk_add);
+
+//Bulk Upload - Submit Reviewed forms
+router.post('/dashboard/bulk_submit', ensureAuthenticated, bulkController.bulk_submit);
 
 // Get Hike Details
 router.get('/dashboard/hike_details/:hike', ensureAuthenticated, detailsPageController.details_get);
