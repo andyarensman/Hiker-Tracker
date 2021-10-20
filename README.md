@@ -1,6 +1,6 @@
 # Hiker Data Tracker
 
-This web app is being built as a way to practice full stack development with Node, Express, MongoDB, Mongoose, EJS, and D3. It will allow the user to log in, input data they collect from hiking, then see a visualization of the data.
+This web app was built as a way to practice full stack development with Node, Express, MongoDB, Mongoose, EJS, and D3. It allows the user to log in, input data they collect from hiking, then see a visualization of the data. I organized it using an MVC approach.
 
 ## Table of Contents
 <ul>
@@ -53,8 +53,6 @@ For the schemas, I used the following setup:
       log: [hikeSessionSchema]
     })
 
-*(Note: This will likely change before the app is complete.)*
-
 <a id="challenges"></a>
 ## Challenges
 
@@ -64,8 +62,6 @@ For the schemas, I used the following setup:
 It took awhile to find a way to get a login system working with my set up. I found a lot of tutorials on using Passport without MongoDB and/or Mongoose, but very few with both. I ended up finding [this tutorial](https://www.youtube.com/watch?v=6FOq4cUdH8k&ab_channel=TraversyMedia) by [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA), which suited all my needs.
 
 After Passport is set up following the tutorial above, I could access all the user's info using `req.user` in my app methods. I use `req.user._id` a lot to `findById`, `findByIdAndUpdate`, etc. to update, delete, and add data to MongoDB.
-
-*(Note: The login system was one of the last main features I added.)*
 
 <a id="reset"></a>
 ### Password Reset
@@ -77,14 +73,14 @@ Sahat also left out encrypting the new password, so I had to do that using `bcry
 <a id="d3"></a>
 ### MongoDB to D3 via EJS
 
-One of the biggest challenges I faced was getting the MongoDB data into D3. I originally had my D3 in a js file as a module and ran the module in a `GET` request. I couldn't get this to work because D3 wouldn't import correctly. I settled on putting the D3 function as a script in an EJS file. This allowed me to send the data from the `GET` request to the EJS file.
+One of the first challenges I faced was getting the MongoDB data into D3. I originally had my D3 in a js file as a module and ran the module in a `GET` request. I couldn't get this to work because D3 wouldn't import correctly. I settled on putting the D3 function as a script in an EJS file. This allowed me to send the data from the `GET` request to the EJS file.
 
-This is what it ended up as in the index.js file in the routes folder:
+This is the basic form of the `GET` request I ended up with:
 
     app.get('/dashboard', (req, res) => {
       const id = req.user._id
 
-      Hiker.findById(id, '-log._id')
+      Hiker.findById(id)
       .then(result => {
         res.render('dashboard', { data: result.log })
       })
@@ -95,9 +91,9 @@ This is what it ended up as in the index.js file in the routes folder:
 
 And this is the line I used to import the data into an EJS file:
 
-    var data = [<%- data %>];
+    var data = [<%- JSON.stringify(data) %>];
 
-Originally I imported using an equals sign: `<%= data %>`. This messed up the formatting of the data, so I had to change it to the minus sign: `<%- data %>`.
+Originally I imported using an equals sign: `<%=`. This messed up the formatting of the data, so I had to change it to the minus sign: `<%-`.
 
 <a id="put"></a>
 ### PUT Request with HTML Forms
@@ -146,7 +142,7 @@ I wanted to include an option for the user to add multiple hikes at once via a s
 
 *Important Note: If you want to follow this same tutorial, make sure you install version 2.4.1 of `fast-csv`. Newer versions did not work.*
 
-There were a few things I had to alter from the guide. In Jamie's version, he only had one Mongoose schema, not a schema in a schema. For the photo upload section of my code, I had to use `multer` which clashes with `express-fileupload`, so I had to use multer here, too, which Jaime did not use. Here's what it looks like:
+There were a few things I had to alter from the guide. In Jamie's version, he only had one Mongoose schema, not a schema in a schema. For the photo upload section of my code, I had to use `multer` which clashes with `express-fileupload`, so I had to use multer here, too, which Jaime did not use. Here's what the first version looked like:
 
 
     const multer = require('multer');
@@ -233,14 +229,14 @@ There were a few things I had to alter from the guide. In Jamie's version, he on
     };
 
 
-There are still some bugs to work out - if the user doesn't follow the csv template corretly, there might be some problems. This will be looked into soon.
+Later I ended up adding a review page in between the csv file being uploaded and the data being sent to MongoDB. This page allows the user to review their spreadsheet before submitting it and make sure the data is in the correct format.
 
 <a id="imgur"></a>
 ### Uploading Photos with Imgur API
 
-I wanted to have a way for users to include a photo with each of their hikes, but as I understand it, MongoDB doesn't really allow you to store photos. So I decided to use Imgur to store the image and then put a link the image in the `hikeSession` schema in MongoDB.
+I wanted to have a way for users to include a photo with each of their hikes, but as I understand it, MongoDB doesn't really allow you to store photos. So I decided to use Imgur to store the image and then put a link to the image in the `hikeSession` schema in MongoDB.
 
-To get this to work, I needed to use `multer` and `imgur` version 1.0.2 (there is a version 2 in the works, but I had trouble with it). The user uploads the photo via multer to a folder in my server, then my server send it to Imgur, Imgur sends back an object with a link to the image, my server updates MongoDB, and then deletes the image from the server folder.
+To get this to work, I needed to use `multer` and `imgur` version 1.0.2 (there is a version 2 in the works, but I had trouble with it). The user uploads the photo via multer to a folder in my server, then my server sends it to Imgur, Imgur sends back an object with a link to the image, my server updates MongoDB, and then deletes the image from the server folder.
 
     const mongoose = require('mongoose');
     const imgur = require('imgur');
@@ -315,14 +311,14 @@ To get this to work, I needed to use `multer` and `imgur` version 1.0.2 (there i
 
 The json object that Imgur sends you, after uploading your image, includes a deletehash that can be used to remove the image from Imgur.
 
-  imgur
-    .deleteImage(deletehash)
-    .then((status) => {
-      console.log(status);
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
+    imgur
+      .deleteImage(deletehash)
+      .then((status) => {
+        console.log(status);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
 
 I tried to implement the image uploader on my edit page, but ran into some problems. For some reason Imgur would not except the image when it was in the edit form I made earlier. I kept getting an error that read: `EPERM: operation not permitted, stat '(path to the file)'`. I wasn't able to figure out why this was happening, so as a work around I made a separate form and `POST` and that seemed to work fine.
 
@@ -381,7 +377,20 @@ This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-
 <a id="future"></a>
 ## Future Plans
 
-After I get this version up and running, there are a few features I may try to add. I want the users to be able to select a date range for what hikes are being displayed and I would like the users to be able to share their profiles somehow. I may also implement some setting features like allowing the user to hike data fields that they don't use such as BPM.
+There are a few features I may try to add and a few minor things I may try to fix at some point in the near future:
+
+- Allow users to select a date range of their data, or have tabs to jump between different years.
+- Allow users to share their profiles either as a series of images or their entire profiles.
+- Incorporate settings that allow for some customization like hiding fields the user doesn't use (BPM, notes, etc.)
+- Allow users to upload pictures from their home page.
+- Show the users' notes on the home page somehow, rather than having to click on the hike in the table.
+- When the user hovers over a hike in their home page table, a pop up of their hike's image shows (if they have one).
+- Upload multiple images per hike (but still keep it limited).
+- In the home page table, highlight top stats.
+- When users click on a point in the graph, it jumps down to that hike in the table.
+- Add a new page like the details page, but it shows all hikes (or selected range).
+- Make it work on a mobile browser.
+- Improve the CSS.
 
 <a id="helpful"></a>
 ## Helpful Resources
