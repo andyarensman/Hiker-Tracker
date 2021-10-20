@@ -46,7 +46,7 @@
   text-align: center;
 }
 
-input[type=text], input[type=date], input[type=password], input[type=email], textarea, .edit-checkbox, .edit-choose-image  {
+input[type=text], input[type=date], input[type=password], input[type=email], input[type=name_first], input[type=name_last], textarea, .edit-checkbox, .edit-choose-image  {
   width: 100%;
   margin: 8px 0;
   display: inline-block;
@@ -71,7 +71,7 @@ em {
   font-style: italic;
 }
 
-input[type=text], input[type=password], input[type=email], textarea {
+input[type=text], input[type=password], input[type=email], input[type=name_first], input[type=name_last], textarea {
   padding: 8px 10px;
 }
 

@@ -30,6 +30,8 @@
   column-gap: 30px;
 }
 
+
+
 .portrait img {
   height: 350px;
   width: auto;
@@ -45,10 +47,11 @@
 .image-upload-box {
   border: 1px dotted #635F5D;
   position: relative;
+  background-color: #EFECEA;
 }
 
 .center-image-form {
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 .add-image-label {
@@ -95,6 +98,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 10px;
 }
 
 .details-image {
