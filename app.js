@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo');
 
 //Passport config
 require('./config/passport')(passport);
@@ -17,7 +18,7 @@ const app = express();
 
 //connect to mongodb
 const uri = process.env['MONGO_URI']
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(process.env.PORT || 3000))
   .catch((err) => console.log(err));
 mongoose.set('useFindAndModify', false);
@@ -35,8 +36,13 @@ app.use(cookieParser());
 app.use(session({
   secret: 'secret',
   resave: true,
-  saveUninitialized: true
-}))
+  saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: process.env['MONGO_URI'],
+    mongoOptions: { useUnifiedTopology: true },
+    ttl: 2 * 24 * 60 * 60
+  })
+}));
 
 //Passport Middleware
 app.use(passport.initialize());
