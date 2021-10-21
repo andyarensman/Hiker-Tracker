@@ -127,7 +127,7 @@ const forgot_handle = (req, res, next) => {
         service: 'SendGrid',
         auth: {
           user: 'apikey',
-          pass: process.env.SENDGRID_SECRET || process.env.H_SENDGRID_SECRET
+          pass: process.env.SENDGRID_SECRET
         }
       });
       var mailOptions = {
