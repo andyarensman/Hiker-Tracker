@@ -16,7 +16,7 @@ require('./config/passport')(passport);
 const app = express();
 
 //connect to mongodb
-const uri = process.env['MONGO_URI']
+const uri = process.env['MONGO_URI'] || process.env['H_MONGO_URI']
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => app.listen(process.env.PORT || 3000))
   .catch((err) => console.log(err));
