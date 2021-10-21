@@ -381,6 +381,7 @@ This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-
 
 There are a few features I may try to add and a few minor things I may try to fix at some point in the near future:
 
+- Make it look better on different devices (desktop vs laptop)
 - Allow users to select a date range of their data, or have tabs to jump between different years.
 - Allow users to share their profiles either as a series of images or their entire profiles.
 - Incorporate settings that allow for some customization like hiding fields the user doesn't use (BPM, notes, etc.)
