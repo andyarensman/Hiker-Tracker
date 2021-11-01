@@ -32,6 +32,7 @@
 }
 
 #dashboard-message {
-  min-width: 1428px;
+  /* min-width: 1428px; */
+  min-width: 940px;
   margin: 8px 11px -3px;
 }

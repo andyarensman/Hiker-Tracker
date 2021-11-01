@@ -2,29 +2,49 @@
 
 nav {
   display: flex;
-  min-width: 1428px;
+  /* min-width: 1428px; */
+  min-width: 940px;
   justify-content: space-between;
   margin: 11px 11px 5px;
-  padding: 0px 35px 0px;
+  padding: 22px 35px 16px;
   border-bottom: 1px solid #ddd;
   background-color: #F8F8F8;
 }
-nav ul{
+
+.navigation, .user {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.navigation {
+  padding-left: 20px;
+}
+
+nav div:last-child {
+  margin-left: auto;
+}
+
+nav ul {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  padding: 0;
+  list-style-type: none;
+  margin: 7px 0px;
 }
-nav li{
+nav li {
   list-style-type: none;
   margin-left: 20px;
+  align-self: flex-start;
+  text-align: left;
 }
+
 nav h1{
-  font-size: 3em;
+  font-size: 2.5em;
   color: #635F5D;
   font-weight: normal;
-  margin-top: 22px;
-  margin-bottom: 11px;
+  margin: 0px 0px;
 }
+
 nav p, nav li{
   color: #777;
   font-weight: 300;
