@@ -4,6 +4,11 @@
   <body>
     <%- include("../partials/nav-logout.ejs") %>
     <%- include("../partials/messages") %>
+    <div id="dashboard-message" class="isa_info">
+      <i class="fa fa-info-circle"></i>
+      This is an example of what your page could look like! <a href="/users/register">Create an account</a> or <a href="/users/login">login</a> to begin!
+    </div>
+
     <div class="welcome-container">
     <h3 class="login-form-title">Welcome!</h3>
       <div class="row mt-5">
@@ -14,16 +19,10 @@
       </div>
     </div>
 
-    <div id="dashboard-message" class="isa_info">
-      <i class="fa fa-info-circle"></i>
-      This is an example of what your page could look like! <a href="/users/register">Create an account</a> or <a href="/users/login">login</a> to begin!
-    </div>
-
     <div class="flex-container">
 
-      <div id="d3-graph"></div>
-
       <%- include("../dataVis/exampleDescription.ejs") %>
+      <div id="d3-graph"></div>
 
     </div>
 

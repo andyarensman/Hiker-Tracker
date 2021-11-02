@@ -1,17 +1,22 @@
 /* Form CSS */
 
+@media(min-width:1450px) {
+  #form-container {
+    height: 600px;
+  }
+}
+
 #form-container {
   display: block;
   padding: 0px 35px 10px;
   background-color: #F8F8F8;
   border: 0.75px solid #C0C0BB;
-  height: 600px;
 }
 
 #form-container p {
   color: #635F5D;
   line-height: 1.45;
-  margin-bottom: 20px;
+  margin-bottom: 20px;  
   font-size: 15px;
 }
 
