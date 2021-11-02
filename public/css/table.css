@@ -1,14 +1,51 @@
 /* Table CSS */
+@media(min-width:1450px) {
+  #table {
+    min-width: 1428px;
+  }
+}
+
+@media(max-width:1450px) {
+
+  .dash-table-width {
+    min-width: 900px;
+  }
+
+  .bulk-table-width {
+    min-width: 940px;
+  }
+
+  #table-container {
+    overflow-x: scroll;
+    transform: rotateX(180deg);
+  }
+
+  #table-container table {
+    min-width: 1150px;
+    transform: rotateX(180deg);
+  }
+
+  #bulk-table-container {
+    overflow-x: scroll;
+    transform: rotateX(180deg);
+  }
+
+  #bulk-table-container table {
+    min-width: 1300px;
+    transform: rotateX(180deg);
+  }
+}
+
 
 #table {
   background-color: #F8F8F8;
   display: block;
-  min-width: 1428px;
   padding: 0px 35px 22px;
   background-color: #F8F8F8;
   border: 0.75px solid #C0C0BB;
   margin: 5px 10px 0px;
 }
+
 #table td.clickable {
   cursor: pointer;
 }

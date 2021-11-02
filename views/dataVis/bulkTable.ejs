@@ -1,6 +1,7 @@
 <script>
   var hikes = <%- JSON.stringify(data) %>;
-  var hikeTable = document.querySelector('#table');
+  var hikeTable = document.querySelector('#bulk-table-container');
+  var hikeTableContainer = document.querySelector('#table');
 
   var headers = ['Name', 'Date', 'Mileage', 'Duration', 'El. Gain(ft)', 'Min El.(ft)', 'Max El.(ft)', 'Avg. Pace', 'Avg. BPM', 'Max BPM', 'City', 'Location', 'Notes'];
 
@@ -154,6 +155,6 @@
     'id': 'bulk-submit-button'
   })
 
-  hikeTable.appendChild(button);
+  hikeTableContainer.appendChild(button);
 
 </script>
