@@ -1,18 +1,18 @@
 /* Table CSS */
 @media(min-width:1450px) {
   #table {
-    min-width: 1428px;
+    /* min-width: 1428px; */
   }
 }
 
-@media(max-width:1450px) {
+@media(max-width:1449px) {
 
   .dash-table-width {
     min-width: 900px;
   }
 
-  .bulk-table-width {
-    min-width: 940px;
+  .bulk-table-width, .edit-table-width {
+    min-width: 942px;
   }
 
   #table-container {

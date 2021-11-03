@@ -21,7 +21,7 @@
   }
 }
 
-@media(max-width:1450px) {
+@media(max-width:1449px) {
   .flex-container {
     display: flex;
     flex-wrap: wrap;

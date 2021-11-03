@@ -4,10 +4,13 @@
 <body>
   <%- include("../partials/nav.ejs") %>
   <%- include("../partials/messages") %>
-  <div id="table" style="margin-top: 11px">
+  <div id="table" style="margin-top: 11px" class="edit-table-width">
     <h3 class="form-title">Current Data From Hike</h3>
   </div>
   <div class="edit-flex-container">
+
+    <%- include("../dataVis/editForm.ejs") %>
+
     <div id="edit-image-container" class="details-container">
       <h3 class="login-form-title">Add/Edit Image</h3>
         <div class="edit-image-upload-box">
@@ -26,8 +29,6 @@
           </div>
         </div>
     </div>
-    <%- include("../dataVis/editForm.ejs") %>
-
   </div>
   <%- include("../partials/footer.ejs") %>
 
