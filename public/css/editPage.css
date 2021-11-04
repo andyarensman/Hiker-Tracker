@@ -26,11 +26,21 @@
     row-gap: 11px;
     min-width: 962px;
   }
+
   #edit-form-container {
     flex-grow: 1;
   }
+
   .edit-image-upload-box {
     height: 80%;
+  }
+
+  #edit-table-container {
+    overflow-x: scroll;
+  }
+
+  #edit-table-container table {
+    min-width: 1050px;
   }
 }
 

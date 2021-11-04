@@ -16,7 +16,7 @@
 #form-container p {
   color: #635F5D;
   line-height: 1.45;
-  margin-bottom: 20px;  
+  margin-bottom: 20px;
   font-size: 15px;
 }
 
@@ -119,6 +119,11 @@ label {
   padding: 0px 35px 10px;
   background-color: #F8F8F8;
   border: 0.75px solid #C0C0BB;
+  text-align: center;
+}
+
+.setting-container h3 {
+  padding-bottom: 12px;
 }
 
 .setting-container h4, .setting-container p {
