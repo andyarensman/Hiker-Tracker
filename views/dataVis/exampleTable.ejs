@@ -37,9 +37,9 @@
       var editCell = document.createElement('td');
 
       if (<%- JSON.stringify(isExample) %> == 'Yes') {
-        editCell.innerHTML = '<img src="/assets/images/editicon.svg" alt="edit icon">'
+        editCell.innerHTML = '<img src="/assets/images/editicon.svg" alt="edit icon" style="height: 25px; width: 25px;">'
       } else {
-        editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/assets/images/editicon.svg" alt="edit icon"></a>'
+        editCell.innerHTML = '<a href="/dashboard/' + hike.id + '"><img src="/assets/images/editicon.svg" alt="edit icon" style="height: 25px; width: 25px;"></a>'
       }
 
       row.appendChild(editCell);
