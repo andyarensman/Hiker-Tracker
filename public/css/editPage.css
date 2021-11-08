@@ -21,7 +21,6 @@
 @media(max-width:1449px) {
   .edit-flex-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     row-gap: 11px;
     min-width: 962px;
@@ -29,6 +28,11 @@
 
   #edit-form-container {
     flex-grow: 1;
+    order: 1;
+  }
+
+  #edit-image-container {
+    margin: 12px 5px 0 10px;
   }
 
   .edit-image-upload-box {
@@ -41,22 +45,6 @@
 
   #edit-table-container table {
     min-width: 1050px;
-  }
-}
-
-@media(min-width:1010px) {
-  #edit-form-container {
-    order: 1;
-  }
-  #edit-image-container {
-    margin: 12px 5px 0 10px;
-  }
-}
-
-@media(max-width:1009px) {
-  #edit-image-container {
-    height: 300px;
-    margin: 2px 5px 0 10px;
   }
 }
 
@@ -133,6 +121,10 @@
 @media(max-width:1449px) {
   #hike-edit-form {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  #edit-button {
+    grid-column-end: -1;
   }
 }
 
