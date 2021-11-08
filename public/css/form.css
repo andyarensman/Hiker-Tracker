@@ -84,6 +84,10 @@ input[type=date] {
   padding: 6px 10px;
 }
 
+input[type=date]:invalid::-webkit-datetime-edit {
+    color: #635F5D;
+}
+
 input[type="file"] {
     display: none;
 }
