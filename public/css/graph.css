@@ -7,7 +7,7 @@
     /* min-width: 1450px; */
   }
 
-  #d3-graph, #form-container {
+  #d3-graph, #form-container, #example-form-container {
     flex: 1;
     margin: 11px;
   }
@@ -16,7 +16,7 @@
     order: 1;
   }
 
-  #form-container {
+  #form-container, #example-form-container {
     order: 2;
   }
 }
@@ -33,7 +33,7 @@
     min-width: 940px;
   }
 
-  #form-container {
+  #form-container, #example-form-container {
     width: 900px;
   }
 }

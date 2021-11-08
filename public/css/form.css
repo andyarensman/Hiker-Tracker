@@ -1,19 +1,27 @@
 /* Form CSS */
 
 @media(min-width:1450px) {
-  #form-container {
+  #example-form-container {
     height: 600px;
   }
 }
 
+@media(max-width:1449px) {
+
+}
+
 #form-container {
+  height: 600px;
+}
+
+#form-container, #example-form-container {
   display: block;
   padding: 0px 35px 10px;
   background-color: #F8F8F8;
   border: 0.75px solid #C0C0BB;
 }
 
-#form-container p {
+#form-container p, #example-form-container p {
   color: #635F5D;
   line-height: 1.45;
   margin-bottom: 20px;
@@ -53,7 +61,7 @@
 
 input[type=text], input[type=date], input[type=password], input[type=email], input[type=name_first], input[type=name_last], textarea, .edit-checkbox, .edit-choose-image  {
   width: 100%;
-  margin: 8px 0;
+  margin: 6px 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
