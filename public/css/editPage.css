@@ -52,6 +52,11 @@
   font-size: 20px;
 }
 
+.photo-icon {
+  height: 24px;
+  color: #635F5D;
+}
+
 /* Edit Image */
 
 #edit-image-container {

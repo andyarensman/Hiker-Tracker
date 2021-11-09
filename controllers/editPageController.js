@@ -29,7 +29,7 @@ const edit_get = (req, res) => {
     var image_link = 'None';
     if (hikeData.image_url != undefined) {
       if (Object.keys(hikeData.image_url).length != 0) {
-        image_link = '<a style="cursor: pointer" href=' + hikeData.image_url.link  + ' target="_blank"><img src="/assets/images/imageicon.svg\" alt="image icon" style="height: 24"></a>'
+        image_link = '<a style="cursor: pointer" href=' + hikeData.image_url.link  + ' target="_blank" rel="noopener"><img src="/assets/images/imageicon.svg\" alt="image icon" class="photo-icon"></a>'
       }
     }
     res.render('dashboard/editHike', {

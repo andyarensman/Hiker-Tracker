@@ -5,7 +5,6 @@
   var hikeId = <%- JSON.stringify(hikeId) %>;
   var id = <%- JSON.stringify(user_id) %>;
   var imageLink = <%- JSON.stringify(image_link) %>;
-  console.log(imageLink)
 
   var hikeTable = document.querySelector('#edit-table-container');
 
@@ -41,7 +40,7 @@
   row.appendChild(imageCell);
 
   var deleteCell = document.createElement('td');
-  deleteCell.innerHTML = '<a class="delete" style="cursor: pointer" data-doc="' + hikeId +'" data-id="' + id +'"><img src="/assets/images/trashcanicon.svg\" alt="trash icon"></a>'
+  deleteCell.innerHTML = '<a class="delete" style="cursor: pointer" data-doc="' + hikeId +'" data-id="' + id +'"><img src="/assets/images/trashcanicon.svg\" alt="trash icon" style="height: 24; width: 24;"></a>'
   row.appendChild(deleteCell);
 
   table.appendChild(row);

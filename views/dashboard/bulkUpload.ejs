@@ -6,7 +6,7 @@
   <%- include("../partials/nav.ejs") %>
 
   <div class="bulk-container">
-    <h3 class="login-form-title">Bulk Upload</h3>
+    <h2 class="login-form-title">Bulk Upload</h2>
 
     <%- include("../partials/messages") %>
     <p>If you already have a spreadsheet of your hiking data, you can follow the steps below to upload them faster:</p>
@@ -17,8 +17,8 @@
       <li>Use the correct formats shown in row two</li>
       <li>If you do not have data for a field, leave that column blank - do not delete the column or header</li>
       <li>Delete the template row before finishing</li>
-      <li>Export as CSV and upload here</li><br>
-    </ol>
+      <li>Export as CSV and upload here</li>
+    </ol><br>
     <form method="POST" encType="multipart/form-data" class="bulk-form">
       <label for="upload-button" class="bulk-file-upload">
         <i class="fa fa-cloud-upload"></i> Choose File
