@@ -1,8 +1,8 @@
 # Hiker Data Tracker
 
-This web app was built as a way to practice full stack development with Node, Express, MongoDB, Mongoose, EJS, and D3. It allows the user to log in, input data they collect from hiking, then see a visualization of the data. I organized it using an MVC approach.
+This web app was built as a way to practice full stack development with Node, Express, MongoDB, Mongoose, EJS, and D3. It allows the user to log in, input data they collect from hiking, then see a visualization of the data as well as upload images. I organized it using an MVC approach.
 
-[Check out the app here.](https://hiking-data-logger.herokuapp.com/)
+[Check out the app here](https://hiking-data-logger.herokuapp.com/)
 
 ## Table of Contents
 <ul>
@@ -42,7 +42,7 @@ For the schemas, I used the following setup:
         location: {type: String, required: true},
         notes: String,
         image_url: Schema.Types.Mixed
-      })
+      });
 
     const hikerSchema = new mongoose.Schema({
       name_first: {type: String, required: true},
@@ -53,7 +53,7 @@ For the schemas, I used the following setup:
       resetPasswordToken: String,
       resetPasswordExpires: Date,
       log: [hikeSessionSchema]
-    })
+    });
 
 <a id="challenges"></a>
 ## Challenges
@@ -84,12 +84,12 @@ This is the basic form of the `GET` request I ended up with:
 
       Hiker.findById(id)
       .then(result => {
-        res.render('dashboard', { data: result.log })
+        res.render('dashboard', { data: result.log });
       })
       .catch(err => {
         console.log(err);
-      })
-    })
+      });
+    });
 
 And this is the line I used to import the data into an EJS file:
 
@@ -133,7 +133,7 @@ To update the file, I used the following in my `PUT` method:
           }
         }
       )
-    })
+    });
 
 By turning `req.body` into an array of keys, I was able to make the `updateObject` contain only the fields the user entered and to put the keys in the correct format for the `updateOne` method.
 
@@ -142,7 +142,7 @@ By turning `req.body` into an array of keys, I was able to make the `updateObjec
 
 I wanted to include an option for the user to add multiple hikes at once via a spreadsheet. I ended up finding this tutorial by Jamie Munro: [Bulk Import a CSV File Into MongoDB Using Mongoose With Node.js](https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574).
 
-*Important Note: If you want to follow this same tutorial, make sure you install version 2.4.1 of `fast-csv`. Newer versions did not work.*
+*Important Note: If you want to follow this same tutorial, make sure you install version 2.4.1 of `fast-csv`. Newer versions did not work with this tutorial.*
 
 There were a few things I had to alter from the guide. In Jamie's version, he only had one Mongoose schema, not a schema in a schema. For the photo upload section of my code, I had to use `multer` which clashes with `express-fileupload`, so I had to use multer here, too, which Jaime did not use. Here's what the first version looked like:
 
@@ -190,7 +190,7 @@ There were a few things I had to alter from the guide. In Jamie's version, he on
           }
           console.log('file deleted')
           })
-      })
+      });
 
   In order to add multiple subdocuments at once, you need the line `{$push : {log: { $each: updateObjectArray } } }` within `findByIdAndUpdate` - `log` is the array of subdocuments, `$push` allows you to add to it, and `$each` allows you to add multiple.
 
@@ -234,11 +234,11 @@ There were a few things I had to alter from the guide. In Jamie's version, he on
 Later I ended up adding a review page in between the csv file being uploaded and the data being sent to MongoDB. This page allows the user to review their spreadsheet before submitting it and make sure the data is in the correct format.
 
 <a id="imgur"></a>
-### Uploading Photos with Imgur API
+### Uploading Photos with Imgur
 
-I wanted to have a way for users to include a photo with each of their hikes, but as I understand it, MongoDB doesn't really allow you to store photos. So I decided to use Imgur to store the image and then put a link to the image in the `hikeSession` schema in MongoDB.
+I wanted to have a way for users to include a photo with each of their hikes, but as I understand it, MongoDB doesn't really allow you to store photos. So I decided to use Imgur to store the image and then put a link to the image in the `hikeSession` schema in MongoDB. The upload time doesn't seem to be very fast compared with other image upload websites, but it is fine for this application.
 
-To get this to work, I needed to use `multer` and `imgur` version 1.0.2 (there is a version 2 in the works, but I had trouble with it). The user uploads the photo via multer to a folder in my server, then my server sends it to Imgur, Imgur sends back an object with a link to the image, my server updates MongoDB, and then deletes the image from the server folder.
+To get this system to work, I needed to use `multer` and `imgur` version 1.0.2 (there is a version 2 in the works, but I had trouble with it). The user uploads the photo via multer to a folder in my server, then my server sends it to Imgur, Imgur sends back an object with a link to the image, my server updates MongoDB, and then deletes the image from the server folder.
 
     const mongoose = require('mongoose');
     const imgur = require('imgur');
@@ -309,9 +309,9 @@ To get this to work, I needed to use `multer` and `imgur` version 1.0.2 (there i
           }
         }
       });
-    })
+    });
 
-The json object that Imgur sends you, after uploading your image, includes a deletehash that can be used to remove the image from Imgur.
+After the photo is uploaded, I wanted to make sure that the user could delete not only the image link from my database but also the image off of Imgur. Luckily, the json object that Imgur sends you after uploading your image includes a delete hash that can be sent back to remove the image.
 
     imgur
       .deleteImage(deletehash)
@@ -381,7 +381,6 @@ This is [the same D3 scatter plot](https://github.com/andyarensman/d3-hike-data-
 
 There are a few features I may try to add and a few minor things I may try to fix at some point in the near future:
 
-- Make it look better on different devices (desktop vs laptop)
 - Allow users to select a date range of their data, or have tabs to jump between different years.
 - Allow users to share their profiles either as a series of images or their entire profiles.
 - Incorporate settings that allow for some customization like hiding fields the user doesn't use (BPM, notes, etc.)
