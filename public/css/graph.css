@@ -4,11 +4,12 @@
 @media(min-width:1450px) {
   .flex-container {
     display: flex;
+    justify-content: center;
     /* min-width: 1450px; */
   }
 
   #d3-graph, #form-container, #example-form-container {
-    flex: 1;
+    /* flex: 1; */
     margin: 11px;
   }
 
@@ -19,6 +20,15 @@
   #form-container, #example-form-container {
     order: 2;
   }
+
+  #form-container {
+    max-width: 900px;
+  }
+
+  #example-form-container {
+    max-width: 700px;
+  }
+
 }
 
 @media(max-width:1449px) {
@@ -35,6 +45,10 @@
 
   #form-container, #example-form-container {
     width: 900px;
+  }
+
+  #form-container {
+    min-width: 900px;
   }
 }
 
