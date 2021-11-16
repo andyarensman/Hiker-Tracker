@@ -48,6 +48,8 @@
   }
 }
 
+
+
 .edit-form-description {
   font-size: 20px;
 }
@@ -185,3 +187,10 @@ input[type=checkbox] {
   align-self: end;
   margin-bottom: 13px;
 } */
+
+@media(max-width:600px) {
+  p, h1, h2, h3, td, th {
+    color: red;
+    font-size: 10vw;
+  }
+}
