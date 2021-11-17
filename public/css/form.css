@@ -175,3 +175,23 @@ input[name="delete-checkbox"] {
 textarea {
   resize: none;
 }
+
+@media(max-width:600px) {
+  /* p, h1, h2, h3, td, th {
+    font-size: 10vw;
+  } */
+
+  #form-container p, #example-form-container p {
+    font-size: 10vw;
+  }
+
+  .form-title {
+    font-size: 16vw;
+    margin: 10vw 0px 10px;
+  }
+
+  .login-form-title {
+    font-size: 16vw;
+    margin: 10vw 0px 10px;
+  }
+}

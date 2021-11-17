@@ -65,3 +65,20 @@
   font-weight: 300;
   margin: 4px 0px 11px;
 }
+
+@media(max-width:600px) {
+  /* p, h1, h2, h3, td, th {
+    font-size: 10vw;
+  } */
+  .welcome-container {
+    display: block;
+    margin: 50px auto;
+    width: 200vw;
+    padding: 0px 35px 10px;
+  }
+
+  .welcome-item {
+    margin: 10vw auto 10vw;
+    font-size: 10vw;
+  }
+}

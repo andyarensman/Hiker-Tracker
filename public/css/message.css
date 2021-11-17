@@ -36,3 +36,15 @@
   min-width: 940px;
   margin: 8px 11px -3px;
 }
+
+@media(max-width:600px) {
+  .isa_info, .isa_success, .isa_warning, .isa_error {
+    margin: 4px 0px;
+    padding: 4vw 8vw;
+    font-size: 9vw;
+  }
+
+  .isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    font-size: 9vw;
+  }
+}

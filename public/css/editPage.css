@@ -189,7 +189,7 @@ input[type=checkbox] {
 } */
 
 @media(max-width:600px) {
-  p, h1, h2, h3, td, th {
+  /* p, h1, h2, h3, td, th {
     font-size: 10vw;
-  }
+  } */
 }

@@ -3,4 +3,11 @@
 body {
   font-family: 'Roboto';
   background-color: #635F5D;
+  /* width: 100vw; */
+}
+
+@media(max-width:600px) {
+  body {
+    width: 100%;
+  }
 }
