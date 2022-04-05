@@ -2,7 +2,7 @@
 
 This web app was built as a way to practice full stack development with Node, Express, MongoDB, Mongoose, EJS, and D3. It allows the user to log in, input data they collect from hiking, then see a visualization of the data as well as upload images. I organized it using an MVC approach.
 
-[Check out the app here](https://hiking-data-logger.herokuapp.com/) *(mobile browser version not available yet)*
+[Check out the app here](https://hiking-data-logger.herokuapp.com/) *(mobile browser version not available yet - coming soon)*
 
 ## Table of Contents
 <ul>
