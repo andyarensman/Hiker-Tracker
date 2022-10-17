@@ -72,3 +72,6 @@ app.use('/users', require('./routes/users'))
 app.use((req, res) => {
   res.status(404).render('404', { title: '404'})
 })
+
+// Export the Express API for Vercel
+module.exports = app;
