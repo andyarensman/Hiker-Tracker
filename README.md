@@ -4,6 +4,10 @@ This web app was built as a way to practice full stack development with Node, Ex
 
 [Check out the app here](https://hiking-data-logger.herokuapp.com/) *(mobile browser version not available yet - coming soon)*.
 
+Example of the main page:
+
+![Example of the main page](https://i.imgur.com/oUo8dPa.png)
+
 Heroku is removing the free tier, so I will need to change the hosting location soon.
 
 ## Table of Contents
