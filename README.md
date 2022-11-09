@@ -72,7 +72,7 @@ After Passport is set up following the tutorial above, I could access all the us
 <a id="reset"></a>
 ### Password Reset
 
-To allow the user to reset their password if they forgot it, I used [this tutorial](http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/) by Sahat Yalkabov. The tutorial is a little outdated (2014), so I had to change a few things. To get `nodemailer` to work, remove the `'SMTP'` argument from the `createTransport` methods. To get `SendGrid` working, you need to make an account, then go under settings => api keys and create a key. Back in the `createTransport` method, `auth.user` will always be `apikey` and `auth.pass` will be the api key you created on `SendGrid`. You will likely want to use `.env` with your api key.
+To allow the user to reset their password, I used [this tutorial](http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/) by Sahat Yalkabov. The tutorial is a little outdated (2014), so I had to change a few things. To get `nodemailer` to work, remove the `'SMTP'` argument from the `createTransport` methods. To get `SendGrid` working, you need to make an account, then go under settings => api keys and create a key. Back in the `createTransport` method, `auth.user` will always be `apikey` and `auth.pass` will be the api key you created on `SendGrid`. You will likely want to use `.env` with your api key.
 
 Sahat also left out encrypting the new password, so I had to do that using `bcrypt` like I did for creating a new user.
 
