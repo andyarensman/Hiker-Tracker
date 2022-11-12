@@ -396,7 +396,7 @@ There are a few features I may try to add and a few minor things I may try to fi
 - When users click on a point in the graph, it jumps down to that hike in the table.
 - Add a new page like the details page, but it shows all hikes (or selected range).
 - Make it work on a mobile browser.
-- Improve the CSS.
+- Improve the CSS. This will probably be the first thing I fix. Currently it looks best in a larger window size - as soon as you shrink it and the boxes stack, there is a lot of grey space that looks off. Some basic design stuff could also make it look a lot better.
 
 <a id="helpful"></a>
 ## Helpful Resources
