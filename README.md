@@ -19,7 +19,7 @@ Example of the main page:
     <li><a href="#put">PUT Request with HTML Forms</a></li>
     <li><a href="#bulk">Bulk Upload with a CSV File</a></li>
     <li><a href="#imgur">Uploading Photos with Imgur API</a></li>
-    <li><a href="#footer">Always on the Bottom Footer</a></li>
+    <li><a href="#footer">Always-on-the-Bottom Footer</a></li>
     <li><a href="#graph">D3 Scatter Plot</a></li>
   </ul>
   <li><a href="#future">Future Plans</a></li>
@@ -104,7 +104,7 @@ Originally I imported using an equals sign: `<%=`. This messed up the formatting
 <a id="put"></a>
 ### PUT Request with HTML Forms
 
-I struggled to figure out how to do a `PUT` request with an HTML form. HTML only allow you to use `POST` and `GET` methods, so I had to install [method-override](http://expressjs.com/en/resources/middleware/method-override.html). Inside your form element you have to put this:
+I struggled to figure out how to do a `PUT` request with an HTML form. HTML only allow you to use `POST` and `GET` methods, so I had to install [method-override](http://expressjs.com/en/resources/middleware/method-override.html). Inside the form element you have to put this:
 
     <form method="POST" action="/<path>?_method=PUT">
 
@@ -331,7 +331,7 @@ I tried to implement the image uploader on my edit page, but ran into some probl
 Another weird thing was that according to the Imgur API docs, you need a client ID to be able to work with them. I went through the steps to set that up, but with `npm imgur` installed, it didn't seem like I actually needed the client ID to make it work. It's possible I misunderstood this step though.
 
 <a id="footer"></a>
-### Always on the Bottom Footer
+### Always-on-the-Bottom Footer
 
 There are quite a few Stack Overflow questions about how to get your footer to always be at the bottom of the page, but people mean different things when they ask this. Some people want the footer to be sticky - always at the bottom of the view window no matter how far you scroll. I wanted my footer to always be the last thing on the page, at the bottom of the view window, but not visible if you can scroll on the page.
 
