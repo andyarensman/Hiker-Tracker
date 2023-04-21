@@ -2,7 +2,7 @@
 
 This full-stack web app was built with Node, Express, MongoDB, Mongoose, EJS, and D3. It allows the user to log in, input data they collect from hiking, then see a visualization of the data as well as upload images. I organized it using an MVC approach.
 
-[Check out the app here](https://hiking-data-logger.adaptable.app/) *(mobile browser version not available yet - coming soon)*.
+[Check out the app here](https://hiking-data-logger.adaptable.app/) *(mobile browser version not available yet - coming soon)*. *There is an update coming to Imgur that will likely break the image upload section of this project.*
 
 Example of the main page:
 
